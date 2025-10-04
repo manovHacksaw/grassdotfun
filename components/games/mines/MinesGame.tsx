@@ -13,6 +13,7 @@ import { useContract } from "@/context/contract-provider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
 import { gameResolutionService } from "@/lib/gameResolutionService"
 import { formatEther } from "viem"
+import { useToast } from "@/components/ui/Toast"
 
 interface MineCell {
   id: number
@@ -104,7 +105,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
         setErrorMessage(`Failed to auto-resolve game: ${result.error}`);
       }
     } catch (error: any) {
-      console.error("❌ Error auto-resolving game:", error);
+      console.error("�� Error auto-resolving game:", error);
       setErrorMessage(`Failed to auto-resolve game: ${error.message}`);
     }
   };
