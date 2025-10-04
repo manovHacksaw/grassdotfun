@@ -243,7 +243,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       }
       
       if (bet < 0.001) {
-        setErrorMessage("Minimum bet amount is 0.001 ETH")
+        toast.show({ title: 'Minimum bet', description: 'Minimum bet amount is 0.001 ETH', type: 'warning' })
         return
       }
       
