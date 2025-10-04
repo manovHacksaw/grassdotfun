@@ -133,10 +133,10 @@ export default function UserStats() {
 
           // Convert contract data to our expected format
           const processedStats: UserStats = {
-            totalBet: (parseFloat(contractStats.totalBet.toString()) / 1e24).toFixed(2),
-            totalWon: (parseFloat(contractStats.totalWon.toString()) / 1e24).toFixed(2),
-            totalLost: (parseFloat(contractStats.totalLost.toString()) / 1e24).toFixed(2),
-            withdrawableBalance: (parseFloat(contractStats.withdrawableBalance.toString()) / 1e24).toFixed(2),
+            totalBet: (parseFloat(contractStats.totalBet.toString()) / 1e18).toFixed(2),
+            totalWon: (parseFloat(contractStats.totalWon.toString()) / 1e18).toFixed(2),
+            totalLost: (parseFloat(contractStats.totalLost.toString()) / 1e18).toFixed(2),
+            withdrawableBalance: (parseFloat(contractStats.withdrawableBalance.toString()) / 1e18).toFixed(2),
             gamesPlayed: contractStats.gamesPlayed || 0,
             gamesWon: contractStats.gamesWon || 0,
             winRate: contractStats.gamesPlayed > 0 ? (contractStats.gamesWon / contractStats.gamesPlayed) * 100 : 0,
@@ -196,10 +196,10 @@ export default function UserStats() {
           const fakeLastPlayDate = new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) // Random date within last 7 days
 
           const processedStats: UserStats = {
-            totalBet: (parseFloat(contractStats.totalBet.toString()) / 1e24).toFixed(2),
-            totalWon: (parseFloat(contractStats.totalWon.toString()) / 1e24).toFixed(2),
-            totalLost: (parseFloat(contractStats.totalLost.toString()) / 1e24).toFixed(2),
-            withdrawableBalance: (parseFloat(contractStats.withdrawableBalance.toString()) / 1e24).toFixed(2),
+            totalBet: (parseFloat(contractStats.totalBet.toString()) / 1e18).toFixed(2),
+            totalWon: (parseFloat(contractStats.totalWon.toString()) / 1e18).toFixed(2),
+            totalLost: (parseFloat(contractStats.totalLost.toString()) / 1e18).toFixed(2),
+            withdrawableBalance: (parseFloat(contractStats.withdrawableBalance.toString()) / 1e18).toFixed(2),
             gamesPlayed: contractStats.gamesPlayed || 0,
             gamesWon: contractStats.gamesWon || 0,
             winRate: contractStats.gamesPlayed > 0 ? (contractStats.gamesWon / contractStats.gamesPlayed) * 100 : 0,
@@ -257,10 +257,10 @@ export default function UserStats() {
 
         // Convert contract data to our expected format
         const processedStats: UserStats = {
-          totalBet: (parseFloat(contractStats.totalBet.toString()) / 1e24).toFixed(2),
-          totalWon: (parseFloat(contractStats.totalWon.toString()) / 1e24).toFixed(2),
-          totalLost: (parseFloat(contractStats.totalLost.toString()) / 1e24).toFixed(2),
-          withdrawableBalance: (parseFloat(contractStats.withdrawableBalance.toString()) / 1e24).toFixed(2),
+          totalBet: (parseFloat(contractStats.totalBet.toString()) / 1e18).toFixed(2),
+          totalWon: (parseFloat(contractStats.totalWon.toString()) / 1e18).toFixed(2),
+          totalLost: (parseFloat(contractStats.totalLost.toString()) / 1e18).toFixed(2),
+          withdrawableBalance: (parseFloat(contractStats.withdrawableBalance.toString()) / 1e18).toFixed(2),
           gamesPlayed: contractStats.gamesPlayed || 0,
           gamesWon: contractStats.gamesWon || 0,
           winRate: contractStats.gamesPlayed > 0 ? (contractStats.gamesWon / contractStats.gamesPlayed) * 100 : 0,
