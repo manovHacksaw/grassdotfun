@@ -1,7 +1,7 @@
 /**
  * Currency Utilities
  * 
- * Handles NEAR currency formatting and conversions to USD/INR
+ * Handles ETH currency formatting and conversions to USD/INR (legacy function names kept for compatibility)
  * Uses real-time exchange rates from CoinGecko and ExchangeRate-API
  */
 
