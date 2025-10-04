@@ -104,12 +104,12 @@ export default function AdminDashboard() {
     try {
       const details = await contractService.getGameDetails(gameId)
       if (details) {
-        setSuccessMessage(`Game found: ${JSON.stringify(details, null, 2)}`)
+        toast.show({ title: 'Game found', description: JSON.stringify(details, null, 2), type: 'success' })
       } else {
-        setErrorMessage("Game not found")
+        toast.show({ title: 'Game not found', description: 'Please verify the game ID', type: 'warning' })
       }
     } catch (error: any) {
-      setErrorMessage(`Failed to get game details: ${error.message}`)
+      toast.show({ title: 'Failed to get game details', description: String(error?.message || 'Unknown'), type: 'error' })
     } finally {
       setIsLoading(false)
     }
