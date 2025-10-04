@@ -396,7 +396,7 @@ export default function UserStats() {
         errorMsg = error.message
       }
 
-      setErrorMessage(errorMsg)
+      toast.show({ title: 'Withdrawal failed', description: errorMsg, type: 'error' })
     } finally {
       setIsLoading(false)
     }
