@@ -167,7 +167,7 @@ export function formatStatsCurrency(nearAmount: string | number): string {
   const usd = nearToUSD(nearAmount);
   const inr = nearToINR(nearAmount);
   
-  return `${near} NEAR`;
+  return `${near} ETH`;
 }
 
 /**
