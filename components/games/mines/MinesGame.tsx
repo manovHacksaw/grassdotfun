@@ -265,7 +265,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           initializeGame()
           BetSound()
         } else if (result.error) {
-          setErrorMessage(`Failed to start game: ${result.error.message}`)
+          toast.show({ title: 'Failed to start game', description: String(result.error?.message || 'Unknown'), type: 'error' })
         }
       } catch (error: any) {
         console.error("Error starting game:", error)
