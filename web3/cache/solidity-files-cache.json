@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/manov/Desktop/code/grassdotfun/web3/contracts/SecureGames.sol": {
+      "lastModificationDate": 1759567557189,
+      "contentHash": "a9dec5f2dd4bbc1687efed35ca1a91db",
+      "sourceName": "contracts/SecureGames.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "SecureGames"
+      ]
+    }
+  }
+}
