@@ -22,6 +22,7 @@ import { useWallet } from "@/contexts/WalletContext"
 import { useContract } from "@/context/contract-provider"
 import { gameResolutionService } from "@/lib/gameResolutionService"
 import { formatEther } from "viem"
+import { useToast } from "@/components/ui/Toast"
 
 type GameStatus = "idle" | "flipping" | "won" | "lost" | "streak-active"
 
