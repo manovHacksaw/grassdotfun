@@ -96,9 +96,9 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       if (result.success) {
         setTransactionHash(result.hash || "");
         if (didWin) {
-          setSuccessMessage(`🎉 Game won! Auto-resolved at ${finalMultiplier.toFixed(2)}× multiplier.`);
+          toast.show({ title: 'Game won', description: `🎉 Auto-resolved at ${finalMultiplier.toFixed(2)}× multiplier.`, type: 'success' })
         } else {
-          setSuccessMessage(`Game auto-resolved successfully.`);
+          toast.show({ title: 'Game resolved', description: 'Game auto-resolved successfully.', type: 'success' })
         }
       } else {
         toast.show({ title: 'Auto-resolve failed', description: String(result.error || 'Unknown error'), type: 'error' });
