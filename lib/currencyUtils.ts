@@ -156,7 +156,7 @@ export function formatGameCurrency(nearAmount: string | number): string {
   const near = formatNEAR(nearAmount);
   const usd = nearToUSD(nearAmount);
   
-  return `${near} NEAR (${formatUSD(usd)})`;
+  return `${near} ETH (${formatUSD(usd)})`;
 }
 
 /**
