@@ -259,8 +259,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
         
         if (result.success) {
           setTransactionHash(result.hash || "")
-          setSuccessMessage(`Game started! Transaction: ${result.hash?.slice(0, 8)}...`)
-          
+          toast.show({ title: 'Game started', description: `Transaction: ${result.hash?.slice(0, 8)}...`, type: 'success' })
           setIsPlaying(true)
           initializeGame()
           BetSound()
