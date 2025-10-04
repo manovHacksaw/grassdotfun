@@ -49,8 +49,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [gameId, setGameId] = useState<string>("")
   const [transactionHash, setTransactionHash] = useState<string>("")
-  const [errorMessage, setErrorMessage] = useState<string>("")
-  const [successMessage, setSuccessMessage] = useState<string>("")
+  const toast = useToast()
   const loseMessages = [
     "Every pro loses once. Bounce back stronger.",
     "Close call? Your comeback starts here.",
@@ -105,7 +104,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
         setErrorMessage(`Failed to auto-resolve game: ${result.error}`);
       }
     } catch (error: any) {
-      console.error("�� Error auto-resolving game:", error);
+      console.error("❌ Error auto-resolving game:", error);
       setErrorMessage(`Failed to auto-resolve game: ${error.message}`);
     }
   };
