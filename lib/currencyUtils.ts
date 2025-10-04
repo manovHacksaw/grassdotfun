@@ -65,7 +65,7 @@ export interface CurrencyDisplay {
 }
 
 /**
- * Format NEAR amount with proper decimal places
+ * Format ETH amount with proper decimal places (export name kept for compatibility)
  */
 export function formatNEAR(amount: string | number): string {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
