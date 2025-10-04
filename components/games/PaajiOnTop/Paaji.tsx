@@ -146,7 +146,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     // Validate bet amount first
     const bet = Number.parseFloat(betAmount)
     if (bet <= 0 || isNaN(bet)) {
-      setErrorMessage("Please enter a valid bet amount")
+      toast.show({ title: 'Invalid bet', description: 'Please enter a valid bet amount', type: 'warning' })
       return
     }
     
