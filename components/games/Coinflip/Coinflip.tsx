@@ -44,6 +44,8 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
   const { startGame: startGameContract } = useContract()
   const [isStaking, setIsStaking] = React.useState(false)
   const [gameId, setGameId] = React.useState<string>("")
+  const toast = useToast()
+  const queuedStakeRef = React.useRef(false)
   // Game state
   const [status, setStatus] = React.useState<GameStatus>("idle")
   
