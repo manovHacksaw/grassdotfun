@@ -448,7 +448,7 @@ export default function UserStats() {
                 <p className="text-green-300 text-xs">Loading balance...</p>
               </div>
             ) : (
-              <p className="text-green-300 text-xs">Balance: {walletBalance} NEAR</p>
+              <p className="text-green-300 text-xs">Balance: {walletBalance} ETH</p>
             )}
           </div>
           <div className="text-right">
