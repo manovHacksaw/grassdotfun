@@ -114,20 +114,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
 
   // Balance is now handled by the wallet context
 
-  // Clear messages after a delay
-  const clearMessages = () => {
-    setErrorMessage("")
-    setSuccessMessage("")
-    setTransactionHash("")
-  }
-
-  // Auto-clear messages after 5 seconds
-  React.useEffect(() => {
-    if (errorMessage || successMessage) {
-      const timer = setTimeout(clearMessages, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [errorMessage, successMessage])
+  // messages shown via toast; no local message clearing required
 
   React.useEffect(() => {
     if (difficulty === "Easy") setNumCols(4)
