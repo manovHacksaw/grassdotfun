@@ -350,7 +350,7 @@ export default function UserStats() {
 
     const withdrawableAmount = parseFloat(userStats.withdrawableBalance)
     if (withdrawableAmount <= 0) {
-      setErrorMessage("No winnings to withdraw")
+      toast.show({ title: 'No winnings', description: 'No winnings to withdraw', type: 'info' })
       return
     }
 
