@@ -26,6 +26,7 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [successMessage, setSuccessMessage] = useState<string>("")
+  const toastContext = null
   
   // Game resolution form
   const [gameId, setGameId] = useState("")
