@@ -55,7 +55,7 @@ export default function AdminDashboard() {
       const stats = await contractService.getContractStats()
       setContractStats(stats)
     } catch (error: any) {
-      setErrorMessage(`Failed to fetch contract stats: ${error.message}`)
+      toast.show({ title: 'Failed to fetch stats', description: String(error?.message || 'Unknown error'), type: 'error' })
     } finally {
       setIsLoading(false)
     }
