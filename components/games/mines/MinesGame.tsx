@@ -238,7 +238,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       // Start new game - validate bet amount first
       const bet = Number.parseFloat(betAmount)
       if (bet <= 0 || isNaN(bet)) {
-        setErrorMessage("Please enter a valid bet amount")
+        toast.show({ title: 'Invalid bet', description: 'Please enter a valid bet amount', type: 'warning' })
         return
       }
       
