@@ -6,16 +6,17 @@ import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { useContract } from "@/context/contract-provider"
 import { useWallet } from "@/contexts/WalletContext"
-import { 
-  Settings, 
-  Users, 
-  Gamepad2, 
-  DollarSign, 
+import {
+  Settings,
+  Users,
+  Gamepad2,
+  DollarSign,
   RefreshCw,
   CheckCircle,
   XCircle,
   AlertTriangle
 } from "lucide-react"
+import { useToast } from "@/components/ui/Toast"
 
 export default function AdminDashboard() {
   const { selector, accountId, isConnected } = useWallet()
