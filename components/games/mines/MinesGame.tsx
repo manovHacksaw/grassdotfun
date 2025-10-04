@@ -285,7 +285,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           errorMsg = error.message
         }
         
-        setErrorMessage(errorMsg)
+        toast.show({ title: 'Error starting game', description: errorMsg, type: 'error' })
       } finally {
         setIsLoading(false)
       }
