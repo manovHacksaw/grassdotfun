@@ -289,7 +289,7 @@ export default function UserStats() {
       }
     } catch (error: any) {
       console.error("❌ Error in fetchUserStats:", error)
-      setErrorMessage("Failed to fetch user statistics")
+      toast.show({ title: 'Stats error', description: 'Failed to fetch user statistics', type: 'error' })
 
       // Set empty data on error
       const errorStats: UserStats = {
