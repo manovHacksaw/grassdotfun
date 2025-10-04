@@ -79,12 +79,12 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
       if (result.success) {
         setTransactionHash(result.hash || "");
         if (didWin) {
-          setSuccessMessage(`🎉 Game won! Auto-resolved at ${finalMultiplier.toFixed(2)}× multiplier.`);
+          toast.show({ title: 'Game won', description: `🎉 Auto-resolved at ${finalMultiplier.toFixed(2)}× multiplier.`, type: 'success' })
         } else {
-          setSuccessMessage(`Game auto-resolved successfully.`);
+          toast.show({ title: 'Game resolved', description: 'Game auto-resolved successfully.', type: 'success' })
         }
       } else {
-        setErrorMessage(`Failed to auto-resolve game: ${result.error}`);
+        toast.show({ title: 'Auto-resolve failed', description: String(result.error || 'Unknown'), type: 'error' })
       }
     } catch (error: any) {
       console.error("❌ Error auto-resolving game:", error);
