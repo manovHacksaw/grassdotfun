@@ -234,27 +234,45 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
       setStatus("streak-active")
       return
     }
+
+    // If already staking, queue the request to auto-run after current finishes
+    if (isStaking) {
+      queuedStakeRef.current = true
+      toast.show({ title: 'Queued', description: 'Your stake will be placed when the current transaction finishes', type: 'info', duration: 4000 })
+      return
+    }
+
     try {
       setIsStaking(true)
       const newGameId = `coinflip-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
       setGameId(newGameId)
-      
+
       // Convert ETH to wei (BigInt)
       const betInWei = BigInt(Math.round(bet * 1e18))
-      
+
       const result = await startGameContract(newGameId, "coinflip", betInWei)
-      
+
       if (result.success) {
         // After staking successfully, set as staked
         setHasStaked(true)
         setStatus("streak-active")
+        toast.show({ title: 'Staked', description: 'Bet placed successfully', type: 'success' })
       } else {
-        console.error("Stake failed:", result.error)
+        toast.show({ title: 'Stake failed', description: String(result.error || 'Unknown'), type: 'error' })
       }
-    } catch (err) {
-      console.error("Stake failed:", err)
+    } catch (err: any) {
+      toast.show({ title: 'Stake failed', description: String(err?.message || err || 'Unknown error'), type: 'error' })
     } finally {
       setIsStaking(false)
+
+      // If a stake was queued while we were staking, run it now
+      if (queuedStakeRef.current) {
+        queuedStakeRef.current = false
+        // run on next tick to avoid sync re-entrance
+        setTimeout(() => {
+          stakeOnce()
+        }, 50)
+      }
     }
   }
 
