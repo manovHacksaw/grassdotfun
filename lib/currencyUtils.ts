@@ -141,12 +141,12 @@ export function getCurrencyDisplay(nearAmount: string | number): CurrencyDisplay
  */
 export function formatNEARWithConversion(nearAmount: string | number, showConversion: boolean = true): string {
   const near = formatNEAR(nearAmount);
-  if (!showConversion) return `${near} NEAR`;
-  
+  if (!showConversion) return `${near} ETH`;
+
   const usd = nearToUSD(nearAmount);
   const inr = nearToINR(nearAmount);
-  
-  return `${near} NEAR (${formatUSD(usd)} / ${formatINR(inr)})`;
+
+  return `${near} ETH (${formatUSD(usd)} / ${formatINR(inr)})`;
 }
 
 /**
