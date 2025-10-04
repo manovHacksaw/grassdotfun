@@ -149,20 +149,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
 
   // Balance is now handled by the wallet context
 
-  // Clear messages after a delay
-  const clearMessages = () => {
-    setErrorMessage("")
-    setSuccessMessage("")
-    setTransactionHash("")
-  }
-
-  // Auto-clear messages after 5 seconds
-  useEffect(() => {
-    if (errorMessage || successMessage) {
-      const timer = setTimeout(clearMessages, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [errorMessage, successMessage])
+  // messages are shown via toasts; no local message clearing required
 
   const initializeGame = () => {
     const mines = Number.parseInt(mineCount)
