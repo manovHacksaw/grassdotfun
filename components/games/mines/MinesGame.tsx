@@ -393,23 +393,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
               </div>
             )}
 
-            {/* Error Message */}
-            {errorMessage && (
-              <div className="bg-red-600/10 border border-red-500/20 rounded-4xl p-3 text-center">
-                <p className="text-red-400 text-sm font-medium">
-                  ⚠️ {errorMessage}
-                </p>
-              </div>
-            )}
-
-            {/* Success Message */}
-            {successMessage && (
-              <div className="bg-green-600/10 border border-green-500/20 rounded-4xl p-3 text-center">
-                <p className="text-green-400 text-sm font-medium">
-                  ✅ {successMessage}
-                </p>
-              </div>
-            )}
+            {/* Messages are displayed via toast notifications */}
 
             {/* Transaction Hash */}
             {transactionHash && (
