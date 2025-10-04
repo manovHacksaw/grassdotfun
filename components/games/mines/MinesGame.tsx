@@ -219,7 +219,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
     clearMessages()
     
     if (!isConnected) {
-      setErrorMessage("Please connect your wallet first")
+      toast.show({ title: 'Wallet required', description: 'Please connect your wallet first', type: 'warning' })
       return
     }
 
