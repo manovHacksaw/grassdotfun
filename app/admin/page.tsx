@@ -83,11 +83,11 @@ export default function AdminDashboard() {
     setIsLoading(true)
     try {
       const hash = await resolverService.resolveGame(gameId, didWin, parseFloat(multiplier))
-      setSuccessMessage(`Game resolved successfully! Transaction: ${hash.slice(0, 8)}...`)
+      toast.show({ title: 'Resolved', description: `Game resolved successfully! Transaction: ${String(hash).slice(0, 8)}...`, type: 'success' })
       setGameId("")
       setMultiplier("1.0")
     } catch (error: any) {
-      setErrorMessage(`Failed to resolve game: ${error.message}`)
+      toast.show({ title: 'Resolve failed', description: String(error?.message || 'Unknown error'), type: 'error' })
     } finally {
       setIsLoading(false)
     }
