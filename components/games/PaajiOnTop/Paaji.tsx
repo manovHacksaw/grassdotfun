@@ -49,8 +49,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
   const [isLoading, setIsLoading] = React.useState(false)
   const [gameId, setGameId] = React.useState<string>("")
   const [transactionHash, setTransactionHash] = React.useState<string>("")
-  const [errorMessage, setErrorMessage] = React.useState<string>("")
-  const [successMessage, setSuccessMessage] = React.useState<string>("")
+  const toast = useToast()
 
   const [PaajiWinSound] = useSound("/sounds/PaajiWin.mp3");
   const [BetSound] = useSound("/sounds/Bet.mp3");
