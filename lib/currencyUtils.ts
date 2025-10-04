@@ -7,7 +7,7 @@
 
 // Cache for exchange rates to avoid excessive API calls
 let exchangeRatesCache = {
-  NEAR_TO_USD: 3.05, // Default fallback rate
+  NEAR_TO_USD: 1600, // Default fallback: now represents ETH -> USD (kept key for compatibility)
   USD_TO_INR: 88.81, // Default fallback rate
   lastUpdated: 0,
   cacheDuration: 60000, // 1 minute cache
@@ -18,7 +18,7 @@ let exchangeRatesCache = {
  */
 async function fetchExchangeRates(): Promise<{ NEAR_TO_USD: number; USD_TO_INR: number }> {
   const now = Date.now();
-  
+
   // Return cached rates if still valid
   if (now - exchangeRatesCache.lastUpdated < exchangeRatesCache.cacheDuration) {
     return {
@@ -28,10 +28,10 @@ async function fetchExchangeRates(): Promise<{ NEAR_TO_USD: number; USD_TO_INR: 
   }
 
   try {
-    // Fetch NEAR to USD rate from CoinGecko
-    const nearResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=near&vs_currencies=usd');
-    const nearData = await nearResponse.json();
-    const nearToUsd = nearData.near?.usd || exchangeRatesCache.NEAR_TO_USD;
+    // Fetch ETH to USD rate from CoinGecko
+    const ethResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+    const ethData = await ethResponse.json();
+    const ethToUsd = ethData.ethereum?.usd || exchangeRatesCache.NEAR_TO_USD;
 
     // Fetch USD to INR rate from ExchangeRate-API
     const usdResponse = await fetch('https://open.er-api.com/v6/latest/USD');
@@ -40,15 +40,15 @@ async function fetchExchangeRates(): Promise<{ NEAR_TO_USD: number; USD_TO_INR: 
 
     // Update cache
     exchangeRatesCache = {
-      NEAR_TO_USD: nearToUsd,
+      NEAR_TO_USD: ethToUsd,
       USD_TO_INR: usdToInr,
       lastUpdated: now,
       cacheDuration: 60000, // 1 minute cache
     };
 
-    console.log(`🔄 Updated exchange rates: 1 NEAR = $${nearToUsd}, 1 USD = ₹${usdToInr}`);
-    
-    return { NEAR_TO_USD: nearToUsd, USD_TO_INR: usdToInr };
+    console.log(`🔄 Updated exchange rates: 1 ETH = $${ethToUsd}, 1 USD = ₹${usdToInr}`);
+
+    return { NEAR_TO_USD: ethToUsd, USD_TO_INR: usdToInr };
   } catch (error) {
     console.warn('⚠️ Failed to fetch exchange rates, using cached values:', error);
     return {
