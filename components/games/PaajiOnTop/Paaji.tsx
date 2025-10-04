@@ -151,24 +151,24 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     }
     
     if (bet < 0.001) {
-      setErrorMessage("Minimum bet amount is 0.001 ETH")
+      toast.show({ title: 'Minimum bet', description: 'Minimum bet amount is 0.001 ETH', type: 'warning' })
       return
     }
-    
+
     try {
       setIsLoading(true)
       const newGameId = `paaji-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
       setGameId(newGameId)
-      
+
       // Convert ETH to wei (BigInt)
       const betInWei = BigInt(Math.round(bet * 1e18))
-      
+
       const result = await startGameContract(newGameId, "paaji", betInWei)
-      
+
       if (result.success) {
         setTransactionHash(result.hash || "")
-        setSuccessMessage(`Game started! Transaction: ${result.hash?.slice(0, 8)}...`)
-        
+        toast.show({ title: 'Game started', description: `Transaction: ${result.hash?.slice(0, 8)}...`, type: 'success' })
+
         BetSound()
         setConfig(generateBoard())
         setStatus("in-progress")
@@ -176,7 +176,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
         setSteps(0)
         setPopup({ isOpen: false, type: null })
       } else if (result.error) {
-        setErrorMessage(`Failed to start game: ${result.error.message}`)
+        toast.show({ title: 'Failed to start game', description: String(result.error?.message || 'Unknown'), type: 'error' })
       }
     } catch (error: any) {
       console.error("Error starting game:", error)
