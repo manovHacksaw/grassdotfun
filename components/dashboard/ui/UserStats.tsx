@@ -176,12 +176,7 @@ export default function UserStats() {
 
   // Balance is now handled by the wallet context
 
-  // Clear messages after a delay
-  const clearMessages = () => {
-    setErrorMessage("")
-    setSuccessMessage("")
-    setTransactionHash("")
-  }
+  // messages are shown via toasts; no local message clearing required
 
   const refreshStats = async () => {
     if (accountId && getUserStats) {
