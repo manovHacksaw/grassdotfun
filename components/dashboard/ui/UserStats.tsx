@@ -365,7 +365,7 @@ export default function UserStats() {
       const hash = await contractWithdraw()
       console.log("✅ Withdrawal transaction successful:", hash)
 
-      setSuccessMessage(`🎉 Withdrawal successful! ${withdrawableAmount.toFixed(4)} ETH has been sent to your wallet.`)
+      toast.show({ title: 'Withdrawal successful', description: `🎉 ${withdrawableAmount.toFixed(4)} ETH has been sent to your wallet.`, type: 'success' })
       setTransactionHash(hash)
 
       // Refresh stats and balance after successful withdrawal
