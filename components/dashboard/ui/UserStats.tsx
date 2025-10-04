@@ -344,7 +344,7 @@ export default function UserStats() {
 
   const handleWithdraw = async () => {
     if (!isConnected || !userStats) {
-      setErrorMessage("Please connect your wallet first")
+      toast.show({ title: 'Wallet required', description: 'Please connect your wallet first', type: 'warning' })
       return
     }
 
