@@ -48,9 +48,15 @@ export async function POST(request: NextRequest) {
 
     console.log(`🎯 Resolving game: ${gameId}, Win: ${didWin}, Multiplier: ${multiplierPercent}%`);
 
+    // Ensure resolver private key is available (set RESOLVER_PRIVATE_KEY env variable)
+    if (!RESOLVER_PRIVATE_KEY) {
+      console.error('Resolver private key not configured. Set RESOLVER_PRIVATE_KEY env variable');
+      return NextResponse.json({ success: false, error: 'Resolver not configured' }, { status: 500 });
+    }
+
     // Create resolver account
     const account = privateKeyToAccount(RESOLVER_PRIVATE_KEY as `0x${string}`);
-    
+
     // Create wallet client
     const client = createWalletClient({
       account,
