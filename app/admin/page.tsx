@@ -25,8 +25,7 @@ export default function AdminDashboard() {
   const [contractStats, setContractStats] = useState<any>(null)
   const [resolverAccount, setResolverAccount] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string>("")
-  const [successMessage, setSuccessMessage] = useState<string>("")
+  const toast = useToast()
   const toastContext = null
   
   // Game resolution form
