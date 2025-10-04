@@ -10,6 +10,7 @@ import { UIProvider } from "@/contexts/UIContext";
 import { ContractProvider } from "@/context/contract-provider";
 import { initializeExchangeRates } from "@/lib/currencyUtils";
 import NetworkSwitcher from "./NetworkSwitcher";
+import { ToastProvider } from "@/components/ui/Toast";
 
 const queryClient = new QueryClient();
 
