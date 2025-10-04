@@ -7,7 +7,7 @@
 
 // Cache for exchange rates to avoid excessive API calls
 let exchangeRatesCache = {
-  NEAR_TO_USD: 1600, // Default fallback: now represents ETH -> USD (kept key for compatibility)
+  NEAR_TO_USD: 1600, // Default fallback: represents ETH -> USD (key kept for compatibility)
   USD_TO_INR: 88.81, // Default fallback rate
   lastUpdated: 0,
   cacheDuration: 60000, // 1 minute cache
