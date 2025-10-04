@@ -193,7 +193,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
         errorMsg = error.message
       }
       
-      setErrorMessage(errorMsg)
+      toast.show({ title: 'Error starting game', description: errorMsg, type: 'error' })
     } finally {
       setIsLoading(false)
     }
