@@ -211,13 +211,7 @@ export default function UserStats() {
       }
     }
   }
-  // Auto-clear messages after 5 seconds
-  useEffect(() => {
-    if (errorMessage || successMessage) {
-      const timer = setTimeout(clearMessages, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [errorMessage, successMessage])
+  // toasts auto-dismiss; no auto-clear needed
 
   // Auto-refresh stats every 30 seconds
   useEffect(() => {
