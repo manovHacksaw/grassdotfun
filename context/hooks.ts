@@ -179,8 +179,15 @@ export function useContractActions() {
     hash,
   });
 
+  const MIN_BET_WEI =  BigInt(1e15) // 0.001 ETH
+
   const startGame = async (gameId: string, gameType: string, amount: bigint): Promise<TransactionState> => {
     try {
+      // Enforce minimum bet
+      if (amount < MIN_BET_WEI) {
+        return { isLoading: false, error: new Error('Minimum bet is 0.001 ETH'), success: false };
+      }
+
       await writeContract({
         address: CONTRACT_CONFIG.address,
         abi: CONTRACT_CONFIG.abi,
@@ -188,7 +195,7 @@ export function useContractActions() {
         args: [gameId, gameType],
         value: amount,
       });
-      
+
       return {
         isLoading: isPending || isConfirming,
         error: error as Error | null,
@@ -310,6 +317,3 @@ export function useContractActions() {
     hash,
   };
 }
-
-
-
