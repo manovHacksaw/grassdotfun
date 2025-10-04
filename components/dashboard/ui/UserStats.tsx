@@ -37,6 +37,7 @@ import {
 } from "lucide-react"
 import GameResolver from "@/components/games/GameResolver"
 import Leaderboard from "./Leaderboard"
+import { useToast } from "@/components/ui/Toast"
 
 interface GameStats {
   gameType: string
@@ -416,7 +417,7 @@ export default function UserStats() {
   if (!isConnected) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center p-8">
-        <div className="text-8xl mb-6">📊</div>
+        <div className="text-8xl mb-6">����</div>
         <h2 className="text-white text-4xl font-bold mb-4">User Statistics</h2>
         <p className="text-white/70 text-xl mb-8 max-w-2xl">
           Connect your wallet to view your gaming statistics and performance analytics
