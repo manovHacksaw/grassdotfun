@@ -139,7 +139,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     clearMessages()
     
     if (!isConnected) {
-      setErrorMessage("Please connect your wallet first")
+      toast.show({ title: 'Wallet required', description: 'Please connect your wallet first', type: 'warning' })
       return
     }
 
