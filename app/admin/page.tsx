@@ -173,18 +173,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Messages */}
-        {errorMessage && (
-          <div className="bg-red-600/20 border border-red-500/30 rounded-2xl p-4 mb-6">
-            <p className="text-red-400 text-sm font-medium">⚠️ {errorMessage}</p>
-          </div>
-        )}
-
-        {successMessage && (
-          <div className="bg-green-600/20 border border-green-500/30 rounded-2xl p-4 mb-6">
-            <p className="text-green-400 text-sm font-medium">✅ {successMessage}</p>
-          </div>
-        )}
+        {/* Messages are displayed via toast notifications */}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Contract Statistics */}
