@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAccount, useSwitchChain } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
+import { useToast } from '@/components/ui/Toast'
 
 export default function NetworkSwitcher() {
   const { chain, isConnected } = useAccount();
