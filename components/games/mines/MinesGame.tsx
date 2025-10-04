@@ -101,7 +101,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           setSuccessMessage(`Game auto-resolved successfully.`);
         }
       } else {
-        setErrorMessage(`Failed to auto-resolve game: ${result.error}`);
+        toast.show({ title: 'Auto-resolve failed', description: String(result.error || 'Unknown error'), type: 'error' });
       }
     } catch (error: any) {
       console.error("❌ Error auto-resolving game:", error);
