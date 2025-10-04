@@ -32,7 +32,9 @@ export default function ClientProviders({
           <WalletProvider>
             <ContractProvider>
               <UIProvider>
-                {children}
+                <ToastProvider>
+                  {children}
+                </ToastProvider>
               </UIProvider>
             </ContractProvider>
           </WalletProvider>
