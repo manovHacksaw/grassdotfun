@@ -5,7 +5,7 @@ import { sepolia } from 'viem/chains';
 
 // Import contract ABI and config
 const CONTRACT_ADDRESS = '0x7769C0DCAA9316fc592f7258B3fACA2300D41caf';
-const RESOLVER_PRIVATE_KEY = 'c6b08c97b6039baeffaa806542acb680ae5e1ddda3e6c6496b8ac5c9aa1c256a';
+const RESOLVER_PRIVATE_KEY = process.env.RESOLVER_PRIVATE_KEY as string | undefined;
 
 // Contract ABI - just the resolveGame function
 const RESOLVE_GAME_ABI = [
