@@ -17,6 +17,7 @@ import {
   AlertTriangle
 } from "lucide-react"
 import { useToast } from "@/components/ui/Toast"
+import { formatEther } from 'viem'
 
 export default function AdminDashboard() {
   const { selector, accountId, isConnected } = useWallet()
