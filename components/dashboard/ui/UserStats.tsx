@@ -109,8 +109,7 @@ export default function UserStats() {
   const totalBetConversion = useLiveConversion(userStats?.totalBet || "0")
   const totalWonConversion = useLiveConversion(userStats?.totalWon || "0")
   const withdrawableConversion = useLiveConversion(userStats?.withdrawableBalance || "0")
-  const [errorMessage, setErrorMessage] = useState<string>("")
-  const [successMessage, setSuccessMessage] = useState<string>("")
+  const toast = useToast()
   const [isNetworkError, setIsNetworkError] = useState<boolean>(false)
   const [transactionHash, setTransactionHash] = useState<string>("")
 
@@ -417,7 +416,7 @@ export default function UserStats() {
   if (!isConnected) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center p-8">
-        <div className="text-8xl mb-6">����</div>
+        <div className="text-8xl mb-6">📊</div>
         <h2 className="text-white text-4xl font-bold mb-4">User Statistics</h2>
         <p className="text-white/70 text-xl mb-8 max-w-2xl">
           Connect your wallet to view your gaming statistics and performance analytics
