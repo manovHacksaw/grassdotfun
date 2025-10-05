@@ -1,10 +1,11 @@
 /**
  * Wagmi Contract Service
  * Integrates with the deployed SecureGames contract using wagmi hooks
+ * Updated to properly handle transaction confirmation
  */
 
 import React from 'react';
-import { useWriteContract, useReadContract, useAccount } from 'wagmi';
+import { useWriteContract, useReadContract, useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther, formatEther } from 'viem';
 
 // Contract configuration
@@ -88,7 +89,10 @@ const CONTRACT_ABI = [
 
 export function useWagmiContractService() {
   const { address } = useAccount();
-  const { writeContract, isPending, error } = useWriteContract();
+  const { writeContract, isPending, error, data: hash } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   /**
    * Start a new game with a bet amount
@@ -110,10 +114,7 @@ export function useWagmiContractService() {
         value: value,
       });
       
-      // Generate a transaction hash since writeContract doesn't return one
-      const hash = `tx-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      console.log('📝 Transaction sent:', hash);
-      
+      // Return the transaction hash that will be available after user signs
       return hash;
     } catch (error: any) {
       console.error('❌ Error starting game:', error);
@@ -134,10 +135,7 @@ export function useWagmiContractService() {
         functionName: 'withdraw',
       });
       
-      // Generate a transaction hash since writeContract doesn't return one
-      const hash = `withdraw-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      console.log('📝 Withdrawal transaction sent:', hash);
-      
+      // Return the transaction hash that will be available after user signs
       return hash;
     } catch (error: any) {
       console.error('❌ Error withdrawing:', error);
@@ -149,7 +147,10 @@ export function useWagmiContractService() {
     startGame,
     withdraw,
     isPending,
+    isConfirming,
+    isConfirmed,
     error,
+    hash,
     address
   };
 }

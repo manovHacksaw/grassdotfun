@@ -204,7 +204,7 @@ export default function DashboardPage() {
       <ChatSidebar />
 
       <div className="relative z-10 w-full mx-auto pt-14">
-        <DashboardHeader title="Grass" balanceInNEAR={parseFloat(balance)} />
+        <DashboardHeader title="Grass" balanceInU2U={parseFloat(balance)} />
 
         <div className="flex gap-0 h-[calc(100vh-56px)] overflow-hidden">
           <div className="w-64 shrink-0 m-0 p-0">

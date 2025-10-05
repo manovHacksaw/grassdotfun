@@ -189,11 +189,11 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-white/70">Total Bets:</span>
-                  <span className="text-white font-medium">{(parseFloat(contractStats.totalBets) / 1e24).toFixed(2)} NEAR</span>
+                  <span className="text-white font-medium">{(parseFloat(contractStats.totalBets) / 1e24).toFixed(2)} U2U</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-white/70">Total Winnings:</span>
-                  <span className="text-white font-medium">{(parseFloat(contractStats.totalWinnings) / 1e24).toFixed(2)} NEAR</span>
+                  <span className="text-white font-medium">{(parseFloat(contractStats.totalWinnings) / 1e24).toFixed(2)} U2U</span>
                 </div>
               </div>
             ) : contractStatsLoading ? (

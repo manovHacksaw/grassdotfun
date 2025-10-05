@@ -12,7 +12,7 @@ import { useWagmiContractService } from "@/lib/wagmiContractService"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useContract } from "@/contexts/ContractProvider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
-import { formatNEAR, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
+import { formatU2U, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
 import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
 import { toast } from "sonner"
 
@@ -36,7 +36,7 @@ interface MinesGameProps {
 
 export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
   const { address, isConnected, balance, isBalanceLoading, refreshBalance } = useWagmiWallet()
-  const { startGame: startContractGame, isPending: isContractPending, error: contractError } = useWagmiContractService()
+  const { startGame: startContractGame, isPending: isContractPending, isConfirming, isConfirmed, error: contractError, hash: contractTransactionHash } = useWagmiContractService()
   const { getUserStats } = useContract()
   const [betAmount, setBetAmount] = useState("0.10")
   const [mineCount, setMineCount] = useState("3")
@@ -53,6 +53,7 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
   const [transactionHash, setTransactionHash] = useState<string>("")
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [successMessage, setSuccessMessage] = useState<string>("")
+  const [waitingForConfirmation, setWaitingForConfirmation] = useState(false)
   const walletBalance = balance
   const loseMessages = [
     "Every pro loses once. Bounce back stronger.",
@@ -206,6 +207,75 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
     }
   }, [errorMessage, successMessage])
 
+  // Watch for transaction confirmation
+  useEffect(() => {
+    console.log('🔍 Transaction confirmation check:', {
+      waitingForConfirmation,
+      isConfirmed,
+      transactionHash,
+      contractTransactionHash
+    });
+    
+    if (waitingForConfirmation && isConfirmed && (transactionHash || contractTransactionHash)) {
+      console.log('✅ Transaction confirmed! Starting game...');
+      
+      // Transaction confirmed! Start the game
+      setWaitingForConfirmation(false)
+      
+      const finalHash = transactionHash || contractTransactionHash;
+      
+      // Show success state briefly before starting game
+      setTransactionModal({
+        isOpen: true,
+        status: "confirmed",
+        title: "Bet Placed Successfully!",
+        message: "Your bet has been confirmed on-chain. Game starting...",
+        transactionHash: finalHash
+      })
+      
+      // Wait a moment to show success state, then start the game
+      setTimeout(() => {
+        // Close transaction modal and start the game
+        setTransactionModal({
+          isOpen: false,
+          status: "confirmed",
+          title: "",
+          message: "",
+          transactionHash: undefined
+        })
+        
+        // Now start the game after confirmation
+        setIsPlaying(true)
+        initializeGame()
+        BetSound()
+        
+        // Show success toast with transaction hash
+        toast.success("Game started successfully!", {
+          description: `Transaction: ${finalHash?.slice(0, 8)}...${finalHash?.slice(-6)}`,
+          duration: 4000,
+        })
+        
+        setSuccessMessage(`Game started!`)
+      }, 1500)
+    }
+  }, [isConfirmed, transactionHash, contractTransactionHash, waitingForConfirmation])
+
+  // Watch for transaction errors
+  useEffect(() => {
+    if (waitingForConfirmation && contractError) {
+      setWaitingForConfirmation(false)
+      
+      // Show error in transaction modal
+      setTransactionModal({
+        isOpen: true,
+        status: "failed",
+        title: "Transaction Failed",
+        message: contractError.message || "Transaction failed. Please try again.",
+        transactionHash: transactionHash
+      })
+    }
+  }, [contractError, waitingForConfirmation, transactionHash])
+
   const initializeGame = () => {
     const mines = Number.parseInt(mineCount)
     const newGrid = Array.from({ length: 25 }, (_, i) => ({
@@ -315,7 +385,20 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           transactionHash: undefined
         })
         
-        const hash = await startContractGame(newGameId, betAmount, "mines")
+        // Start the contract transaction - this opens wallet for user to sign
+        console.log('🚀 Starting contract game...');
+        await startContractGame(newGameId, betAmount, "mines")
+        console.log('📝 Contract game started, hash:', contractTransactionHash);
+        
+        // Set the transaction hash and start waiting for confirmation
+        setTransactionHash(contractTransactionHash || "")
+        setWaitingForConfirmation(true)
+        
+        console.log('⏳ Waiting for confirmation...', {
+          waitingForConfirmation: true,
+          isConfirmed,
+          contractTransactionHash
+        });
         
         // Update modal with transaction hash and confirmation status
         setTransactionModal({
@@ -323,48 +406,8 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           status: "confirming",
           title: "Confirming Transaction",
           message: "Your bet is being confirmed on the blockchain. This usually takes a few seconds.",
-          transactionHash: hash
+          transactionHash: contractTransactionHash || ""
         })
-        
-        setTransactionHash(hash)
-        
-        // Wait for actual transaction confirmation
-        // In a real implementation, you would wait for the transaction to be mined
-        await new Promise(resolve => setTimeout(resolve, 3000))
-        
-        // Show success state briefly before starting game
-        setTransactionModal({
-          isOpen: true,
-          status: "confirmed",
-          title: "Bet Placed Successfully!",
-          message: "Your bet has been confirmed on-chain. Game starting...",
-          transactionHash: hash
-        })
-        
-        // Wait a moment to show success state, then start the game
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
-        // Close transaction modal and start the game
-        setTransactionModal({
-          isOpen: false,
-          status: "confirmed",
-          title: "",
-          message: "",
-          transactionHash: undefined
-        })
-        
-        // Now start the game after confirmation
-        setIsPlaying(true)
-        initializeGame()
-        BetSound()
-        
-        // Show success toast with transaction hash
-        toast.success("Game started successfully!", {
-          description: `Transaction: ${hash.slice(0, 8)}...${hash.slice(-6)}`,
-          duration: 4000,
-        })
-        
-        setSuccessMessage(`Game started!`)
       } catch (error: any) {
         console.error("Error starting game:", error)
         let errorMsg = "Error starting game. Please try again."

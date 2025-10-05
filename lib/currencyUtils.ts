@@ -29,9 +29,9 @@ async function fetchExchangeRates(): Promise<{ U2U_TO_USD: number; USD_TO_INR: n
 
   try {
     // Fetch U2U to USD rate from CoinGecko
-    const u2uResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=near&vs_currencies=usd');
+    const u2uResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=u2u-network&vs_currencies=usd');
     const u2uData = await u2uResponse.json();
-    const u2uToUsd = u2uData.near?.usd || exchangeRatesCache.U2U_TO_USD;
+    const u2uToUsd = u2uData['u2u-network']?.usd || exchangeRatesCache.U2U_TO_USD;
 
     // Fetch USD to INR rate from ExchangeRate-API
     const usdResponse = await fetch('https://open.er-api.com/v6/latest/USD');
@@ -67,7 +67,7 @@ export interface CurrencyDisplay {
 /**
  * Format U2U amount with proper decimal places
  */
-export function formatNEAR(amount: string | number): string {
+export function formatU2U(amount: string | number): string {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
   if (isNaN(num)) return '0.00';
   return num.toFixed(2);
@@ -76,7 +76,7 @@ export function formatNEAR(amount: string | number): string {
 /**
  * Convert U2U to USD (synchronous - uses cached rates)
  */
-export function nearToUSD(u2uAmount: string | number): number {
+export function u2uToUSD(u2uAmount: string | number): number {
   const u2u = typeof u2uAmount === 'string' ? parseFloat(u2uAmount) : u2uAmount;
   if (isNaN(u2u)) return 0;
   return u2u * exchangeRatesCache.U2U_TO_USD;
@@ -85,7 +85,7 @@ export function nearToUSD(u2uAmount: string | number): number {
 /**
  * Convert U2U to INR (synchronous - uses cached rates)
  */
-export function nearToINR(u2uAmount: string | number): number {
+export function u2uToINR(u2uAmount: string | number): number {
   const u2u = typeof u2uAmount === 'string' ? parseFloat(u2uAmount) : u2uAmount;
   if (isNaN(u2u)) return 0;
   return u2u * exchangeRatesCache.U2U_TO_USD * exchangeRatesCache.USD_TO_INR;
@@ -94,7 +94,7 @@ export function nearToINR(u2uAmount: string | number): number {
 /**
  * Convert U2U to USD (async - fetches latest rates)
  */
-export async function nearToUSDLive(u2uAmount: string | number): Promise<number> {
+export async function u2uToUSDLive(u2uAmount: string | number): Promise<number> {
   const u2u = typeof u2uAmount === 'string' ? parseFloat(u2uAmount) : u2uAmount;
   if (isNaN(u2u)) return 0;
   const rates = await fetchExchangeRates();
@@ -104,7 +104,7 @@ export async function nearToUSDLive(u2uAmount: string | number): Promise<number>
 /**
  * Convert U2U to INR (async - fetches latest rates)
  */
-export async function nearToINRLive(u2uAmount: string | number): Promise<number> {
+export async function u2uToINRLive(u2uAmount: string | number): Promise<number> {
   const u2u = typeof u2uAmount === 'string' ? parseFloat(u2uAmount) : u2uAmount;
   if (isNaN(u2u)) return 0;
   const rates = await fetchExchangeRates();
@@ -129,9 +129,9 @@ export function formatINR(amount: number): string {
  * Get all currency displays for a U2U amount
  */
 export function getCurrencyDisplay(u2uAmount: string | number): CurrencyDisplay {
-  const u2u = formatNEAR(u2uAmount);
-  const usd = formatUSD(nearToUSD(u2uAmount));
-  const inr = formatINR(nearToINR(u2uAmount));
+  const u2u = formatU2U(u2uAmount);
+  const usd = formatUSD(u2uToUSD(u2uAmount));
+  const inr = formatINR(u2uToINR(u2uAmount));
   
   return { u2u, usd, inr };
 }
@@ -139,12 +139,12 @@ export function getCurrencyDisplay(u2uAmount: string | number): CurrencyDisplay 
 /**
  * Format U2U with conversion display
  */
-export function formatNEARWithConversion(u2uAmount: string | number, showConversion: boolean = true): string {
-  const u2u = formatNEAR(u2uAmount);
+export function formatU2UWithConversion(u2uAmount: string | number, showConversion: boolean = true): string {
+  const u2u = formatU2U(u2uAmount);
   if (!showConversion) return `${u2u} U2U`;
   
-  const usd = nearToUSD(u2uAmount);
-  const inr = nearToINR(u2uAmount);
+  const usd = u2uToUSD(u2uAmount);
+  const inr = u2uToINR(u2uAmount);
   
   return `${u2u} U2U (${formatUSD(usd)} / ${formatINR(inr)})`;
 }
@@ -153,8 +153,8 @@ export function formatNEARWithConversion(u2uAmount: string | number, showConvers
  * Format currency for display in game UI
  */
 export function formatGameCurrency(u2uAmount: string | number): string {
-  const u2u = formatNEAR(u2uAmount);
-  const usd = nearToUSD(u2uAmount);
+  const u2u = formatU2U(u2uAmount);
+  const usd = u2uToUSD(u2uAmount);
   
   return `${u2u} U2U (${formatUSD(usd)})`;
 }
@@ -163,9 +163,9 @@ export function formatGameCurrency(u2uAmount: string | number): string {
  * Format currency for display in stats
  */
 export function formatStatsCurrency(u2uAmount: string | number): string {
-  const u2u = formatNEAR(u2uAmount);
-  const usd = nearToUSD(u2uAmount);
-  const inr = nearToINR(u2uAmount);
+  const u2u = formatU2U(u2uAmount);
+  const usd = u2uToUSD(u2uAmount);
+  const inr = u2uToINR(u2uAmount);
   
   return `${u2u} U2U`;
 }
@@ -174,8 +174,8 @@ export function formatStatsCurrency(u2uAmount: string | number): string {
  * Get conversion text for tooltips
  */
 export function getConversionText(u2uAmount: string | number): string {
-  const usd = nearToUSD(u2uAmount);
-  const inr = nearToINR(u2uAmount);
+  const usd = u2uToUSD(u2uAmount);
+  const inr = u2uToINR(u2uAmount);
   
   return `${formatUSD(usd)} / ${formatINR(inr)}`;
 }
@@ -184,8 +184,8 @@ export function getConversionText(u2uAmount: string | number): string {
  * Get conversion text for tooltips (async - fetches latest rates)
  */
 export async function getConversionTextLive(u2uAmount: string | number): Promise<string> {
-  const usd = await nearToUSDLive(u2uAmount);
-  const inr = await nearToINRLive(u2uAmount);
+  const usd = await u2uToUSDLive(u2uAmount);
+  const inr = await u2uToINRLive(u2uAmount);
   
   return `${formatUSD(usd)} / ${formatINR(inr)}`;
 }

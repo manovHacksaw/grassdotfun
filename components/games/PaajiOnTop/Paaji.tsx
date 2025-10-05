@@ -11,7 +11,7 @@ import { useWagmiContractService } from "@/lib/wagmiContractService"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useContract } from "@/contexts/ContractProvider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
-import { formatNEAR, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
+import { formatU2U, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
 import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
 import { toast } from "sonner"
 
@@ -38,7 +38,7 @@ type PopupState = {
 
 export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
   const { address, isConnected, balance, isBalanceLoading, refreshBalance } = useWagmiWallet()
-  const { startGame: startContractGame, isPending: isContractPending, error: contractError } = useWagmiContractService()
+  const { startGame: startContractGame, isPending: isContractPending, isConfirming, isConfirmed, error: contractError, hash: contractTransactionHash } = useWagmiContractService()
   const { getUserStats } = useContract()
   const [status, setStatus] = React.useState<GameStatus>("idle")
   const [currentRow, setCurrentRow] = React.useState(0)
@@ -53,6 +53,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
   const [transactionHash, setTransactionHash] = React.useState<string>("")
   const [errorMessage, setErrorMessage] = React.useState<string>("")
   const [successMessage, setSuccessMessage] = React.useState<string>("")
+  const [waitingForConfirmation, setWaitingForConfirmation] = React.useState(false)
   const [transactionModal, setTransactionModal] = React.useState<{
     isOpen: boolean
     status: TransactionStatus
@@ -169,6 +170,78 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     }
   }, [errorMessage, successMessage])
 
+  // Watch for transaction confirmation
+  React.useEffect(() => {
+    console.log('🔍 Paaji transaction confirmation check:', {
+      waitingForConfirmation,
+      isConfirmed,
+      transactionHash,
+      contractTransactionHash
+    });
+    
+    if (waitingForConfirmation && isConfirmed && (transactionHash || contractTransactionHash)) {
+      console.log('✅ Paaji transaction confirmed! Starting game...');
+      
+      // Transaction confirmed! Start the game
+      setWaitingForConfirmation(false)
+      
+      const finalHash = transactionHash || contractTransactionHash;
+      
+      // Show success state briefly before starting game
+      setTransactionModal({
+        isOpen: true,
+        status: "confirmed",
+        title: "Bet Placed Successfully!",
+        message: "Your bet has been confirmed on-chain. Game starting...",
+        transactionHash: finalHash
+      })
+      
+      // Wait a moment to show success state, then start the game
+      setTimeout(() => {
+        // Close transaction modal and start the game
+        setTransactionModal({
+          isOpen: false,
+          status: "confirmed",
+          title: "",
+          message: "",
+          transactionHash: undefined
+        })
+        
+        // Now start the game after confirmation
+        BetSound()
+        setConfig(generateBoard())
+        setStatus("in-progress")
+        setCurrentRow(0)
+        setSteps(0)
+        setPopup({ isOpen: false, type: null })
+        
+        // Show success toast with transaction hash
+        toast.success("Game started successfully!", {
+          description: `Transaction: ${finalHash?.slice(0, 8)}...${finalHash?.slice(-6)}`,
+          duration: 4000,
+        })
+        
+        setSuccessMessage(`Game started!`)
+      }, 1500)
+    }
+  }, [isConfirmed, transactionHash, contractTransactionHash, waitingForConfirmation])
+
+  // Watch for transaction errors
+  React.useEffect(() => {
+    if (waitingForConfirmation && contractError) {
+      setWaitingForConfirmation(false)
+      
+      // Show error in transaction modal
+      setTransactionModal({
+        isOpen: true,
+        status: "failed",
+        title: "Transaction Failed",
+        message: contractError.message || "Transaction failed. Please try again.",
+        transactionHash: transactionHash
+      })
+    }
+  }, [contractError, waitingForConfirmation, transactionHash])
+
   React.useEffect(() => {
     if (difficulty === "Easy") setNumCols(4)
     if (difficulty === "Hard") setNumCols(5)
@@ -221,7 +294,20 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
           transactionHash: undefined
         })
         
-        const hash = await startContractGame(newGameId, betAmount, "paaji")
+        // Start the contract transaction - this opens wallet for user to sign
+        console.log('🚀 Starting Paaji contract game...');
+        await startContractGame(newGameId, betAmount, "paaji")
+        console.log('📝 Paaji contract game started, hash:', contractTransactionHash);
+        
+        // Set the transaction hash and start waiting for confirmation
+        setTransactionHash(contractTransactionHash || "")
+        setWaitingForConfirmation(true)
+        
+        console.log('⏳ Paaji waiting for confirmation...', {
+          waitingForConfirmation: true,
+          isConfirmed,
+          contractTransactionHash
+        });
         
         // Update modal with transaction hash and confirmation status
         setTransactionModal({
@@ -229,45 +315,8 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
           status: "confirming",
           title: "Confirming Transaction",
           message: "Your bet is being confirmed on the blockchain. This usually takes a few seconds.",
-          transactionHash: hash
+          transactionHash: contractTransactionHash || ""
         })
-        
-        setTransactionHash(hash)
-        
-        // Wait for actual transaction confirmation
-        // In a real implementation, you would wait for the transaction to be mined
-        await new Promise(resolve => setTimeout(resolve, 3000))
-        
-        // Show success state briefly before starting game
-        setTransactionModal({
-          isOpen: true,
-          status: "confirmed",
-          title: "Bet Placed Successfully!",
-          message: "Your bet has been confirmed on-chain. Game starting...",
-          transactionHash: hash
-        })
-        
-        // Wait a moment to show success state, then start the game
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
-        // Close transaction modal and start the game
-        setTransactionModal({
-          isOpen: false,
-          status: "confirmed",
-          title: "",
-          message: "",
-          transactionHash: undefined
-        })
-        
-        // Now start the game after confirmation
-        BetSound()
-        setConfig(generateBoard())
-        setStatus("in-progress")
-        setCurrentRow(0)
-        setSteps(0)
-        setPopup({ isOpen: false, type: null })
-        
-        setSuccessMessage(`Game started! Transaction: ${hash.slice(0, 8)}...`)
     } catch (error: any) {
       console.error("Error starting game:", error)
       let errorMsg = "Error starting game. Please try again."
@@ -310,12 +359,6 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
       setStatus("cashed-out")
       PaajiCashoutSound()
       
-      // Show resolution modal first
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: undefined
-      })
-      
       // Resolve game directly
       resolveGame(true, parseFloat(multiplier))
     }
@@ -342,12 +385,6 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
         setStatus("won")
         PaajiCashoutSound()
         
-        // Show resolution modal first
-        setResolutionModal({
-          isOpen: true,
-          transactionHash: undefined
-        })
-        
         // User reached the top - resolve directly
         console.log("🏆 User reached the top with multiplier:", multiplier)
         resolveGame(true, parseFloat(multiplier))
@@ -357,12 +394,6 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     } else {
       setStatus("lost")
       PaajiLoseSound()
-      
-      // Show resolution modal first
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: undefined
-      })
       
       // Game lost - resolve directly
       console.log("💥 User hit wrong tile - game lost")
@@ -452,22 +483,6 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
               </div>
             )}
 
-            {/* Transaction Hash */}
-            {transactionHash && (
-              <div className="bg-blue-600/20 border border-blue-500/30 rounded-4xl p-3 text-center">
-                <p className="text-blue-400 text-xs font-medium">
-                  🔗 TX: {transactionHash.slice(0, 12)}...
-                </p>
-                <a 
-                  href={`https://explorer.testnet.near.org/transactions/${transactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-blue-200 text-xs underline"
-                >
-                  View on Explorer
-                </a>
-              </div>
-            )}
 
             {/* Game Mode Toggle */}
             <div className="grid grid-cols-2 gap-2 rounded-xl border border-border p-1">
@@ -511,7 +526,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
                   2×
                 </button>
               </div>
-              <div className="mt-1 text-[11px] text-foreground/50">Min: 0.01 NEAR</div>
+              <div className="mt-1 text-[11px] text-foreground/50">Min: 0.01 U2U</div>
             </div>
 
             <div>
@@ -571,7 +586,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
                 <span className="text-foreground/60">
                   {status === "in-progress" || status === "cashed-out" || status === "won" 
                     ? formatGameCurrency((parseFloat(betAmount) * (parseFloat(multiplier) - 1)).toString())
-                    : "0.00 NEAR"
+                    : "0.00 U2U"
                   }
                 </span>
               </div>
@@ -754,16 +769,6 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
           }}
         />
 
-        {/* Resolution Modal */}
-        <TransactionModal
-          isOpen={resolutionModal.isOpen}
-          onClose={() => setResolutionModal(prev => ({ ...prev, isOpen: false }))}
-          status="resolving"
-          title="Resolving Game"
-          message="Resolving game results on-chain…"
-          transactionHash={resolutionModal.transactionHash}
-          explorerUrl={resolutionModal.transactionHash ? getExplorerUrl(resolutionModal.transactionHash) : undefined}
-        />
       </div>
     </div>
   )

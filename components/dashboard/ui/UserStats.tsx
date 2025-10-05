@@ -6,36 +6,21 @@ import { Button } from "@/components/ui/button"
 // ContractService is deprecated - using wagmi hooks directly
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useUserStats, useContractStats, useWagmiContractService } from "@/lib/wagmiContractService"
-import { formatNEAR, formatNEARWithConversion, getConversionText } from "@/lib/currencyUtils"
+import { formatU2U } from "@/lib/currencyUtils"
 import { useLiveConversion } from "@/lib/useCurrencyRates"
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,
   Area,
-  AreaChart
+  AreaChart,
 } from "recharts"
-import {
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Gamepad2,
-  Trophy,
-  Target,
-  Calendar,
-  RefreshCw,
-  CloudCog
-} from "lucide-react"
-import GameResolver from "@/components/games/GameResolver"
+import { TrendingUp, DollarSign, Gamepad2, Trophy, Target, Calendar, RefreshCw } from "lucide-react"
 import Leaderboard from "./Leaderboard"
 
 interface GameStats {
@@ -64,7 +49,7 @@ interface UserStats {
   gameTypeStats: GameStats[]
 }
 
-// Contract data format (from NEAR contract)
+// Contract data format (from U2U contract)
 interface ContractUserStats {
   totalBet: string | bigint
   totalWon: string | bigint
@@ -90,16 +75,16 @@ interface GameDistribution {
   [key: string]: any // Add index signature for recharts compatibility
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8']
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
 
 export default function UserStats() {
   const { address, isConnected, balance, isBalanceLoading, refreshBalance } = useWagmiWallet()
-  
+
   // Use wagmi hooks for real contract data
   const contractUserStats = useUserStats(address as `0x${string}`)
   const contractStats = useContractStats()
   const { withdraw: contractWithdraw, isPending: isWithdrawPending, error: withdrawError } = useWagmiContractService()
-  
+
   const [userStats, setUserStats] = useState<UserStats | null>(null)
   const [gameStats, setGameStats] = useState<GameStats[]>([])
   const [chartData, setChartData] = useState<ChartData[]>([])
@@ -116,8 +101,6 @@ export default function UserStats() {
   const [isNetworkError, setIsNetworkError] = useState<boolean>(false)
   const [transactionHash, setTransactionHash] = useState<string>("")
 
-  
-
   // This useEffect is no longer needed since we're using the contractUserStats useEffect below
 
   // ContractService is deprecated - using wagmi hooks directly
@@ -132,13 +115,15 @@ export default function UserStats() {
   }, [])
 
   const refreshStats = useCallback(async () => {
-    if (address) { // getUserStats is deprecated - using wagmi hooks
+    if (address) {
+      // getUserStats is deprecated - using wagmi hooks
       console.log("🔄 Refreshing user stats...")
       try {
         // const contractStats = await getUserStats(address) // Deprecated - using wagmi hooks
         console.log("📊 Refreshed contract stats:", contractStats)
 
-        if (false) { // Temporarily disabled - using wagmi hooks
+        if (false) {
+          // Temporarily disabled - using wagmi hooks
           // This code was trying to access user stats from contract stats, which is incorrect
           // User stats are now handled by the contractUserStats useEffect
         }
@@ -181,7 +166,8 @@ export default function UserStats() {
       // const contractStats = await getUserStats(address) // Deprecated - using wagmi hooks
       console.log("📊 Raw contract stats received:", contractStats)
 
-      if (false) { // Temporarily disabled - using wagmi hooks for user stats
+      if (false) {
+        // Temporarily disabled - using wagmi hooks for user stats
         // This code was trying to access user stats from contract stats, which is incorrect
         // User stats are now handled by the contractUserStats useEffect below
       } else {
@@ -198,7 +184,7 @@ export default function UserStats() {
           favoriteGame: "N/A",
           joinDate: "N/A",
           lastPlayDate: "N/A",
-          gameTypeStats: []
+          gameTypeStats: [],
         }
         setUserStats(defaultStats)
         setGameStats([])
@@ -221,7 +207,7 @@ export default function UserStats() {
         favoriteGame: "N/A",
         joinDate: "N/A",
         lastPlayDate: "N/A",
-        gameTypeStats: []
+        gameTypeStats: [],
       }
       setUserStats(errorStats)
       setGameStats([])
@@ -232,7 +218,6 @@ export default function UserStats() {
       console.log("🏁 fetchUserStats completed")
     }
   }, [address, contractStats, clearMessages])
-
 
   useEffect(() => {
     console.log("🔄 Stats fetch effect triggered")
@@ -253,25 +238,25 @@ export default function UserStats() {
     if (contractUserStats && !contractUserStats.isLoading && contractUserStats.totalBet) {
       try {
         // Use real timestamps from contract data
-        const joinTimestamp = parseInt(contractUserStats.joinTimestamp) || 0
-        const lastPlayTimestamp = parseInt(contractUserStats.lastPlayTimestamp) || 0
-        
+        const joinTimestamp = Number.parseInt(contractUserStats.joinTimestamp) || 0
+        const lastPlayTimestamp = Number.parseInt(contractUserStats.lastPlayTimestamp) || 0
+
         // Convert timestamps to dates (multiply by 1000 to convert from seconds to milliseconds)
         const joinDate = joinTimestamp > 0 ? new Date(joinTimestamp * 1000) : new Date()
         const lastPlayDate = lastPlayTimestamp > 0 ? new Date(lastPlayTimestamp * 1000) : new Date()
 
         const processedStats: UserStats = {
-          totalBet: parseFloat(contractUserStats.totalBet).toFixed(2),
-          totalWon: parseFloat(contractUserStats.totalWon).toFixed(2),
-          totalLost: parseFloat(contractUserStats.totalLost).toFixed(2),
-          withdrawableBalance: parseFloat(contractUserStats.withdrawableBalance).toFixed(2),
-          gamesPlayed: parseInt(contractUserStats.gamesPlayed) || 0,
-          gamesWon: parseInt(contractUserStats.gamesWon) || 0,
+          totalBet: Number.parseFloat(contractUserStats.totalBet).toFixed(2),
+          totalWon: Number.parseFloat(contractUserStats.totalWon).toFixed(2),
+          totalLost: Number.parseFloat(contractUserStats.totalLost).toFixed(2),
+          withdrawableBalance: Number.parseFloat(contractUserStats.withdrawableBalance).toFixed(2),
+          gamesPlayed: Number.parseInt(contractUserStats.gamesPlayed) || 0,
+          gamesWon: Number.parseInt(contractUserStats.gamesWon) || 0,
           winRate: contractUserStats.winRate || 0,
           favoriteGame: "N/A",
           joinDate: joinDate.toISOString(),
           lastPlayDate: lastPlayDate.toISOString(),
-          gameTypeStats: []
+          gameTypeStats: [],
         }
 
         console.log("📊 Processed user stats:", processedStats)
@@ -280,17 +265,17 @@ export default function UserStats() {
         console.error("Error processing user stats:", error)
       }
     }
-  }, [contractUserStats?.totalBet, contractUserStats?.totalWon, contractUserStats?.totalLost, contractUserStats?.withdrawableBalance, contractUserStats?.gamesPlayed, contractUserStats?.gamesWon, contractUserStats?.winRate, contractUserStats?.joinTimestamp, contractUserStats?.lastPlayTimestamp, contractUserStats?.isLoading])
+  }, [contractUserStats])
 
   const formatCurrency = (amount: string) => {
-    return `${formatNEAR(amount)} U2U`
+    return `${formatU2U(amount)} U2U`
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     })
   }
 
@@ -300,7 +285,7 @@ export default function UserStats() {
       return
     }
 
-    const withdrawableAmount = parseFloat(userStats.withdrawableBalance)
+    const withdrawableAmount = Number.parseFloat(userStats.withdrawableBalance)
     if (withdrawableAmount <= 0) {
       setErrorMessage("No winnings to withdraw")
       return
@@ -311,24 +296,22 @@ export default function UserStats() {
 
     try {
       console.log("💰 Starting withdrawal process...")
-      console.log(`💸 Withdrawing ${formatNEAR(withdrawableAmount.toString())} U2U`)
+      console.log(`💸 Withdrawing ${formatU2U(withdrawableAmount.toString())} U2U`)
 
       // Call the contract withdraw function
       const result = await contractWithdraw()
       console.log("✅ Withdrawal transaction sent:", result)
 
-      setSuccessMessage(`🎉 Withdrawal transaction sent! ${formatNEAR(withdrawableAmount.toString())} U2U will be sent to your wallet.`)
+      setSuccessMessage(
+        `🎉 Withdrawal transaction sent! ${formatU2U(withdrawableAmount.toString())} U2U will be sent to your wallet.`,
+      )
       setTransactionHash(result || "withdrawal-sent")
 
       // Refresh stats and balance after successful withdrawal
       setTimeout(async () => {
         console.log("🔄 Refreshing stats and balance after withdrawal...")
-        await Promise.all([
-          refreshStats(),
-          refreshBalance()
-        ])
+        await Promise.all([refreshStats(), refreshBalance()])
       }, 3000) // Wait for the transaction to be processed
-
     } catch (error: any) {
       console.error("❌ Error withdrawing:", error)
       let errorMsg = "Error withdrawing winnings. Please try again."
@@ -362,8 +345,8 @@ export default function UserStats() {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center p-8">
         <div className="text-8xl mb-6">📊</div>
-        <h2 className="text-white text-4xl font-bold mb-4">User Statistics</h2>
-        <p className="text-white/70 text-xl mb-8 max-w-2xl">
+        <h2 className="text-foreground text-4xl font-bold mb-4">User Statistics</h2>
+        <p className="text-muted-foreground text-xl mb-8 max-w-2xl">
           Connect your wallet to view your gaming statistics and performance analytics
         </p>
         <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl p-8 max-w-lg">
@@ -380,80 +363,75 @@ export default function UserStats() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Your Statistics</h1>
-          <p className="text-white/70">Track your gaming performance and earnings from the blockchain</p>
+          <h1 className="text-3xl font-bold text-foreground mb-1 text-balance">Your statistics</h1>
+          <p className="text-muted-foreground">Track your performance and on-chain earnings</p>
         </div>
-        <Button
-          onClick={fetchUserStats}
-          disabled={isLoading}
-          className="bg-primary hover:bg-primary/90"
-        >
-          <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+        <Button onClick={fetchUserStats} disabled={isLoading} className="bg-primary hover:bg-primary/90">
+          <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
           Refresh
         </Button>
       </div>
 
       {/* Wallet Status */}
-      <div className="bg-green-600/20 border border-green-500/30 rounded-2xl p-4">
+      <Card className="p-4 border-border bg-card/60 hover:border-primary/30 transition-colors">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-green-400 text-sm font-medium">💰 Wallet Connected</p>
+            <p className="text-sm font-medium text-emerald-400">Wallet connected</p>
             {isBalanceLoading ? (
-              <div className="flex items-center space-x-1">
-                <div className="w-3 h-3 border border-green-300 border-t-transparent rounded-full animate-spin"></div>
-                <p className="text-green-300 text-xs">Loading balance...</p>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="w-3 h-3 border border-emerald-300 border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs text-muted-foreground">Loading balance...</p>
               </div>
             ) : (
-              <p className="text-green-300 text-xs">Balance: {walletBalance} U2U</p>
+              <p className="text-xs text-muted-foreground">Balance: {walletBalance} U2U</p>
             )}
           </div>
           <div className="text-right">
-            <p className="text-green-400 text-sm font-medium">Account</p>
-            <p className="text-green-300 text-xs">{address?.slice(0, 12)}...</p>
+            <p className="text-sm font-medium text-emerald-400">Account</p>
+            <p className="text-xs text-muted-foreground">{address?.slice(0, 12)}...</p>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Quick Withdraw Section */}
-      {userStats && parseFloat(userStats.withdrawableBalance) > 0 && (
-        <div className="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-2xl p-6">
+      {userStats && Number.parseFloat(userStats.withdrawableBalance) > 0 && (
+        <Card className="p-6 border border-yellow-500/30 bg-card/60 hover:border-yellow-400/40 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex-1">
-              <h3 className="text-yellow-400 text-lg font-bold mb-2">🎉 You have winnings to withdraw!</h3>
-              <p className="text-yellow-300 text-sm mb-3">
-                You have <span className="font-bold text-yellow-200">{formatNEAR(userStats.withdrawableBalance)} U2U</span> ready to withdraw
+              <h3 className="text-yellow-400 text-lg font-semibold mb-1">You have winnings to withdraw</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                <span className="font-semibold text-yellow-300">{formatU2U(userStats.withdrawableBalance)} U2U</span>{" "}
+                is ready to withdraw
               </p>
               <Button
                 onClick={handleWithdraw}
                 disabled={isLoading || isWithdrawPending}
-                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50"
+                className="bg-yellow-500 hover:bg-yellow-600 text-primary-foreground font-semibold h-10 rounded-xl shadow-sm hover:shadow-md transition-all disabled:opacity-50"
               >
-                {(isLoading || isWithdrawPending) ? (
+                {isLoading || isWithdrawPending ? (
                   <>
-                    <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
-                    Processing Withdrawal...
+                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                    Processing...
                   </>
                 ) : (
-                  <>
-                    💰 Withdraw {formatNEAR(userStats.withdrawableBalance)} U2U
-                  </>
+                  <>Withdraw {formatU2U(userStats.withdrawableBalance)} U2U</>
                 )}
               </Button>
             </div>
-            <div className="text-6xl ml-4">🎁</div>
+            <Trophy className="w-10 h-10 text-yellow-400 ml-4" />
           </div>
-        </div>
+        </Card>
       )}
 
       {/* Error Message */}
       {errorMessage && (
-        <div className={`${isNetworkError ? 'bg-yellow-600/20 border-yellow-500/30' : 'bg-red-600/20 border-red-500/30'} border rounded-2xl p-4`}>
+        <div
+          className={`${isNetworkError ? "bg-yellow-600/20 border-yellow-500/30" : "bg-red-600/20 border-red-500/30"} border rounded-2xl p-4`}
+        >
           <div className="flex items-center gap-3">
-            <div className="text-2xl">
-              {isNetworkError ? '🌐' : '⚠️'}
-            </div>
+            <div className="text-2xl">{isNetworkError ? "🌐" : "⚠️"}</div>
             <div>
-              <p className={`${isNetworkError ? 'text-yellow-400' : 'text-red-400'} text-sm font-medium`}>
+              <p className={`${isNetworkError ? "text-yellow-400" : "text-red-400"} text-sm font-medium`}>
                 {errorMessage}
               </p>
               {isNetworkError && (
@@ -469,18 +447,14 @@ export default function UserStats() {
       {/* Success Message */}
       {successMessage && (
         <div className="bg-green-600/20 border border-green-500/30 rounded-2xl p-4">
-          <p className="text-green-400 text-sm font-medium">
-            ✅ {successMessage}
-          </p>
+          <p className="text-green-400 text-sm font-medium">✅ {successMessage}</p>
         </div>
       )}
 
       {/* Transaction Hash */}
       {transactionHash && (
         <div className="bg-blue-600/20 border border-blue-500/30 rounded-2xl p-4">
-          <p className="text-blue-400 text-xs font-medium">
-            🔗 TX: {transactionHash.slice(0, 12)}...
-          </p>
+          <p className="text-blue-400 text-xs font-medium">🔗 TX: {transactionHash.slice(0, 12)}...</p>
           <a
             href={`https://explorer.testnet.near.org/transactions/${transactionHash}`}
             target="_blank"
@@ -494,7 +468,7 @@ export default function UserStats() {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Total Bet</p>
@@ -509,7 +483,7 @@ export default function UserStats() {
           </div>
         </Card>
 
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Total Won</p>
@@ -524,7 +498,7 @@ export default function UserStats() {
           </div>
         </Card>
 
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Win Rate</p>
@@ -534,14 +508,12 @@ export default function UserStats() {
           </div>
         </Card>
 
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Games Played</p>
               <p className="text-2xl font-bold text-white">{userStats?.gamesPlayed || 0}</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {userStats?.gamesWon || 0} wins
-              </p>
+              <p className="text-xs text-muted-foreground mt-1">{userStats?.gamesWon || 0} wins</p>
             </div>
             <Gamepad2 className="h-8 w-8 text-orange-500" />
           </div>
@@ -551,7 +523,7 @@ export default function UserStats() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Profit Chart */}
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <h3 className="text-lg font-semibold text-white mb-4">Daily Profit/Loss</h3>
           {chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -561,22 +533,26 @@ export default function UserStats() {
                   dataKey="date"
                   stroke="#9CA3AF"
                   fontSize={12}
-                  tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  tickFormatter={(value) =>
+                    new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+                  }
                 />
                 <YAxis stroke="#9CA3AF" fontSize={12} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#1F2937',
-                    border: '1px solid #374151',
-                    borderRadius: '8px',
-                    color: '#F9FAFB'
+                    backgroundColor: "#1F2937",
+                    border: "1px solid #374151",
+                    borderRadius: "8px",
+                    color: "#F9FAFB",
                   }}
-                  labelFormatter={(value) => new Date(value).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                  formatter={(value: number) => [`${formatNEAR(value.toString())} U2U`, 'Profit/Loss']}
+                  labelFormatter={(value) =>
+                    new Date(value).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  }
+                  formatter={(value: number) => [`${formatU2U(value.toString())} U2U`, "Profit/Loss"]}
                 />
                 <Area
                   type="monotone"
@@ -591,16 +567,16 @@ export default function UserStats() {
           ) : (
             <div className="flex items-center justify-center h-[300px] text-center">
               <div>
-                <div className="text-4xl mb-2">📊</div>
-                <p className="text-white/60 text-sm">No historical data available</p>
-                <p className="text-white/40 text-xs">Play some games to see your performance charts</p>
+                <p className="text-4xl mb-2">📊</p>
+                <p className="text-sm text-muted-foreground">No historical data available</p>
+                <p className="text-xs text-muted-foreground/70">Play some games to see your performance</p>
               </div>
             </div>
           )}
         </Card>
 
         {/* Game Distribution */}
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <h3 className="text-lg font-semibold text-white mb-4">Game Distribution</h3>
           {gameDistribution.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -621,22 +597,22 @@ export default function UserStats() {
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#1F2937',
-                    border: '1px solid #374151',
-                    borderRadius: '8px',
-                    color: '#F9FAFB'
+                    backgroundColor: "#1F2937",
+                    border: "1px solid #374151",
+                    borderRadius: "8px",
+                    color: "#F9FAFB",
                   }}
                   // @ts-ignore - recharts typing
-                  formatter={(value: number) => [`${value}%`, 'Games']}
+                  formatter={(value: number) => [`${value}%`, "Games"]}
                 />
               </PieChart>
             </ResponsiveContainer>
           ) : (
             <div className="flex items-center justify-center h-[300px] text-center">
               <div>
-                <div className="text-4xl mb-2">🎮</div>
-                <p className="text-white/60 text-sm">No game data available</p>
-                <p className="text-white/40 text-xs">Play different games to see distribution</p>
+                <p className="text-4xl mb-2">🎮</p>
+                <p className="text-sm text-muted-foreground">No game data available</p>
+                <p className="text-xs text-muted-foreground/70">Play different games to see distribution</p>
               </div>
             </div>
           )}
@@ -644,7 +620,7 @@ export default function UserStats() {
       </div>
 
       {/* Game Performance Table */}
-      <Card className="bg-background/60 border-border p-6">
+      <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
         <h3 className="text-lg font-semibold text-white mb-4">Game Performance</h3>
         {gameStats.length > 0 ? (
           <div className="overflow-x-auto no-scrollbar">
@@ -661,18 +637,23 @@ export default function UserStats() {
               </thead>
               <tbody>
                 {gameStats.map((game, index) => (
-                  <tr key={index} className="border-b border-border/50">
+                  <tr key={index} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                     <td className="py-3 px-4 text-white font-medium">{game.gameType}</td>
                     <td className="py-3 px-4 text-white">{game.totalGames}</td>
                     <td className="py-3 px-4">
-                      <span className={`${game.winRate >= 60 ? 'bg-green-500/20 text-green-400' :
-                        game.winRate >= 40 ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-red-500/20 text-red-400'
-                        } px-2 py-1 rounded-full text-xs font-medium`}>
+                      <span
+                        className={`${
+                          game.winRate >= 60
+                            ? "bg-green-500/20 text-green-400"
+                            : game.winRate >= 40
+                              ? "bg-yellow-500/20 text-yellow-400"
+                              : "bg-red-500/20 text-red-400"
+                        } px-2 py-1 rounded-full text-xs font-medium`}
+                      >
                         {game.winRate}%
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-green-400 font-medium">{formatNEAR(game.totalWon.toString())} U2U</td>
+                    <td className="py-3 px-4 text-green-400 font-medium">{formatU2U(game.totalWon.toString())} U2U</td>
                     <td className="py-3 px-4 text-white">{game.bestMultiplier.toFixed(2)}×</td>
                     <td className="py-3 px-4 text-white">{game.avgMultiplier.toFixed(2)}×</td>
                   </tr>
@@ -683,9 +664,9 @@ export default function UserStats() {
         ) : (
           <div className="flex items-center justify-center h-32 text-center">
             <div>
-              <div className="text-4xl mb-2">📈</div>
-              <p className="text-white/60 text-sm">No game performance data available</p>
-              <p className="text-white/40 text-xs">Play games to see your performance statistics</p>
+              <p className="text-4xl mb-2">📈</p>
+              <p className="text-sm text-muted-foreground">No game performance data available</p>
+              <p className="text-xs text-muted-foreground/70">Play games to see your performance statistics</p>
             </div>
           </div>
         )}
@@ -693,17 +674,22 @@ export default function UserStats() {
 
       {/* Additional Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className={`${userStats && parseFloat(userStats.withdrawableBalance) > 0 ? 'bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border-yellow-500/30' : 'bg-background/60 border-border'} p-6`}>
+        <Card
+          className={`${userStats && Number.parseFloat(userStats.withdrawableBalance) > 0 ? "bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border-yellow-500/30" : "bg-card/60 border-border"} p-6 hover:shadow-md hover:border-primary/30 transition`}
+        >
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Withdrawable Balance</p>
-              <p className={`${userStats && parseFloat(userStats.withdrawableBalance) > 0 ? 'text-yellow-400' : 'text-white'} text-2xl font-bold`} title={withdrawableConversion.conversionText}>
+              <p
+                className={`${userStats && Number.parseFloat(userStats.withdrawableBalance) > 0 ? "text-yellow-400" : "text-white"} text-2xl font-bold`}
+                title={withdrawableConversion.conversionText}
+              >
                 {formatCurrency(userStats?.withdrawableBalance || "0")}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 {withdrawableConversion.isLoading ? "Loading..." : withdrawableConversion.conversionText}
               </p>
-              {userStats && parseFloat(userStats.withdrawableBalance) > 0 ? (
+              {userStats && Number.parseFloat(userStats.withdrawableBalance) > 0 ? (
                 <div className="mt-3">
                   <Button
                     onClick={handleWithdraw}
@@ -716,9 +702,7 @@ export default function UserStats() {
                         Withdrawing...
                       </>
                     ) : (
-                      <>
-                        💰 Withdraw {formatNEAR(userStats.withdrawableBalance)} U2U
-                      </>
+                      <>💰 Withdraw {formatU2U(userStats.withdrawableBalance)} U2U</>
                     )}
                   </Button>
                   <p className="text-xs text-yellow-400/80 mt-2 text-center">
@@ -730,17 +714,17 @@ export default function UserStats() {
                   <div className="h-10 w-full bg-gray-700/50 rounded-lg flex items-center justify-center">
                     <p className="text-xs text-gray-400">No winnings to withdraw</p>
                   </div>
-                  <p className="text-xs text-gray-500 mt-2 text-center">
-                    Play games to earn withdrawable winnings
-                  </p>
+                  <p className="text-xs text-gray-500 mt-2 text-center">Play games to earn withdrawable winnings</p>
                 </div>
               )}
             </div>
-            <Trophy className={`h-8 w-8 ${userStats && parseFloat(userStats.withdrawableBalance) > 0 ? 'text-yellow-400' : 'text-yellow-500'}`} />
+            <Trophy
+              className={`h-8 w-8 ${userStats && Number.parseFloat(userStats.withdrawableBalance) > 0 ? "text-yellow-400" : "text-yellow-500"}`}
+            />
           </div>
         </Card>
 
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Favorite Game</p>
@@ -750,21 +734,25 @@ export default function UserStats() {
           </div>
         </Card>
 
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Member Since</p>
-              <p className="text-lg font-bold text-white">{userStats?.joinDate ? formatDate(userStats.joinDate) : "N/A"}</p>
+              <p className="text-lg font-bold text-white">
+                {userStats?.joinDate ? formatDate(userStats.joinDate) : "N/A"}
+              </p>
             </div>
             <Calendar className="h-8 w-8 text-purple-500" />
           </div>
         </Card>
 
-        <Card className="bg-background/60 border-border p-6">
+        <Card className="bg-card/60 border-border p-6 hover:shadow-md hover:border-primary/30 transition">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Last Played</p>
-              <p className="text-lg font-bold text-white">{userStats?.lastPlayDate ? formatDate(userStats.lastPlayDate) : "N/A"}</p>
+              <p className="text-lg font-bold text-white">
+                {userStats?.lastPlayDate ? formatDate(userStats.lastPlayDate) : "N/A"}
+              </p>
             </div>
             <Calendar className="h-8 w-8 text-blue-500" />
           </div>
@@ -772,18 +760,18 @@ export default function UserStats() {
       </div>
 
       {/* Withdrawal Information */}
-      <Card className="bg-background/60 border-border p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">💰 Withdraw Your Winnings</h3>
-        <p className="text-white/70 text-sm mb-4">
-          All your winnings are automatically processed by our resolver system. Use the withdraw button above to transfer your winnings to your wallet.
+      <Card className="bg-card/60 border-border p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-3">Withdraw your winnings</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Winnings are processed by our resolver. Use the withdraw button when available.
         </p>
-        <div className="bg-blue-600/20 border border-blue-500/30 rounded-xl p-4">
-          <h4 className="text-blue-400 font-medium mb-2">How it works:</h4>
-          <ul className="text-blue-300 text-sm space-y-1">
-            <li>• Play games and win - your winnings are tracked on-chain</li>
-            <li>• Our automated resolver processes all game outcomes</li>
-            <li>• Withdraw your accumulated winnings anytime</li>
-            <li>• All transactions are secure and transparent</li>
+        <div className="rounded-xl p-4 border border-blue-500/30 bg-blue-500/10">
+          <h4 className="font-medium text-blue-300 mb-2">How it works</h4>
+          <ul className="text-sm text-blue-200/90 space-y-1">
+            <li>• Play and win; totals are tracked on-chain</li>
+            <li>• Automated resolver processes outcomes</li>
+            <li>• Withdraw any time from your dashboard</li>
+            <li>• All transactions are transparent</li>
           </ul>
         </div>
       </Card>

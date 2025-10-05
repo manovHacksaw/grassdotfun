@@ -47,7 +47,7 @@ npm run verify:u2u <CONTRACT_ADDRESS>
 ## Contract Details
 
 ### SecureGames Contract
-- **Purpose:** EVM-compatible version of the NEAR SecureGames contract
+- **Purpose:** EVM-compatible version of the U2U SecureGames contract
 - **Features:**
   - Game management (start/resolve)
   - User statistics tracking

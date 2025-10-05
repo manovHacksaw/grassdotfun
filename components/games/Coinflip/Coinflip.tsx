@@ -20,8 +20,10 @@ import {
 } from "@/lib/provablyFair"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useWagmiContractService } from "@/lib/wagmiContractService"
-import { formatNEAR, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
+import { formatU2U, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
 import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
+import { toast } from "sonner"
+import { gameOutcomeService } from "@/lib/gameOutcomeService"
 
 type GameStatus = "idle" | "flipping" | "won" | "lost" | "streak-active"
 
@@ -40,7 +42,7 @@ type PopupState = {
 
 export function CoinFlip({ compact = false }: CoinFlipProps) {
   const { address, isConnected, balance, isBalanceLoading, refreshBalance } = useWagmiWallet()
-  const { startGame: startContractGame, isPending: isContractPending, error: contractError } = useWagmiContractService()
+  const { startGame: startContractGame, isPending: isContractPending, isConfirming, isConfirmed, error: contractError, hash: contractTransactionHash } = useWagmiContractService()
   const [isStaking, setIsStaking] = React.useState(false)
   // Game state
   const [status, setStatus] = React.useState<GameStatus>("idle")
@@ -51,6 +53,11 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
   const [result, setResult] = React.useState<Side | null>(null)
   const [flipCount, setFlipCount] = React.useState(0)
   const [hasStaked, setHasStaked] = React.useState(false) // Track if player has staked
+  const [gameId, setGameId] = React.useState<string>("")
+  const [transactionHash, setTransactionHash] = React.useState<string>("")
+  const [waitingForConfirmation, setWaitingForConfirmation] = React.useState(false)
+  const [errorMessage, setErrorMessage] = React.useState<string>("")
+  const [successMessage, setSuccessMessage] = React.useState<string>("")
 
   // Provably fair system
   const [gameSession, setGameSession] = React.useState<GameSession | null>(null)
@@ -96,32 +103,24 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
     message: "",
     transactionHash: undefined
   })
-  const [resolutionModal, setResolutionModal] = React.useState<{
-    isOpen: boolean
-    transactionHash?: string
-  }>({
-    isOpen: false,
-    transactionHash: undefined
-  })
 
   // Resolve game directly
   const resolveGame = async (didWin: boolean, finalMultiplier: number) => {
-    if (!address) {
-      console.log("❌ Cannot resolve game - missing address");
+    if (!gameId || !address) {
+      console.log("❌ Cannot resolve game - missing gameId or address");
       return;
     }
 
     try {
-      console.log(`🚀 Resolving coinflip game, Win: ${didWin}, Multiplier: ${finalMultiplier}`);
+      console.log(`🚀 Resolving coinflip game: ${gameId}, Win: ${didWin}, Multiplier: ${finalMultiplier}`);
       
-      // Show resolution modal
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: undefined
-      })
+      // Show resolution toast
+      toast.loading("Resolving game result on-chain...", {
+        id: "game-resolution"
+      });
       
       const result = await gameOutcomeService.resolveGame({
-        gameId: `coinflip-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        gameId,
         didWin,
         multiplier: finalMultiplier,
         timestamp: Date.now(),
@@ -129,11 +128,12 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         player: address
       });
       
-      // Update resolution modal with transaction hash
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: result.transactionHash || "resolution-complete"
-      })
+      // Show success toast with transaction hash
+      toast.success("Game resolved successfully! Transaction confirmed.", {
+        id: "game-resolution",
+        description: `Transaction: ${result.transactionHash?.slice(0, 8)}...${result.transactionHash?.slice(-6)}`,
+        duration: 5000,
+      });
       
       if (didWin) {
         setSuccessMessage(`🎉 Game won! Resolved at ${finalMultiplier.toFixed(2)}× multiplier.`);
@@ -142,13 +142,15 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
       }
     } catch (error: any) {
       console.error("❌ Error resolving game:", error);
-      setErrorMessage(`Failed to resolve game: ${error.message}`);
       
-      // Close resolution modal on error
-      setResolutionModal({
-        isOpen: false,
-        transactionHash: undefined
-      })
+      // Show error toast
+      toast.error("Failed to resolve game", {
+        id: "game-resolution",
+        description: error.message || "Please try again",
+        duration: 5000,
+      });
+      
+      setErrorMessage(`Failed to resolve game: ${error.message}`);
     }
   };
 
@@ -158,6 +160,89 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
     setGameSession(session)
     setClientSeed(session.clientSeed)
   }, [])
+
+  // Watch for transaction confirmation
+  React.useEffect(() => {
+    console.log('🔍 Coinflip transaction confirmation check:', {
+      waitingForConfirmation,
+      isConfirmed,
+      transactionHash,
+      contractTransactionHash
+    });
+    
+    if (waitingForConfirmation && isConfirmed && (transactionHash || contractTransactionHash)) {
+      console.log('✅ Coinflip transaction confirmed! Starting game...');
+      
+      // Transaction confirmed! Start the game
+      setWaitingForConfirmation(false)
+      
+      const finalHash = transactionHash || contractTransactionHash;
+      
+      // Show success state briefly before starting game
+      setTransactionModal({
+        isOpen: true,
+        status: "confirmed",
+        title: "Bet Placed Successfully!",
+        message: "Your bet has been confirmed on-chain. Game starting...",
+        transactionHash: finalHash
+      })
+      
+      // Wait a moment to show success state, then start the game
+      setTimeout(() => {
+        // Close transaction modal and start the game
+        setTransactionModal({
+          isOpen: false,
+          status: "confirmed",
+          title: "",
+          message: "",
+          transactionHash: undefined
+        })
+        
+        // Now start the game after confirmation
+        setHasStaked(true)
+        setStatus("streak-active")
+        
+        // Show success toast with transaction hash
+        toast.success("Game started successfully!", {
+          description: `Transaction: ${finalHash?.slice(0, 8)}...${finalHash?.slice(-6)}`,
+          duration: 4000,
+        })
+        
+        setSuccessMessage(`Game started!`)
+      }, 1500)
+    }
+  }, [isConfirmed, transactionHash, contractTransactionHash, waitingForConfirmation])
+
+  // Watch for transaction errors
+  React.useEffect(() => {
+    if (waitingForConfirmation && contractError) {
+      setWaitingForConfirmation(false)
+      
+      // Show error in transaction modal
+      setTransactionModal({
+        isOpen: true,
+        status: "failed",
+        title: "Transaction Failed",
+        message: contractError.message || "Transaction failed. Please try again.",
+        transactionHash: transactionHash
+      })
+    }
+  }, [contractError, waitingForConfirmation, transactionHash])
+
+  // Clear messages after a delay
+  const clearMessages = () => {
+    setErrorMessage("")
+    setSuccessMessage("")
+    setTransactionHash("")
+  }
+
+  // Auto-clear messages after 5 seconds
+  React.useEffect(() => {
+    if (errorMessage || successMessage) {
+      const timer = setTimeout(clearMessages, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [errorMessage, successMessage])
 
   // Calculate current multiplier
   const currentMultiplier = React.useMemo(() => {
@@ -266,8 +351,10 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
       setStatus("streak-active")
       return
     }
+    
     try {
-      const gameId = `coinflip-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+      const newGameId = `coinflip-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+      setGameId(newGameId)
       
       // Show transaction modal with engaging message
       setTransactionModal({
@@ -278,7 +365,20 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         transactionHash: undefined
       })
       
-      const hash = await startContractGame(gameId, betAmount, "coinflip")
+      // Start the contract transaction - this opens wallet for user to sign
+      console.log('🚀 Starting Coinflip contract game...');
+      await startContractGame(newGameId, betAmount, "coinflip")
+      console.log('📝 Coinflip contract game started, hash:', contractTransactionHash);
+      
+      // Set the transaction hash and start waiting for confirmation
+      setTransactionHash(contractTransactionHash || "")
+      setWaitingForConfirmation(true)
+      
+      console.log('⏳ Coinflip waiting for confirmation...', {
+        waitingForConfirmation: true,
+        isConfirmed,
+        contractTransactionHash
+      });
       
       // Update modal with transaction hash and confirmation status
       setTransactionModal({
@@ -286,45 +386,29 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         status: "confirming",
         title: "Confirming Transaction",
         message: "Your bet is being confirmed on the blockchain. This usually takes a few seconds.",
-        transactionHash: hash
+        transactionHash: contractTransactionHash || ""
       })
+    } catch (error: any) {
+      console.error("Error starting game:", error)
+      let errorMsg = "Error starting game. Please try again."
       
-      // Wait for actual transaction confirmation
-      await new Promise(resolve => setTimeout(resolve, 3000))
-      
-      // Show success state briefly before starting game
-      setTransactionModal({
-        isOpen: true,
-        status: "confirmed",
-        title: "Bet Placed Successfully!",
-        message: "Your bet has been confirmed on-chain. Game starting...",
-        transactionHash: hash
-      })
-      
-      // Wait a moment to show success state, then start the game
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      // Close transaction modal and start the game
-      setTransactionModal({
-        isOpen: false,
-        status: "confirmed",
-        title: "",
-        message: "",
-        transactionHash: undefined
-      })
-      
-      // Now start the game after confirmation
-      setHasStaked(true)
-      setStatus("streak-active")
-    } catch (err) {
-      console.error("Stake failed:", err)
+      // @ts-ignore - best effort error message
+      if (error.message?.includes("User closed the window")) {
+        errorMsg = "Transaction cancelled. Please try again when ready."
+      } else if (error.message?.includes("insufficient balance")) {
+        errorMsg = "Insufficient balance. Please add more U2U to your wallet."
+      } else if (error.message?.includes("already have a pending bet")) {
+        errorMsg = "You already have a pending bet. Please wait for it to be resolved."
+      } else if (error.message) {
+        errorMsg = error.message
+      }
       
       // Show error in transaction modal
       setTransactionModal({
         isOpen: true,
         status: "failed",
         title: "Transaction Failed",
-        message: "Failed to start the game. Please try again.",
+        message: errorMsg,
         transactionHash: transactionModal.transactionHash
       })
     }
@@ -454,6 +538,24 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         {/* Left control panel */}
         <div className="rounded-2xl border border-border bg-background/60 p-3 lg:p-4">
           <div className="space-y-3">
+            {/* Error Message */}
+            {errorMessage && (
+              <div className="bg-red-600/20 border border-red-500/30 rounded-4xl p-3 text-center">
+                <p className="text-red-400 text-sm font-medium">
+                  ⚠️ {errorMessage}
+                </p>
+              </div>
+            )}
+
+            {/* Success Message */}
+            {successMessage && (
+              <div className="bg-green-600/20 border border-green-500/30 rounded-4xl p-3 text-center">
+                <p className="text-green-400 text-sm font-medium">
+                  ✅ {successMessage}
+                </p>
+              </div>
+            )}
+
             {/* Game Stats */}
             <div className="bg-blue-600/20 border border-blue-500/30 rounded-4xl p-3 text-center">
               <p className="text-blue-400 text-sm font-medium">
@@ -900,16 +1002,6 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         }}
       />
 
-      {/* Resolution Modal */}
-      <TransactionModal
-        isOpen={resolutionModal.isOpen}
-        onClose={() => setResolutionModal(prev => ({ ...prev, isOpen: false }))}
-        status="resolving"
-        title="Resolving Game"
-        message="Resolving game results on-chain…"
-        transactionHash={resolutionModal.transactionHash}
-        explorerUrl={resolutionModal.transactionHash ? getExplorerUrl(resolutionModal.transactionHash) : undefined}
-      />
     </div>
   )
 }
