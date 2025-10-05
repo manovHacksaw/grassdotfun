@@ -69,5 +69,4 @@ test/
 
 # Contract files (not needed for frontend deployment)
 contracts/
-contract/
 hardhat.config.cjs
