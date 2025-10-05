@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useContractStats } from "@/lib/wagmiContractService"
+import { useContractStats, useAllUsers, useMultipleUserStats } from "@/lib/wagmiContractService"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { formatNEAR } from "@/lib/currencyUtils"
 import { 
@@ -101,57 +101,94 @@ const formatDate = (dateString: string) => {
 }
 
 export default function Leaderboard() {
-  const { data: contractStats, isLoading: contractStatsLoading, error: contractStatsError } = useContractStats()
+  const { isLoading: contractStatsLoading, error: contractStatsError } = useContractStats()
+  const { users: allUsers, isLoading: allUsersLoading, error: allUsersError } = useAllUsers()
   const { address } = useWagmiWallet()
-  const [leaderboard, setLeaderboard] = useState<ProcessedLeaderboardUser[]>([])
-  const [isLoading, setIsLoading] = useState(false)
   const [sortBy, setSortBy] = useState<'totalWon' | 'netProfit' | 'winRate' | 'gamesPlayed'>('totalWon')
   const [error, setError] = useState<string>("")
 
-  const fetchLeaderboard = async () => {
-    setIsLoading(true)
-    setError("")
-    
-    try {
-      console.log("🏆 Fetching leaderboard data...")
-      
-      // For now, show a message that leaderboard is not fully implemented with real contract data
-      // In the future, this would fetch all users from the contract
-      setError("Leaderboard with real contract data is not fully implemented yet. Use wagmi hooks to fetch individual user stats.")
-      
-      // Generate some dummy data for demonstration
-      const dummyUsers: ProcessedLeaderboardUser[] = [
-        {
-          accountId: "0x1234...5678",
-          totalBet: 10.5,
-          totalWon: 15.2,
-          totalLost: 5.3,
-          withdrawableBalance: 2.1,
-          gamesPlayed: 25,
-          gamesWon: 18,
-          winRate: 72,
-          netProfit: 4.7,
-          joinDate: "2024-01-15",
-          lastPlayDate: "2024-01-20",
-          rank: 1
-        }
-      ]
-      
-      setLeaderboard(dummyUsers)
-      
-      // Leaderboard with real contract data will be implemented in the future
-      
-    } catch (error: any) {
-      console.error("❌ Failed to fetch leaderboard:", error)
-      setError(error.message || "Failed to fetch leaderboard data")
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // Use the multiple user stats hook to fetch stats for all users
+  const { userStats: allUserStats, isLoading: userStatsLoading, error: userStatsError } = useMultipleUserStats(allUsers || [])
 
-  useEffect(() => {
-    fetchLeaderboard()
-  }, [sortBy])
+  // Process and sort the leaderboard data
+  const processedLeaderboard = React.useMemo(() => {
+    if (!allUsers || !allUserStats || allUsers.length === 0) {
+      return []
+    }
+
+    console.log("🏆 Processing leaderboard data...")
+    console.log(`Found ${allUsers.length} users and ${allUserStats.length} user stats`)
+
+    const leaderboardData: ProcessedLeaderboardUser[] = []
+
+    allUsers.forEach((userAddress, index) => {
+      const userStat = allUserStats[index]
+      
+      if (userStat && userStat.totalBet && !userStat.isLoading) {
+        const totalBet = parseFloat(userStat.totalBet)
+        const totalWon = parseFloat(userStat.totalWon)
+        const totalLost = parseFloat(userStat.totalLost)
+        const withdrawableBalance = parseFloat(userStat.withdrawableBalance)
+        const gamesPlayed = parseInt(userStat.gamesPlayed) || 0
+        const gamesWon = parseInt(userStat.gamesWon) || 0
+        const winRate = gamesPlayed > 0 ? (gamesWon / gamesPlayed) * 100 : 0
+        const netProfit = totalWon - totalLost
+        
+        const joinTimestamp = parseInt(userStat.joinTimestamp) || 0
+        const lastPlayTimestamp = parseInt(userStat.lastPlayTimestamp) || 0
+        
+        leaderboardData.push({
+          accountId: userAddress,
+          totalBet,
+          totalWon,
+          totalLost,
+          withdrawableBalance,
+          gamesPlayed,
+          gamesWon,
+          winRate,
+          netProfit,
+          joinDate: joinTimestamp > 0 ? new Date(joinTimestamp * 1000).toISOString() : "N/A",
+          lastPlayDate: lastPlayTimestamp > 0 ? new Date(lastPlayTimestamp * 1000).toISOString() : "N/A",
+          rank: 0 // Will be set after sorting
+        })
+      }
+    })
+
+    // Sort users based on selected criteria
+    leaderboardData.sort((a, b) => {
+      switch (sortBy) {
+        case 'totalWon':
+          return b.totalWon - a.totalWon
+        case 'netProfit':
+          return b.netProfit - a.netProfit
+        case 'winRate':
+          return b.winRate - a.winRate
+        case 'gamesPlayed':
+          return b.gamesPlayed - a.gamesPlayed
+        default:
+          return b.totalWon - a.totalWon
+      }
+    })
+
+    // Assign ranks
+    leaderboardData.forEach((user, index) => {
+      user.rank = index + 1
+    })
+
+    console.log(`✅ Processed ${leaderboardData.length} users for leaderboard`)
+    return leaderboardData
+  }, [allUsers, allUserStats, sortBy])
+
+  // Set error state
+  React.useEffect(() => {
+    if (allUsersError) {
+      setError(`Failed to fetch users: ${allUsersError.message}`)
+    } else if (userStatsError) {
+      setError(`Failed to fetch user stats: ${userStatsError.message}`)
+    } else {
+      setError("")
+    }
+  }, [allUsersError, userStatsError])
 
   const getSortButtonClass = (buttonSortBy: string) => {
     return `px-3 py-1 rounded-full text-xs font-medium transition-colors ${
@@ -173,13 +210,13 @@ export default function Leaderboard() {
           </div>
         </div>
         <Button
-          onClick={fetchLeaderboard}
-          disabled={isLoading}
+          onClick={() => window.location.reload()}
+          disabled={allUsersLoading || userStatsLoading}
           variant="outline"
           size="sm"
           className="flex items-center space-x-2"
         >
-          <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`h-4 w-4 ${(allUsersLoading || userStatsLoading) ? 'animate-spin' : ''}`} />
           <span>Refresh</span>
         </Button>
       </div>
@@ -225,7 +262,7 @@ export default function Leaderboard() {
       )}
 
       {/* Loading State */}
-      {isLoading && (
+      {(allUsersLoading || userStatsLoading) && (
         <Card className="bg-background/60 border-border p-8">
           <div className="flex items-center justify-center space-x-3">
             <RefreshCw className="h-6 w-6 animate-spin text-primary" />
@@ -235,9 +272,9 @@ export default function Leaderboard() {
       )}
 
       {/* Leaderboard */}
-      {!isLoading && !error && (
+      {!allUsersLoading && !userStatsLoading && !error && (
         <div className="space-y-3">
-          {leaderboard.length === 0 ? (
+          {processedLeaderboard.length === 0 ? (
             <Card className="bg-background/60 border-border p-8">
               <div className="text-center">
                 <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
@@ -246,11 +283,11 @@ export default function Leaderboard() {
               </div>
             </Card>
           ) : (
-            leaderboard.map((user) => (
+            processedLeaderboard.map((user) => (
               <Card
                 key={user.accountId}
                 className={`${getRankColor(user.rank)} border p-4 transition-all hover:scale-[1.02] ${
-                  user.accountId === accountId ? 'ring-2 ring-primary/50' : ''
+                  user.accountId === address ? 'ring-2 ring-primary/50' : ''
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -266,7 +303,7 @@ export default function Leaderboard() {
                             : user.accountId
                           }
                         </p>
-                        {user.accountId === accountId && (
+                        {user.accountId === address && (
                           <span className="px-2 py-1 bg-primary/20 text-primary text-xs rounded-full">
                             You
                           </span>
@@ -285,19 +322,19 @@ export default function Leaderboard() {
                       <div>
                         <p className="text-sm text-muted-foreground">Total Won</p>
                         <p className="font-semibold text-green-400">
-                          {formatNEAR(user.totalWon.toString())} NEAR
+                          {formatNEAR(user.totalWon.toString())} U2U
                         </p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Net Profit</p>
                         <p className={`font-semibold ${user.netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                          {user.netProfit >= 0 ? '+' : ''}{formatNEAR(user.netProfit.toString())} NEAR
+                          {user.netProfit >= 0 ? '+' : ''}{formatNEAR(user.netProfit.toString())} U2U
                         </p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Withdrawable</p>
                         <p className="font-semibold text-yellow-400">
-                          {formatNEAR(user.withdrawableBalance.toString())} NEAR
+                          {formatNEAR(user.withdrawableBalance.toString())} U2U
                         </p>
                       </div>
                     </div>
@@ -310,30 +347,30 @@ export default function Leaderboard() {
       )}
 
       {/* Stats Summary */}
-      {!isLoading && !error && leaderboard.length > 0 && (
+      {!allUsersLoading && !userStatsLoading && !error && processedLeaderboard.length > 0 && (
         <Card className="bg-background/60 border-border p-6">
           <h3 className="text-lg font-semibold text-white mb-4">📊 Leaderboard Stats</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">{leaderboard.length}</p>
+              <p className="text-2xl font-bold text-white">{processedLeaderboard.length}</p>
               <p className="text-sm text-muted-foreground">Total Players</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-green-400">
-                {formatNEAR(leaderboard.reduce((sum, user) => sum + user.totalWon, 0).toString())} NEAR
+                {formatNEAR(processedLeaderboard.reduce((sum, user) => sum + user.totalWon, 0).toString())} U2U
               </p>
               <p className="text-sm text-muted-foreground">Total Won</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-blue-400">
-                {leaderboard.reduce((sum, user) => sum + user.gamesPlayed, 0)}
+                {processedLeaderboard.reduce((sum, user) => sum + user.gamesPlayed, 0)}
               </p>
               <p className="text-sm text-muted-foreground">Total Games</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-purple-400">
-                {leaderboard.length > 0 
-                  ? (leaderboard.reduce((sum, user) => sum + user.winRate, 0) / leaderboard.length).toFixed(1)
+                {processedLeaderboard.length > 0 
+                  ? (processedLeaderboard.reduce((sum, user) => sum + user.winRate, 0) / processedLeaderboard.length).toFixed(1)
                   : 0
                 }%
               </p>

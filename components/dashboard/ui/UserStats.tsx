@@ -252,9 +252,13 @@ export default function UserStats() {
   useEffect(() => {
     if (contractUserStats && !contractUserStats.isLoading && contractUserStats.totalBet) {
       try {
-        // Use stable dates based on user address to avoid infinite re-renders
-        const stableJoinDate = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000) // 15 days ago
-        const stableLastPlayDate = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
+        // Use real timestamps from contract data
+        const joinTimestamp = parseInt(contractUserStats.joinTimestamp) || 0
+        const lastPlayTimestamp = parseInt(contractUserStats.lastPlayTimestamp) || 0
+        
+        // Convert timestamps to dates (multiply by 1000 to convert from seconds to milliseconds)
+        const joinDate = joinTimestamp > 0 ? new Date(joinTimestamp * 1000) : new Date()
+        const lastPlayDate = lastPlayTimestamp > 0 ? new Date(lastPlayTimestamp * 1000) : new Date()
 
         const processedStats: UserStats = {
           totalBet: parseFloat(contractUserStats.totalBet).toFixed(2),
@@ -265,8 +269,8 @@ export default function UserStats() {
           gamesWon: parseInt(contractUserStats.gamesWon) || 0,
           winRate: contractUserStats.winRate || 0,
           favoriteGame: "N/A",
-          joinDate: stableJoinDate.toISOString(),
-          lastPlayDate: stableLastPlayDate.toISOString(),
+          joinDate: joinDate.toISOString(),
+          lastPlayDate: lastPlayDate.toISOString(),
           gameTypeStats: []
         }
 
@@ -276,7 +280,7 @@ export default function UserStats() {
         console.error("Error processing user stats:", error)
       }
     }
-  }, [contractUserStats?.totalBet, contractUserStats?.totalWon, contractUserStats?.totalLost, contractUserStats?.withdrawableBalance, contractUserStats?.gamesPlayed, contractUserStats?.gamesWon, contractUserStats?.winRate, contractUserStats?.isLoading])
+  }, [contractUserStats?.totalBet, contractUserStats?.totalWon, contractUserStats?.totalLost, contractUserStats?.withdrawableBalance, contractUserStats?.gamesPlayed, contractUserStats?.gamesWon, contractUserStats?.winRate, contractUserStats?.joinTimestamp, contractUserStats?.lastPlayTimestamp, contractUserStats?.isLoading])
 
   const formatCurrency = (amount: string) => {
     return `${formatNEAR(amount)} U2U`

@@ -73,6 +73,15 @@ const CONTRACT_ABI = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllUsers",
+    "outputs": [
+      {"internalType": "address[]", "name": "", "type": "address[]"}
+    ],
+    "stateMutability": "view",
+    "type": "function"
   }
 ] as const;
 
@@ -231,5 +240,38 @@ export function useContractStats() {
   return {
     isLoading,
     error
+  };
+}
+
+export function useAllUsers() {
+  const { data, isLoading, error } = useReadContract({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: 'getAllUsers',
+  });
+
+  if (data) {
+    return {
+      users: data as `0x${string}`[],
+      isLoading,
+      error
+    };
+  }
+
+  return {
+    users: [],
+    isLoading,
+    error
+  };
+}
+
+// Hook to fetch user stats for multiple addresses
+export function useMultipleUserStats(addresses: string[]) {
+  const results = addresses.map(address => useUserStats(address));
+  
+  return {
+    userStats: results.map(result => result),
+    isLoading: results.some(result => result.isLoading),
+    error: results.find(result => result.error)?.error || null
   };
 }
