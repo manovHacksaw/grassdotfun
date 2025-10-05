@@ -1,0 +1,10 @@
+{
+  "network": "U2U Solaris Mainnet",
+  "chainId": 39,
+  "contractAddress": "0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F",
+  "deployer": "0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2",
+  "resolver": "0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2",
+  "transactionHash": "0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509ef",
+  "blockNumber": 40015168,
+  "timestamp": "2025-10-05T07:28:05.352Z"
+}
