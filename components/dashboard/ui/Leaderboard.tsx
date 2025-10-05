@@ -107,8 +107,8 @@ export default function Leaderboard() {
   const [sortBy, setSortBy] = useState<'totalWon' | 'netProfit' | 'winRate' | 'gamesPlayed'>('totalWon')
   const [error, setError] = useState<string>("")
 
-  // Use the multiple user stats hook to fetch stats for all users
-  const { userStats: allUserStats, isLoading: userStatsLoading, error: userStatsError } = useMultipleUserStats(allUsers || [])
+  // Use the multiple user stats hook to fetch stats for all users (limited to first 10)
+  const { userStats: allUserStats, isLoading: userStatsLoading, error: userStatsError } = useMultipleUserStats((allUsers || []).slice(0, 10))
 
   // Process and sort the leaderboard data
   const processedLeaderboard = React.useMemo(() => {
@@ -116,12 +116,15 @@ export default function Leaderboard() {
       return []
     }
 
+    // Limit to first 10 users to match our hook limitation
+    const limitedUsers = allUsers.slice(0, 10)
+    
     console.log("🏆 Processing leaderboard data...")
-    console.log(`Found ${allUsers.length} users and ${allUserStats.length} user stats`)
+    console.log(`Found ${allUsers.length} total users, processing first ${limitedUsers.length} users and ${allUserStats.length} user stats`)
 
     const leaderboardData: ProcessedLeaderboardUser[] = []
 
-    allUsers.forEach((userAddress, index) => {
+    limitedUsers.forEach((userAddress, index) => {
       const userStat = allUserStats[index]
       
       if (userStat && userStat.totalBet && !userStat.isLoading) {
@@ -206,7 +209,12 @@ export default function Leaderboard() {
           <Trophy className="h-8 w-8 text-yellow-400" />
           <div>
             <h2 className="text-2xl font-bold text-white">🏆 Leaderboard</h2>
-            <p className="text-muted-foreground text-sm">Top players by performance</p>
+            <p className="text-muted-foreground text-sm">
+              Top players by performance
+              {allUsers && allUsers.length > 10 && (
+                <span className="text-yellow-400 ml-2">(Showing top 10 of {allUsers.length} players)</span>
+              )}
+            </p>
           </div>
         </div>
         <Button

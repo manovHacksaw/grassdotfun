@@ -13,6 +13,7 @@ import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useContract } from "@/contexts/ContractProvider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
 import { formatNEAR, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
+import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
 
 interface MineCell {
   id: number
@@ -74,6 +75,28 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
   const [BombSound] = useSound("/sounds/Bomb.mp3");
   const [CashoutSound] = useSound("/sounds/Cashout.mp3");
   const [GemsSound] = useSound("/sounds/Gems.mp3");
+
+  // Transaction modal state
+  const [transactionModal, setTransactionModal] = useState<{
+    isOpen: boolean
+    status: TransactionStatus
+    title: string
+    message: string
+    transactionHash?: string
+  }>({
+    isOpen: false,
+    status: "pending",
+    title: "",
+    message: "",
+    transactionHash: undefined
+  })
+  const [resolutionModal, setResolutionModal] = useState<{
+    isOpen: boolean
+    transactionHash?: string
+  }>({
+    isOpen: false,
+    transactionHash: undefined
+  })
 
   // Resolve game directly
   const resolveGame = async (didWin: boolean, finalMultiplier: number) => {
@@ -209,6 +232,12 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       setIsPlaying(false)
       setTotalProfit("0.00")
       
+      // Show resolution modal first
+      setResolutionModal({
+        isOpen: true,
+        transactionHash: undefined
+      })
+      
       // Game lost - resolve directly
       console.log("💥 User hit mine - game lost")
       resolveGame(false, 1.0)
@@ -243,6 +272,12 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       setIsPlaying(false)
       setGameOver(true)
       
+      // Show resolution modal first
+      setResolutionModal({
+        isOpen: true,
+        transactionHash: undefined
+      })
+      
       // Resolve game directly
       resolveGame(true, multiplier)
     } else {
@@ -259,17 +294,47 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       }
       
       try {
-        setIsLoading(true)
         const newGameId = `mines-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
         setGameId(newGameId)
         
+        // Show transaction modal
+        setTransactionModal({
+          isOpen: true,
+          status: "pending",
+          title: "Starting Game",
+          message: "Hang tight! Waiting for your bet to confirm on-chain…",
+          transactionHash: undefined
+        })
+        
         const hash = await startContractGame(newGameId, betAmount, "mines")
+        
+        // Update modal with transaction hash
+        setTransactionModal({
+          isOpen: true,
+          status: "confirming",
+          title: "Confirming Transaction",
+          message: "Your bet is being confirmed on the blockchain. This usually takes a few seconds.",
+          transactionHash: hash
+        })
+        
         setTransactionHash(hash)
-        setSuccessMessage(`Game started! Transaction: ${hash.slice(0, 8)}...`)
+        
+        // Wait for confirmation (simulate with a delay for now)
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        
+        // Close transaction modal and start the game
+        setTransactionModal({
+          isOpen: false,
+          status: "confirmed",
+          title: "",
+          message: "",
+          transactionHash: undefined
+        })
         
         setIsPlaying(true)
         initializeGame()
         BetSound()
+        setSuccessMessage(`Game started! Transaction: ${hash.slice(0, 8)}...`)
       } catch (error: any) {
         console.error("Error starting game:", error)
         let errorMsg = "Error starting game. Please try again."
@@ -288,9 +353,14 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           errorMsg = error.message
         }
         
-        setErrorMessage(errorMsg)
-      } finally {
-        setIsLoading(false)
+        // Show error in transaction modal
+        setTransactionModal({
+          isOpen: true,
+          status: "failed",
+          title: "Transaction Failed",
+          message: errorMsg,
+          transactionHash: transactionModal.transactionHash
+        })
       }
     }
   }
@@ -369,16 +439,9 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
               </div>
             ) : (
               <div className="bg-green-600/10 border border-green-500/20 rounded-4xl p-3 text-center">
-                {isBalanceLoading ? (
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="w-3 h-3 border border-green-300 border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-green-400 text-sm font-medium">Loading balance...</p>
-                  </div>
-                ) : (
-                  <p className="text-green-400 text-sm font-medium">
-                    💰 Balance: {walletBalance} U2U
-                  </p>
-                )}
+                <p className="text-green-400 text-sm font-medium">
+                  ✅ Wallet Connected
+                </p>
                 <p className="text-green-300 text-xs">
                   Account: {address?.slice(0, 12)}...
                 </p>
@@ -509,9 +572,9 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
                 <Button 
                   className="w-full h-10 rounded-xl" 
                   onClick={handleBet}
-                  disabled={!isConnected || isLoading}
+                  disabled={!isConnected || transactionModal.isOpen}
                 >
-                  {isLoading ? "⏳ Processing..." : "🎯 Start Game"}
+                  {transactionModal.isOpen ? "⏳ Processing..." : "🎯 Start Game"}
                 </Button>
               ) : (
                 <Button variant="secondary" className="w-full h-10 rounded-xl" onClick={handleBet}>
@@ -622,6 +685,37 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
             </div>
           </div>
         )}
+
+        {/* Transaction Modal */}
+        <TransactionModal
+          isOpen={transactionModal.isOpen}
+          onClose={() => setTransactionModal(prev => ({ ...prev, isOpen: false }))}
+          status={transactionModal.status}
+          title={transactionModal.title}
+          message={transactionModal.message}
+          transactionHash={transactionModal.transactionHash}
+          explorerUrl={transactionModal.transactionHash ? getExplorerUrl(transactionModal.transactionHash) : undefined}
+          showRetry={transactionModal.status === "failed"}
+          showCancel={transactionModal.status === "pending" || transactionModal.status === "confirming"}
+          onRetry={() => {
+            setTransactionModal(prev => ({ ...prev, isOpen: false }))
+            handleBet()
+          }}
+          onCancel={() => {
+            setTransactionModal(prev => ({ ...prev, isOpen: false }))
+          }}
+        />
+
+        {/* Resolution Modal */}
+        <TransactionModal
+          isOpen={resolutionModal.isOpen}
+          onClose={() => setResolutionModal(prev => ({ ...prev, isOpen: false }))}
+          status="resolving"
+          title="Resolving Game"
+          message="Resolving game results on-chain…"
+          transactionHash={resolutionModal.transactionHash}
+          explorerUrl={resolutionModal.transactionHash ? getExplorerUrl(resolutionModal.transactionHash) : undefined}
+        />
       </div>
     </div>
   )

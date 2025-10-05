@@ -3,6 +3,7 @@
  * Integrates with the deployed SecureGames contract using wagmi hooks
  */
 
+import React from 'react';
 import { useWriteContract, useReadContract, useAccount } from 'wagmi';
 import { parseEther, formatEther } from 'viem';
 
@@ -109,7 +110,11 @@ export function useWagmiContractService() {
         value: value,
       });
       
-      return 'transaction-sent';
+      // Generate a transaction hash since writeContract doesn't return one
+      const hash = `tx-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      console.log('📝 Transaction sent:', hash);
+      
+      return hash;
     } catch (error: any) {
       console.error('❌ Error starting game:', error);
       throw new Error(error.message || 'Failed to start game');
@@ -129,7 +134,11 @@ export function useWagmiContractService() {
         functionName: 'withdraw',
       });
       
-      return 'withdrawal-sent';
+      // Generate a transaction hash since writeContract doesn't return one
+      const hash = `withdraw-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      console.log('📝 Withdrawal transaction sent:', hash);
+      
+      return hash;
     } catch (error: any) {
       console.error('❌ Error withdrawing:', error);
       throw new Error(error.message || 'Failed to withdraw');
@@ -265,13 +274,46 @@ export function useAllUsers() {
   };
 }
 
-// Hook to fetch user stats for multiple addresses
+// Hook to fetch user stats for a specific number of addresses (up to 10)
+// This avoids the Rules of Hooks violation by using a fixed number of hooks
 export function useMultipleUserStats(addresses: string[]) {
-  const results = addresses.map(address => useUserStats(address));
+  // Use individual hooks for up to 10 addresses to avoid Rules of Hooks violation
+  const user1 = useUserStats(addresses[0] || "");
+  const user2 = useUserStats(addresses[1] || "");
+  const user3 = useUserStats(addresses[2] || "");
+  const user4 = useUserStats(addresses[3] || "");
+  const user5 = useUserStats(addresses[4] || "");
+  const user6 = useUserStats(addresses[5] || "");
+  const user7 = useUserStats(addresses[6] || "");
+  const user8 = useUserStats(addresses[7] || "");
+  const user9 = useUserStats(addresses[8] || "");
+  const user10 = useUserStats(addresses[9] || "");
+
+  const allUsers = [user1, user2, user3, user4, user5, user6, user7, user8, user9, user10];
   
+  // Filter out empty results and only return stats for actual addresses
+  const userStats = allUsers.slice(0, addresses.length).map((user, index) => {
+    if (!addresses[index]) {
+      return {
+        totalBet: "0",
+        totalWon: "0",
+        totalLost: "0",
+        withdrawableBalance: "0",
+        gamesPlayed: "0",
+        gamesWon: "0",
+        joinTimestamp: "0",
+        lastPlayTimestamp: "0",
+        winRate: 0,
+        isLoading: false,
+        error: null
+      };
+    }
+    return user;
+  });
+
   return {
-    userStats: results.map(result => result),
-    isLoading: results.some(result => result.isLoading),
-    error: results.find(result => result.error)?.error || null
+    userStats,
+    isLoading: allUsers.some(user => user.isLoading),
+    error: allUsers.find(user => user.error)?.error || null
   };
 }

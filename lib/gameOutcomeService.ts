@@ -20,7 +20,7 @@ class GameOutcomeService {
   /**
    * Resolve game directly by sending outcome data to resolver
    */
-  async resolveGame(outcome: GameOutcome): Promise<void> {
+  async resolveGame(outcome: GameOutcome): Promise<{ transactionHash: string }> {
     try {
       console.log(`🚀 Resolving game: ${outcome.gameId} - ${outcome.didWin ? 'WIN' : 'LOSE'} at ${outcome.multiplier}x`);
       
@@ -48,6 +48,7 @@ class GameOutcomeService {
             const result = await response.json();
             console.log('✅ Game resolved successfully:', result);
             console.log('ℹ️ Transaction hash:', result.transactionHash);
+            return { transactionHash: result.transactionHash };
           } else {
             const errorData = await response.json();
             console.error('❌ Failed to resolve game:', errorData.message);
