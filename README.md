@@ -1,12 +1,12 @@
-# 🎮 Kono - Cross-Chain Gaming Platform
+# 🎮 Grass.fun - U2U Gaming Platform
 
-A revolutionary blockchain-based gaming platform built on NEAR Protocol featuring multiple casino-style games with cross-chain withdrawals via NEAR Intents. Play on NEAR, withdraw on any chain!
+A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet featuring multiple casino-style games with provably fair mechanics. Play exciting games and win real U2U tokens!
 
-![Kono Gaming Platform](https://img.shields.io/badge/Platform-NEAR%20Protocol-blue) ![NEAR Intents](https://img.shields.io/badge/Cross--Chain-NEAR%20Intents-purple) ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black) ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue) ![Smart Contract](https://img.shields.io/badge/Contract-NEAR%20SDK%20JS-green)
+![Grass.fun Gaming Platform](https://img.shields.io/badge/Platform-U2U%20Solaris%20Mainnet-blue) ![EVM Compatible](https://img.shields.io/badge/Blockchain-EVM%20Compatible-purple) ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black) ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue) ![Smart Contract](https://img.shields.io/badge/Contract-Solidity-green)
 
 <div align="center">
-  <img src="public/screenshots/banner.png" alt="Kono Gaming Platform Banner" width="800" />
-  <p><em>Experience the future of decentralized gaming</em></p>
+  <img src="public/screenshots/banner.png" alt="Grass.fun Gaming Platform Banner" width="800" />
+  <p><em>Experience the future of decentralized gaming on U2U Solaris</em></p>
 </div>
 
 ## 🌟 Features
@@ -18,19 +18,18 @@ A revolutionary blockchain-based gaming platform built on NEAR Protocol featurin
 - **Paaji On Top** - Unique grid-based game with progressive rewards
 
 ### 🔐 **Blockchain Integration**
-- **NEAR Protocol** - Fast, secure, and cost-effective transactions
-- **NEAR Intents** - Cross-chain gaming with seamless withdrawals to any chain
+- **U2U Solaris Mainnet** - Fast, secure, and cost-effective EVM-compatible blockchain
 - **Smart Contract** - Transparent, provably fair game logic
 - **Automated Resolution** - No manual intervention required
 - **Real-time Balance** - Live wallet balance updates
-- **Multi-chain Support** - Play on NEAR, withdraw on any EVM chain
+- **EVM Compatible** - Works with MetaMask and other EVM wallets
 
 ### 💰 **Financial Features**
-- **Multi-currency Support** - NEAR, USD, INR conversions
-- **Cross-chain Withdrawals** - Withdraw winnings to any EVM chain via NEAR Intents
-- **Live Exchange Rates** - Real-time currency conversion
+- **U2U Token Support** - Native U2U token integration
+- **Multi-currency Display** - U2U, USD, INR price conversions
+- **Live Exchange Rates** - Real-time U2U price conversion from CoinGecko API
 - **Balance Caching** - Optimized performance with smart caching
-- **Universal Gaming** - Play on NEAR, cash out on Ethereum, Polygon, BSC, etc.
+- **Instant Withdrawals** - Fast and secure U2U token transfers
 
 ### 📊 **Analytics & Stats**
 - **Personal Statistics** - Detailed gaming performance tracking
@@ -54,13 +53,14 @@ A revolutionary blockchain-based gaming platform built on NEAR Protocol featurin
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- NEAR wallet (MyNearWallet, Sender, Meteor etc.)
+- EVM-compatible wallet (MetaMask, WalletConnect, etc.)
+- U2U tokens for playing games
 ### Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/Debanjannnn/Loops kono
-cd kono
+git clone https://github.com/Debanjannnn/Loops Grassdotfun
+cd Grassdotfun
 ```
 
 2. **Install dependencies**
@@ -76,52 +76,32 @@ npm run dev
 4. **Open your browser**
 Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🌉 Cross-Chain Gaming with NEAR Intents
+## 🎯 U2U Gaming Features
 
-### 🚀 **Revolutionary Cross-Chain Experience**
+### 🚀 **Native U2U Integration**
 
-Kono leverages **NEAR Intents** to provide seamless cross-chain gaming experiences:
+Grass.fun is built specifically for U2U Solaris Mainnet, providing:
 
-#### **Current Implementation (Testnet)**
-- **Play on NEAR** - All games run on NEAR Protocol for fast, cheap transactions
-- **Withdraw on NEAR** - Direct withdrawals to NEAR wallet
-
-#### **Future Implementation (Mainnet)**
-- **Play on NEAR** - Continue gaming on NEAR's fast, low-cost network
-- **Withdraw Anywhere** - Cash out winnings to any EVM chain:
-  - 🟡 **Ethereum** - Withdraw to ETH mainnet
-  - 🟣 **Polygon** - Withdraw to MATIC
-  - 🟠 **BSC** - Withdraw to BNB Smart Chain
-  - 🔵 **Arbitrum** - Withdraw to ARB
-  - 🟢 **Optimism** - Withdraw to OP
-  - And many more EVM-compatible chains!
-
-#### **How NEAR Intents Work**
-1. **Game on NEAR** - Play games using NEAR's superior performance
-2. **Intent Creation** - Express intent to withdraw to specific chain
-3. **Automatic Bridge** - NEAR Intents handle cross-chain transfer
-4. **Receive on Target Chain** - Get your winnings on your preferred network
+#### **Current Features**
+- **Native U2U Support** - All games use U2U tokens
+- **Real-time Price Conversion** - Live U2U to USD/INR rates from CoinGecko
+- **Instant Withdrawals** - Fast and secure U2U token transfers
+- **EVM Compatibility** - Works with MetaMask and other EVM wallets
 
 #### **Benefits**
-- **Best of Both Worlds** - NEAR's speed + Any chain's ecosystem
-- **No Manual Bridging** - Automated cross-chain transfers
-- **Lower Fees** - Play on NEAR, pay minimal gas
-- **Universal Access** - Withdraw to any wallet on any chain
-- **Future-Proof** - Ready for multi-chain gaming expansion
+- **Low Fees** - U2U Solaris provides fast, cheap transactions
+- **High Performance** - EVM-compatible with superior speed
+- **Real-time Updates** - Live price feeds and balance updates
+- **Secure Gaming** - All transactions secured by smart contracts
 
-### 🎯 **Multi-Chain Gaming Roadmap**
+### 🎯 **Future Roadmap**
 
-#### **Phase 1: NEAR Intents Integration** ✅
-- Cross-chain withdrawals via NEAR Intents
-- Support for major EVM chains
-- Seamless user experience
+#### **Phase 1: Core Gaming** ✅
+- Multi-game support (Mines, Crash, Paaji, Coinflip)
+- Provably fair mechanics
+- Real-time price conversion
 
-#### **Phase 2: Multi-Chain Gaming** 🚧
-- Play games on multiple chains
-- Unified leaderboard across chains
-- Cross-chain tournament support
-
-#### **Phase 3: Universal Gaming** 🔮
+#### **Phase 2: Enhanced Features** 🚧
 - Play any game on any supported chain
 - Cross-chain game progression
 - Universal asset management
@@ -192,10 +172,10 @@ lib/
 └── gameOutcomeService.ts # Game resolution logic
 ```
 
-### Smart Contract (NEAR SDK JS)
+### Smart Contract (Solidity)
 ```
-contract/src/
-└── contract.ts        # Main contract logic
+contracts/
+└── SecureGames.sol    # Main contract logic
     ├── UserStats      # User statistics tracking
     ├── Game           # Game state management
     └── Resolution     # Automated game resolution
@@ -216,14 +196,12 @@ scripts/
 Create a `.env.local` file in the root directory:
 
 ```env
-# NEAR Configuration
-NEXT_PUBLIC_NEAR_NETWORK=testnet
-NEXT_PUBLIC_CONTRACT_ID=game-v0.testnet
+# U2U Solaris Configuration
+NEXT_PUBLIC_CHAIN_ID=39
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F
 
-# Resolver Configuration (for automated resolution)
-CONTRACT_ID=game-v0.testnet
-RESOLVER_ACCOUNT_ID=resolver-v0.testnet
-RESOLVER_PRIVATE_KEY=ed25519:YOUR_PRIVATE_KEY
+# WalletConnect Configuration
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id
 
 # Optional
 DEBUG=false
@@ -231,60 +209,76 @@ DEBUG=false
 
 ### Smart Contract Deployment
 
-1. **Build the contract**
+1. **Install dependencies**
 ```bash
-cd contract
-npm run build
+npm install
 ```
 
-2. **Deploy to NEAR**
+2. **Compile the contract**
 ```bash
-near deploy --wasmFile build/hello_near.wasm --accountId game-v0.testnet
+npx hardhat compile
 ```
 
-3. **Initialize the contract**
+3. **Deploy to U2U Solaris Mainnet**
 ```bash
-near call game-v0.testnet new --accountId game-v0.testnet
+npx hardhat run scripts/deploy.js --network u2uSolaris
 ```
+
+4. **Verify the contract**
+```bash
+npx hardhat verify --network u2uSolaris <CONTRACT_ADDRESS>
+```
+
+## 📋 Contract Information
+
+### Current Deployment
+- **Network**: U2U Solaris Mainnet (Chain ID: 39)
+- **Contract Address**: `0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F`
+- **Deployer**: `0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2`
+- **Transaction Hash**: `0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509ef`
+- **Block Number**: 40015168
+- **Deployed**: October 5, 2025
+
+### Contract Features
+- ✅ **Provably Fair Gaming** - All games use transparent, verifiable mechanics
+- ✅ **Multi-Game Support** - Mines, Crash, Paaji, Coinflip
+- ✅ **User Statistics** - Complete gaming history and performance tracking
+- ✅ **Instant Withdrawals** - Fast and secure U2U token transfers
+- ✅ **Real-time Price Conversion** - Live U2U to USD/INR rates
 
 ## 🎯 Game Resolution System
 
-Kono uses an automated resolver system that processes game outcomes without user intervention:
+Grass.fun uses an automated resolver system that processes game outcomes without user intervention:
 
 ### How It Works
-1. **User plays game** → Game state stored on-chain
-2. **Resolver monitors** → Automated script checks for pending games
-3. **Automatic resolution** → Games are resolved based on outcomes
-4. **Winnings credited** → Users can withdraw from stats page
+1. **User plays game** → Game state stored on-chain via smart contract
+2. **Automated resolution** → Games are resolved based on provably fair outcomes
+3. **Winnings credited** → Users can withdraw U2U tokens from stats page
+4. **Real-time updates** → All statistics and balances update instantly
 
-### Setup Resolver
-```bash
-# Install resolver dependencies
-npm run setup-resolver
-
-# Run resolver once
-npm run resolver
-
-# Run resolver continuously
-npm run resolver:watch
-```
+### Resolution Features
+- ✅ **Provably Fair** - All game outcomes are transparent and verifiable
+- ✅ **Instant Processing** - Games resolve immediately after completion
+- ✅ **Secure Withdrawals** - U2U tokens transferred directly to user wallets
+- ✅ **Complete History** - All games and transactions are recorded on-chain
 
 ## 📊 Smart Contract Methods
 
 ### User Methods
-- `play_game(gameType, betAmount)` - Start a new game
+- `startGame(gameId, gameType)` - Start a new game with U2U bet
 - `withdraw()` - Withdraw winnings to wallet
-- `get_user_stats(accountId)` - Get user statistics
+- `getUserStats(address)` - Get user statistics
 
-### Resolver Methods
-- `resolve_game(gameId, didWin, multiplier)` - Resolve a game
-- `get_pending_games()` - Get all pending games
-- `get_game_details(gameId)` - Get specific game details
+### Game Types
+- `"mines"` - Minesweeper game
+- `"crash"` - Crash multiplier game  
+- `"paaji"` - Paaji On Top game
+- `"coinflip"` - Coin flip game
 
-### View Methods
-- `get_all_users()` - Get all registered users
-- `get_leaderboard()` - Get top players
-- `get_contract_stats()` - Get platform statistics
+### Contract Events
+- `GameStarted(address indexed player, string gameId, string gameType, uint256 betAmount)`
+- `GameResolved(address indexed player, string gameId, bool didWin, uint256 multiplier)`
+- `Withdrawal(address indexed player, uint256 amount)`
 
 ## 🚀 Deployment
 
@@ -331,7 +325,7 @@ npm run resolver:watch  # Run resolver continuously
 ### Project Structure
 
 ```
-kono/
+Grassdotfun/
 ├── app/                    # Next.js app router pages
 ├── components/             # React components
 │   ├── dashboard/         # Dashboard components
@@ -339,7 +333,7 @@ kono/
 │   └── ui/                # UI components
 ├── contexts/              # React contexts
 ├── lib/                   # Utility libraries
-├── contract/              # NEAR smart contract
+├── contracts/             # U2U smart contract
 ├── scripts/               # Resolver scripts
 └── public/                # Static assets
 ```
@@ -376,7 +370,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Documentation**: Check the `/docs` folder for detailed guides
 - **Issues**: Report bugs via GitHub Issues
 - **Discord**: Join our community for support
-- **Email**: Contact us at support@kono.games
+- **Email**: Contact us at support@Grassdotfun.games
 
 ## 🎯 Roadmap
 
@@ -394,19 +388,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] **More Games** - Additional game types and variations
 
 ### 🔧 **Technical Improvements**
-- [ ] **Layer 2 Integration** - Support for NEAR L2s
+- [ ] **Layer 2 Integration** - Support for U2U L2s
 - [ ] **Advanced Analytics** - Enhanced performance tracking
 - [ ] **AI-Powered Features** - Smart game recommendations
 - [ ] **Enterprise APIs** - Developer tools and integrations
 
 ## 🙏 Acknowledgments
 
-- **NEAR Protocol** - For the amazing blockchain infrastructure
+- **U2U Solaris** - For the amazing EVM-compatible blockchain infrastructure
 - **Next.js Team** - For the excellent React framework
 - **Open Source Community** - For the incredible tools and libraries
 
 ---
 
-**Built with ❤️ by the Kono Team**
+**Built with ❤️ by the Grassdotfun Team**
 
-*Experience the future of decentralized gaming on NEAR Protocol*
+*Experience the future of decentralized gaming on U2U Solaris*
