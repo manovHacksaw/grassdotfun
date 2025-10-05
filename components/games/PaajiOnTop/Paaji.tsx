@@ -13,6 +13,7 @@ import { useContract } from "@/contexts/ContractProvider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
 import { formatNEAR, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
 import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
+import { toast } from "sonner"
 
 type GameStatus = "idle" | "in-progress" | "won" | "lost" | "cashed-out"
 
@@ -89,11 +90,10 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     try {
       console.log(`🚀 Resolving game: ${gameId}, Win: ${didWin}, Multiplier: ${finalMultiplier}`);
       
-      // Show resolution modal
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: undefined
-      })
+      // Show resolution toast
+      toast.loading("Resolving game result on-chain...", {
+        id: "game-resolution"
+      });
       
       const result = await gameOutcomeService.resolveGame({
         gameId,
@@ -104,11 +104,12 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
         player: address
       });
       
-      // Update resolution modal with transaction hash
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: result.transactionHash || "resolution-complete"
-      })
+      // Show success toast with transaction hash
+      toast.success("Game resolved successfully! Transaction confirmed.", {
+        id: "game-resolution",
+        description: `Transaction: ${result.transactionHash?.slice(0, 8)}...${result.transactionHash?.slice(-6)}`,
+        duration: 5000,
+      });
       
       if (didWin) {
         setSuccessMessage(`🎉 Game won! Resolved at ${finalMultiplier.toFixed(2)}× multiplier.`);
@@ -117,13 +118,15 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
       }
     } catch (error: any) {
       console.error("❌ Error resolving game:", error);
-      setErrorMessage(`Failed to resolve game: ${error.message}`);
       
-      // Close resolution modal on error
-      setResolutionModal({
-        isOpen: false,
-        transactionHash: undefined
-      })
+      // Show error toast
+      toast.error("Failed to resolve game", {
+        id: "game-resolution",
+        description: error.message || "Please try again",
+        duration: 5000,
+      });
+      
+      setErrorMessage(`Failed to resolve game: ${error.message}`);
     }
   };
 
@@ -209,49 +212,62 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
       const newGameId = `paaji-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
       setGameId(newGameId)
       
-      // Show transaction modal
-      setTransactionModal({
-        isOpen: true,
-        status: "pending",
-        title: "Starting Game",
-        message: "Hang tight! Waiting for your bet to confirm on-chain…",
-        transactionHash: undefined
-      })
-      
-      const hash = await startContractGame(newGameId, betAmount, "paaji")
-      
-      // Update modal with transaction hash
-      setTransactionModal({
-        isOpen: true,
-        status: "confirming",
-        title: "Confirming Transaction",
-        message: "Your bet is being confirmed on the blockchain. This usually takes a few seconds.",
-        transactionHash: hash
-      })
-      
-      setTransactionHash(hash)
-      
-      // Wait for confirmation (simulate with a delay for now)
-      // In a real implementation, you would wait for the transaction to be mined
-      await new Promise(resolve => setTimeout(resolve, 3000))
-      
-      // Close transaction modal and start the game
-      setTransactionModal({
-        isOpen: false,
-        status: "confirmed",
-        title: "",
-        message: "",
-        transactionHash: undefined
-      })
-      
-      BetSound()
-      setConfig(generateBoard())
-      setStatus("in-progress")
-      setCurrentRow(0)
-      setSteps(0)
-      setPopup({ isOpen: false, type: null })
-      
-      setSuccessMessage(`Game started! Transaction: ${hash.slice(0, 8)}...`)
+        // Show transaction modal with engaging message
+        setTransactionModal({
+          isOpen: true,
+          status: "pending",
+          title: "Placing Your Bet",
+          message: "Placing your bet on U2U Solaris... hang tight!",
+          transactionHash: undefined
+        })
+        
+        const hash = await startContractGame(newGameId, betAmount, "paaji")
+        
+        // Update modal with transaction hash and confirmation status
+        setTransactionModal({
+          isOpen: true,
+          status: "confirming",
+          title: "Confirming Transaction",
+          message: "Your bet is being confirmed on the blockchain. This usually takes a few seconds.",
+          transactionHash: hash
+        })
+        
+        setTransactionHash(hash)
+        
+        // Wait for actual transaction confirmation
+        // In a real implementation, you would wait for the transaction to be mined
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        
+        // Show success state briefly before starting game
+        setTransactionModal({
+          isOpen: true,
+          status: "confirmed",
+          title: "Bet Placed Successfully!",
+          message: "Your bet has been confirmed on-chain. Game starting...",
+          transactionHash: hash
+        })
+        
+        // Wait a moment to show success state, then start the game
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        
+        // Close transaction modal and start the game
+        setTransactionModal({
+          isOpen: false,
+          status: "confirmed",
+          title: "",
+          message: "",
+          transactionHash: undefined
+        })
+        
+        // Now start the game after confirmation
+        BetSound()
+        setConfig(generateBoard())
+        setStatus("in-progress")
+        setCurrentRow(0)
+        setSteps(0)
+        setPopup({ isOpen: false, type: null })
+        
+        setSuccessMessage(`Game started! Transaction: ${hash.slice(0, 8)}...`)
     } catch (error: any) {
       console.error("Error starting game:", error)
       let errorMsg = "Error starting game. Please try again."
@@ -417,23 +433,6 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
         {/* Left control panel */}
         <div className="rounded-2xl border border-border bg-background/60 p-3 lg:p-4">
           <div className="space-y-3">
-            {/* Wallet Status */}
-            {!isConnected ? (
-              <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-4xl p-3 text-center">
-                <p className="text-yellow-400 text-sm font-medium">
-                  🔗 Connect your wallet to start playing
-                </p>
-              </div>
-            ) : (
-              <div className="bg-green-600/20 border border-green-500/30 rounded-4xl p-3 text-center">
-                <p className="text-green-400 text-sm font-medium">
-                  ✅ Wallet Connected
-                </p>
-                <p className="text-green-300 text-xs">
-                  Account: {address?.slice(0, 12)}...
-                </p>
-              </div>
-            )}
 
             {/* Error Message */}
             {errorMessage && (

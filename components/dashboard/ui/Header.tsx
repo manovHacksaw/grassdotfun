@@ -3,9 +3,9 @@
 import ConnectWalletButton from "@/components/wallet/ConnectWalletButton"
 import { useEffect, useState } from "react"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select"
 import AppSidebar from "@/components/dashboard/ui/SidebarTabs"
-import { ShimmerButton } from "@/components/magicui/shimmer-button"
+import { Badge } from "@/components/ui/badge"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface DashboardHeaderProps {
   title?: string
@@ -14,17 +14,9 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({ title = "Grass", balanceInNEAR }: DashboardHeaderProps) {
   const { isConnected, balance } = useWagmiWallet()
-  const [chain, setChain] = useState<string>("near")
-  const chains = [
-    { value: "near", label: "NEAR", icon: "/near.png" },
-    { value: "arbitrum", label: "Arbitrum", icon: "/arb.png" },
-    { value: "base", label: "Base", icon: "/base.png" },
-    { value: "ethereum", label: "Ethereum", icon: "/eth.png" },
-  ] as const
-  const selectedChain = chains.find((c) => c.value === chain)
 
   return (
-    <>
+    <TooltipProvider>
       <AppSidebar />
 
       {/* make header transparent, fully rounded, and offset from left to clear the sidebar.
@@ -34,41 +26,24 @@ export default function DashboardHeader({ title = "Grass", balanceInNEAR }: Dash
         aria-label="Main header"
       >
         <div className="relative mx-auto flex h-14 items-center justify-end px-2 md:px-3">
-          {/* Right: Chain selector, Wallet connect */}
+          {/* Right: Network indicator, Wallet connect */}
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="flex items-center gap-2">
-              <Select value={chain} onValueChange={setChain}>
-                <SelectTrigger size="sm" className="rounded-full border-white/10 bg-white/5 text-white">
-                  <SelectValue placeholder="Select chain">
-                    {selectedChain ? (
-                      <span className="flex items-center gap-2">
-                        <img
-                          src={selectedChain.icon || "/placeholder.svg"}
-                          alt={selectedChain.label}
-                          className="h-4 w-4 rounded-sm"
-                        />
-                        <span className="hidden sm:inline">{selectedChain.label}</span>
-                      </span>
-                    ) : null}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent className="backdrop-blur-md bg-background/80 border-border text-foreground">
-                  {chains.map((c) => (
-                    <SelectItem key={c.value} value={c.value}>
-                      <span className="flex items-center gap-2">
-                        <img src={c.icon || "/placeholder.svg"} alt={c.label} className="h-4 w-4 rounded-sm" />
-                        <span>{c.label}</span>
-                      </span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {/* U2U Solaris Mainnet Network Badge */}
+            <Badge 
+              variant="outline" 
+              className="rounded-full border-white/20 bg-white/10 text-white hover:bg-white/20 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="hidden sm:inline">U2U Solaris Mainnet</span>
+                <span className="sm:hidden">U2U</span>
+              </div>
+            </Badge>
 
             <ConnectWalletButton />
           </div>
         </div>
       </header>
-    </>
+    </TooltipProvider>
   )
 }

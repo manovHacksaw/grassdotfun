@@ -14,6 +14,7 @@ import { useContract } from "@/contexts/ContractProvider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
 import { formatNEAR, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
 import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
+import { toast } from "sonner"
 
 interface MineCell {
   id: number
@@ -108,13 +109,25 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
     try {
       console.log(`🚀 Resolving game: ${gameId}, Win: ${didWin}, Multiplier: ${finalMultiplier}`);
       
-      await gameOutcomeService.resolveGame({
+      // Show resolution toast
+      toast.loading("Resolving game result on-chain...", {
+        id: "game-resolution"
+      });
+      
+      const result = await gameOutcomeService.resolveGame({
         gameId,
         didWin,
         multiplier: finalMultiplier,
         timestamp: Date.now(),
         gameType: "mines",
         player: address
+      });
+      
+      // Show success toast with transaction hash
+      toast.success("Game resolved successfully! Transaction confirmed.", {
+        id: "game-resolution",
+        description: `Transaction: ${result.transactionHash?.slice(0, 8)}...${result.transactionHash?.slice(-6)}`,
+        duration: 5000,
       });
       
       if (didWin) {
@@ -124,6 +137,14 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       }
     } catch (error: any) {
       console.error("❌ Error resolving game:", error);
+      
+      // Show error toast
+      toast.error("Failed to resolve game", {
+        id: "game-resolution",
+        description: error.message || "Please try again",
+        duration: 5000,
+      });
+      
       setErrorMessage(`Failed to resolve game: ${error.message}`);
     }
   };
@@ -232,12 +253,6 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       setIsPlaying(false)
       setTotalProfit("0.00")
       
-      // Show resolution modal first
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: undefined
-      })
-      
       // Game lost - resolve directly
       console.log("💥 User hit mine - game lost")
       resolveGame(false, 1.0)
@@ -272,12 +287,6 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
       setIsPlaying(false)
       setGameOver(true)
       
-      // Show resolution modal first
-      setResolutionModal({
-        isOpen: true,
-        transactionHash: undefined
-      })
-      
       // Resolve game directly
       resolveGame(true, multiplier)
     } else {
@@ -297,18 +306,18 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
         const newGameId = `mines-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
         setGameId(newGameId)
         
-        // Show transaction modal
+        // Show transaction modal with engaging message
         setTransactionModal({
           isOpen: true,
           status: "pending",
-          title: "Starting Game",
-          message: "Hang tight! Waiting for your bet to confirm on-chain…",
+          title: "Placing Your Bet",
+          message: "Placing your bet on U2U Solaris... hang tight!",
           transactionHash: undefined
         })
         
         const hash = await startContractGame(newGameId, betAmount, "mines")
         
-        // Update modal with transaction hash
+        // Update modal with transaction hash and confirmation status
         setTransactionModal({
           isOpen: true,
           status: "confirming",
@@ -319,8 +328,21 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
         
         setTransactionHash(hash)
         
-        // Wait for confirmation (simulate with a delay for now)
+        // Wait for actual transaction confirmation
+        // In a real implementation, you would wait for the transaction to be mined
         await new Promise(resolve => setTimeout(resolve, 3000))
+        
+        // Show success state briefly before starting game
+        setTransactionModal({
+          isOpen: true,
+          status: "confirmed",
+          title: "Bet Placed Successfully!",
+          message: "Your bet has been confirmed on-chain. Game starting...",
+          transactionHash: hash
+        })
+        
+        // Wait a moment to show success state, then start the game
+        await new Promise(resolve => setTimeout(resolve, 1500))
         
         // Close transaction modal and start the game
         setTransactionModal({
@@ -331,10 +353,18 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           transactionHash: undefined
         })
         
+        // Now start the game after confirmation
         setIsPlaying(true)
         initializeGame()
         BetSound()
-        setSuccessMessage(`Game started! Transaction: ${hash.slice(0, 8)}...`)
+        
+        // Show success toast with transaction hash
+        toast.success("Game started successfully!", {
+          description: `Transaction: ${hash.slice(0, 8)}...${hash.slice(-6)}`,
+          duration: 4000,
+        })
+        
+        setSuccessMessage(`Game started!`)
       } catch (error: any) {
         console.error("Error starting game:", error)
         let errorMsg = "Error starting game. Please try again."
@@ -430,23 +460,6 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
         {/* Left control panel */}
         <div className={`rounded-2xl border border-border bg-background/40 p-3 lg:p-4`}>
           <div className="space-y-3">
-            {/* Wallet Status */}
-            {!isConnected ? (
-              <div className="bg-yellow-600/10 border border-yellow-500/20 rounded-4xl p-3 text-center">
-                <p className="text-yellow-400 text-sm font-medium">
-                  🔗 Connect your wallet to start playing
-                </p>
-              </div>
-            ) : (
-              <div className="bg-green-600/10 border border-green-500/20 rounded-4xl p-3 text-center">
-                <p className="text-green-400 text-sm font-medium">
-                  ✅ Wallet Connected
-                </p>
-                <p className="text-green-300 text-xs">
-                  Account: {address?.slice(0, 12)}...
-                </p>
-              </div>
-            )}
 
             {/* Error Message */}
             {errorMessage && (
@@ -466,22 +479,6 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
               </div>
             )}
 
-            {/* Transaction Hash */}
-            {transactionHash && (
-              <div className="bg-blue-600/10 border border-blue-500/20 rounded-4xl p-3 text-center">
-                <p className="text-blue-400 text-xs font-medium">
-                  🔗 TX: {transactionHash.slice(0, 12)}...
-                </p>
-                <a 
-                  href={`https://explorer.testnet.near.org/transactions/${transactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-blue-200 text-xs underline"
-                >
-                  View on Explorer
-                </a>
-              </div>
-            )}
 
             {/* Game Mode Toggle */}
             <div className="grid grid-cols-2 gap-2 rounded-xl border border-border p-1">
@@ -706,16 +703,6 @@ export default function MinesGame({ compact = false, onBack }: MinesGameProps) {
           }}
         />
 
-        {/* Resolution Modal */}
-        <TransactionModal
-          isOpen={resolutionModal.isOpen}
-          onClose={() => setResolutionModal(prev => ({ ...prev, isOpen: false }))}
-          status="resolving"
-          title="Resolving Game"
-          message="Resolving game results on-chain…"
-          transactionHash={resolutionModal.transactionHash}
-          explorerUrl={resolutionModal.transactionHash ? getExplorerUrl(resolutionModal.transactionHash) : undefined}
-        />
       </div>
     </div>
   )

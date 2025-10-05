@@ -22,6 +22,7 @@ import NearkMarketWork from "@/components/dashboard/ui/nearkmarketwork"
 import { useRouter } from "next/navigation"
 import LoadingScreen from "@/components/ui/LoadingScreen"
 import Leaderboard from "@/components/dashboard/ui/Leaderboard"
+import WalletGate from "@/components/ui/WalletGate"
 
 export default function DashboardPage() {
   const { selectedSection, setSelectedSection, mode } = useUI()
@@ -108,19 +109,35 @@ export default function DashboardPage() {
     }
 
     if (selectedSection === "mines") {
-      return <MinesGame />
+      return (
+        <WalletGate>
+          <MinesGame />
+        </WalletGate>
+      )
     }
 
     if (selectedSection === "rugs") {
-      return <CrashGame />
+      return (
+        <WalletGate>
+          <CrashGame />
+        </WalletGate>
+      )
     }
 
     if (selectedSection === "paaji") {
-      return <PaajiOnTop />
+      return (
+        <WalletGate>
+          <PaajiOnTop />
+        </WalletGate>
+      )
     }
 
     if (selectedSection === "coinflip") {
-      return <Coinflip />
+      return (
+        <WalletGate>
+          <Coinflip />
+        </WalletGate>
+      )
     }
 
     if (selectedSection === "stats") {
@@ -133,15 +150,29 @@ export default function DashboardPage() {
 
     if (selectedSection === "games") {
       if (!activeGame) return <GamePicker onPick={(g) => setActiveGame(g)} />
-      if (activeGame === "mines") return <MinesGame onBack={() => setActiveGame(null)} />
-      if (activeGame === "rugs") return (<>
-        {/* @ts-expect-error - allow onBack prop for now */}
-        <CrashGame onBack={() => setActiveGame(null)} />
-      </>)
-      // @ts-expect-error - allow onBack prop for now
-      if (activeGame === "paaji") return <PaajiOnTop onBack={() => setActiveGame(null)} />
-      // @ts-expect-error - allow onBack prop for now
-      if (activeGame === "coinflip") return <Coinflip onBack={() => setActiveGame(null)} />
+      if (activeGame === "mines") return (
+        <WalletGate>
+          <MinesGame onBack={() => setActiveGame(null)} />
+        </WalletGate>
+      )
+      if (activeGame === "rugs") return (
+        <WalletGate>
+          {/* @ts-expect-error - allow onBack prop for now */}
+          <CrashGame onBack={() => setActiveGame(null)} />
+        </WalletGate>
+      )
+      if (activeGame === "paaji") return (
+        <WalletGate>
+          {/* @ts-expect-error - allow onBack prop for now */}
+          <PaajiOnTop onBack={() => setActiveGame(null)} />
+        </WalletGate>
+      )
+      if (activeGame === "coinflip") return (
+        <WalletGate>
+          {/* @ts-expect-error - allow onBack prop for now */}
+          <Coinflip onBack={() => setActiveGame(null)} />
+        </WalletGate>
+      )
       return null
     }
     return <UserStats />

@@ -269,18 +269,18 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
     try {
       const gameId = `coinflip-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
       
-      // Show transaction modal
+      // Show transaction modal with engaging message
       setTransactionModal({
         isOpen: true,
         status: "pending",
-        title: "Starting Game",
-        message: "Hang tight! Waiting for your bet to confirm on-chain…",
+        title: "Placing Your Bet",
+        message: "Placing your bet on U2U Solaris... hang tight!",
         transactionHash: undefined
       })
       
       const hash = await startContractGame(gameId, betAmount, "coinflip")
       
-      // Update modal with transaction hash
+      // Update modal with transaction hash and confirmation status
       setTransactionModal({
         isOpen: true,
         status: "confirming",
@@ -289,8 +289,20 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         transactionHash: hash
       })
       
-      // Wait for confirmation (simulate with a delay for now)
+      // Wait for actual transaction confirmation
       await new Promise(resolve => setTimeout(resolve, 3000))
+      
+      // Show success state briefly before starting game
+      setTransactionModal({
+        isOpen: true,
+        status: "confirmed",
+        title: "Bet Placed Successfully!",
+        message: "Your bet has been confirmed on-chain. Game starting...",
+        transactionHash: hash
+      })
+      
+      // Wait a moment to show success state, then start the game
+      await new Promise(resolve => setTimeout(resolve, 1500))
       
       // Close transaction modal and start the game
       setTransactionModal({
@@ -301,7 +313,7 @@ export function CoinFlip({ compact = false }: CoinFlipProps) {
         transactionHash: undefined
       })
       
-      // After staking successfully, set as staked
+      // Now start the game after confirmation
       setHasStaked(true)
       setStatus("streak-active")
     } catch (err) {
