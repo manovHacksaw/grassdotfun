@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import DashboardHeader from "@/components/dashboard/ui/Header"
 import SidebarTabs from "@/components/dashboard/ui/SidebarTabs"
 import GameContainer from "@/components/dashboard/ui/GameContainer"
@@ -32,7 +32,6 @@ export default function DashboardPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All")
   // const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const categories = ["All", "Duel Poker", "Scratchcards", "Crash", "Blackjack", "Live Games"]
 
   // Loading timer - show loading for 1 second
   // useEffect(() => {

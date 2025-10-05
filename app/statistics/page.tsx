@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useReadContract } from "wagmi"
 import SecureGamesABI from "../../contract/abi.json"
-import { formatEther } from "viem"
 import { 
   Trophy, 
   TrendingUp, 
@@ -14,9 +13,6 @@ import {
   DollarSign, 
   Gamepad2, 
   Target, 
-  Calendar,
-  Clock,
-  Award,
   BarChart3,
   PieChart,
   Activity,
@@ -33,6 +29,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   PieChart as RechartsPieChart,
+  Pie,
   Cell,
   LineChart,
   Line,
@@ -144,7 +141,7 @@ export default function StatisticsPage() {
     setIsLoading(true)
     try {
       await refetchStats()
-    } catch (err) {
+    } catch {
       setError("Failed to refresh statistics")
     } finally {
       setIsLoading(false)

@@ -20,10 +20,16 @@ export default function TestWalletPage() {
                 {isConnected ? "Yes" : "No"}
               </span>
             </div>
-            {accountId && (
+            {address && (
               <div>
-                <span className="text-white/70">Account ID: </span>
-                <span className="text-white font-mono">{accountId}</span>
+                <span className="text-white/70">Address: </span>
+                <span className="text-white font-mono">{address}</span>
+              </div>
+            )}
+            {balance && (
+              <div>
+                <span className="text-white/70">Balance: </span>
+                <span className="text-white font-mono">{balance} ETH</span>
               </div>
             )}
           </div>

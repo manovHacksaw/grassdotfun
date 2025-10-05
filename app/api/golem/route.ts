@@ -5,7 +5,6 @@ import {
   Tagged,
   GolemBaseCreate,
   Annotation,
-  GolemBaseUpdate,
 } from "golem-base-sdk";
 
 const key: AccountData = new Tagged(
@@ -21,15 +20,19 @@ const wsUrl = "wss://kaolin.holesky.golemdb.io/rpc/ws"; // WebSocket URL of the 
 
 // TextEncoder and TextDecoder are used to encode and decode data from text into bytes and vice versa
 const encoder = new TextEncoder();
-const decoder = new TextDecoder();
 
 // Create a client to interact with the GolemDB API
-const client = await createClient(chainId, key, rpcUrl, wsUrl);
+let client: ReturnType<typeof createClient> | null = null;
 
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    // Initialize client if not already done
+    if (!client) {
+      client = await createClient(chainId, key, rpcUrl, wsUrl);
+    }
+    
     const body = await request.json(); // Fix: Add parentheses
     console.log("Received data:", body);
 

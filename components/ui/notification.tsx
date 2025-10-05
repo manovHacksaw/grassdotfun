@@ -164,24 +164,25 @@ function NotificationItem({ notification, onRemove }: { notification: Notificati
 }
 
 // Helper functions for common notifications
-export const notify = {
-  success: (title: string, message: string, options?: Partial<Notification>) => {
-    const { addNotification } = useNotifications()
-    addNotification({ type: "success", title, message, ...options })
-  },
+// Note: These should be used within React components that have access to the NotificationProvider
+export const createNotificationHelpers = () => {
+  const { addNotification } = useNotifications()
   
-  error: (title: string, message: string, options?: Partial<Notification>) => {
-    const { addNotification } = useNotifications()
-    addNotification({ type: "error", title, message, ...options })
-  },
-  
-  warning: (title: string, message: string, options?: Partial<Notification>) => {
-    const { addNotification } = useNotifications()
-    addNotification({ type: "warning", title, message, ...options })
-  },
-  
-  info: (title: string, message: string, options?: Partial<Notification>) => {
-    const { addNotification } = useNotifications()
-    addNotification({ type: "info", title, message, ...options })
+  return {
+    success: (title: string, message: string, options?: Partial<Notification>) => {
+      addNotification({ type: "success", title, message, ...options })
+    },
+    
+    error: (title: string, message: string, options?: Partial<Notification>) => {
+      addNotification({ type: "error", title, message, ...options })
+    },
+    
+    warning: (title: string, message: string, options?: Partial<Notification>) => {
+      addNotification({ type: "warning", title, message, ...options })
+    },
+    
+    info: (title: string, message: string, options?: Partial<Notification>) => {
+      addNotification({ type: "info", title, message, ...options })
+    }
   }
 }

@@ -1,21 +1,19 @@
 import type { NextConfig } from "next";
-import path from "path";
-
-const projectRoot = path.dirname(new URL(import.meta.url).pathname);
 
 const nextConfig: NextConfig = {
   /* config options here */
   eslint: {
-    // Ignore ESLint errors during production builds
+    // Temporarily ignore ESLint errors during production builds for deployment
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // Ignore TypeScript build errors during production builds
+    // Temporarily ignore TypeScript build errors during production builds for deployment
     ignoreBuildErrors: true,
   },
-  turbopack: {
-    // Explicitly set the root to avoid incorrect workspace root inference
-    root: projectRoot,
+  // Remove turbopack config for production builds
+  experimental: {
+    // Enable optimizations for production
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
   async headers() {
     return [

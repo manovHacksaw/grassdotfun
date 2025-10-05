@@ -39,10 +39,10 @@ export async function POST(request: NextRequest) {
       note: "Game resolved using mock resolver for U2U development"
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error resolving game:', error);
     return NextResponse.json(
-      { success: false, message: `Error resolving game: ${error.message}` },
+      { success: false, message: `Error resolving game: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     );
   }

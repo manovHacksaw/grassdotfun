@@ -81,8 +81,8 @@ export default function AdminDashboard() {
         const errorData = await response.json()
         setErrorMessage(`Failed to resolve game: ${errorData.message}`)
       }
-    } catch (error: any) {
-      setErrorMessage(`Failed to resolve game: ${error.message}`)
+    } catch (error: unknown) {
+      setErrorMessage(`Failed to resolve game: ${error instanceof Error ? error.message : 'Unknown error'}`)
     } finally {
       setIsLoading(false)
     }
@@ -106,11 +106,11 @@ export default function AdminDashboard() {
 
   // Auto-fetch data on load
   useEffect(() => {
-    if (isConnected && contractService) {
+    if (isConnected) {
       fetchContractStats()
       fetchResolverAccount()
     }
-  }, [isConnected, contractService])
+  }, [isConnected, fetchContractStats, fetchResolverAccount])
 
   if (!isConnected) {
     return (
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-green-400 text-sm font-medium">🔗 Wallet Connected</p>
-              <p className="text-green-300 text-xs">Account: {accountId}</p>
+              <p className="text-green-300 text-xs">Account: {address}</p>
             </div>
             <div className="text-right">
               <p className="text-green-400 text-sm font-medium">Resolver Account</p>

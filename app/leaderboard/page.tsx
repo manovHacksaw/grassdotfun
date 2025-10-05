@@ -6,20 +6,12 @@ import { Button } from "@/components/ui/button"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useReadContract } from "wagmi"
 import SecureGamesABI from "../../contract/abi.json"
-import { formatEther } from "viem"
 import { 
   Trophy, 
   Medal, 
   Crown, 
-  TrendingUp, 
   Users, 
   RefreshCw,
-  Award,
-  Target,
-  DollarSign,
-  Gamepad2,
-  Calendar,
-  Clock,
   BarChart3,
   Filter,
   Search
@@ -31,11 +23,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  Area,
-  AreaChart
+  ResponsiveContainer
 } from "recharts"
 
 const CONTRACT_ADDRESS = '0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F'
@@ -164,9 +152,9 @@ export default function LeaderboardPage() {
       setLastRefresh(new Date())
       console.log("🏆 Leaderboard updated with", sortedUsers.length, "users")
       
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("❌ Failed to fetch leaderboard:", error)
-      setError(error.message || "Failed to fetch leaderboard data")
+      setError(error instanceof Error ? error.message : "Failed to fetch leaderboard data")
     } finally {
       setIsLoading(false)
     }
@@ -178,13 +166,13 @@ export default function LeaderboardPage() {
       const userAddresses = allUsers.map(addr => addr.toLowerCase())
       fetchUserStats(userAddresses)
     }
-  }, [allUsers, sortBy])
+  }, [allUsers, sortBy, fetchUserStats])
 
   const handleRefresh = async () => {
     setIsLoading(true)
     try {
       await refetchUsers()
-    } catch (err) {
+    } catch {
       setError("Failed to refresh leaderboard")
     } finally {
       setIsLoading(false)

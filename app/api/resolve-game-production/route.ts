@@ -45,13 +45,13 @@ export async function POST(request: NextRequest) {
       message: 'Game resolved successfully'
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error resolving game:', error);
     
     return NextResponse.json(
       { 
         error: 'Failed to resolve game',
-        message: error.message || 'Unknown error occurred'
+        message: error instanceof Error ? error.message : 'Unknown error occurred'
       },
       { status: 500 }
     );
