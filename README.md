@@ -5,7 +5,9 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 ![Grass.fun Gaming Platform](https://img.shields.io/badge/Platform-U2U%20Solaris%20Mainnet-blue) ![EVM Compatible](https://img.shields.io/badge/Blockchain-EVM%20Compatible-purple) ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black) ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue) ![Smart Contract](https://img.shields.io/badge/Contract-Solidity-green)
 
 <div align="center">
-  <img src="public/screenshots/banner.png" alt="Grass.fun Gaming Platform Banner" width="800" />
+ 
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b951add3-9e32-4c15-ba4d-f5a5b130c020" />
+
   <p><em>Experience the future of decentralized gaming on U2U Solaris</em></p>
 </div>
 
@@ -38,7 +40,8 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 - **Performance Charts** - Visual analytics and trends
 
 <div align="center">
-  <img src="public/screenshots/user_stats.jpeg" alt="User Statistics Dashboard" width="600" />
+ <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4ab28663-32d5-464f-aed0-31414da24be9" />
+
   <p><em>Comprehensive performance tracking and analytics</em></p>
 </div>
 
@@ -133,7 +136,8 @@ Grass.fun is built specifically for U2U Solaris Mainnet, providing:
 - **Strategy**: Pure chance with optimal betting
 
 <div align="center">
-  <img src="public/screenshots/coin_flip.jpeg" alt="Coinflip Game Interface" width="600" />
+ <img width="1921" height="919" alt="image" src="https://github.com/user-attachments/assets/28e0b0db-e672-45ab-af69-2e2679c7cb89" />
+
   <p><em>Classic heads or tails with instant results</em></p>
 </div>
 
@@ -144,7 +148,8 @@ Grass.fun is built specifically for U2U Solaris Mainnet, providing:
 - **Strategy**: Risk management and timing
 
 <div align="center">
-  <img src="public/screenshots/mines_game.jpeg" alt="Mines Game Interface" width="600" />
+  <img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/861aa3a9-19a1-4071-8429-50a6ae4964af" />
+
   <p><em>Navigate the minefield and collect gems</em></p>
 </div>
 
@@ -154,6 +159,9 @@ Grass.fun is built specifically for U2U Solaris Mainnet, providing:
 - **Risk Level**: High
 - **Strategy**: Timing and risk assessment
 
+  <img width="1918" height="925" alt="image" src="https://github.com/user-attachments/assets/fe1f3889-6a0f-4bea-83d2-9a5bedc0d253" />
+
+
 ### 🎯 Paaji On Top
 - **Objective**: Navigate the grid to reach the top
 - **Multipliers**: Progressive rewards
@@ -161,7 +169,8 @@ Grass.fun is built specifically for U2U Solaris Mainnet, providing:
 - **Strategy**: Path optimization and risk management
 
 <div align="center">
-  <img src="public/screenshots/paaji.jpeg" alt="Paaji On Top Game Interface" width="600" />
+<img width="1924" height="919" alt="image" src="https://github.com/user-attachments/assets/8fc925e6-ba2c-4d45-8c5d-137a944f5a56" />
+
   <p><em>Strategic grid navigation with progressive rewards</em></p>
 </div>
 
@@ -170,7 +179,8 @@ Grass.fun is built specifically for U2U Solaris Mainnet, providing:
 Compete with players worldwide and climb the rankings!
 
 <div align="center">
-  <img src="public/screenshots/leaderboard.jpeg" alt="Global Leaderboard" width="600" />
+ <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/16858d34-fd07-4c98-8e42-fe0ffeb4b186" />
+
   <p><em>Track your progress against the best players globally</em></p>
 </div>
 
