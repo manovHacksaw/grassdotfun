@@ -50,9 +50,9 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 
 ### Current Deployment
 - **Network**: U2U Solaris Mainnet (Chain ID: 39)
-- **Contract Address**: `0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F`
-- **Deployer**: `0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2`
-- **Transaction Hash**: `0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509ef`
+- **Contract Address**: `[0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F](https://u2uscan.xyz/address/0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F)`
+- **Deployer**: `[0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2]((https://u2uscan.xyz/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2))`
+- **Transaction Hash**: `[0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509e](https://u2uscan.xyz/tx/0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509ef)`
 - **Block Number**: 40015168
 - **Deployed**: October 5, 2025
 
