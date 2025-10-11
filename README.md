@@ -42,6 +42,24 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
   <p><em>Comprehensive performance tracking and analytics</em></p>
 </div>
 
+
+## 📋 Contract Information
+
+### Current Deployment
+- **Network**: U2U Solaris Mainnet (Chain ID: 39)
+- **Contract Address**: `0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F`
+- **Deployer**: `0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2`
+- **Transaction Hash**: `0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509ef`
+- **Block Number**: 40015168
+- **Deployed**: October 5, 2025
+
+### Contract Features
+- ✅ **Provably Fair Gaming** - All games use transparent, verifiable mechanics
+- ✅ **Multi-Game Support** - Mines, Crash, Paaji, Coinflip
+- ✅ **User Statistics** - Complete gaming history and performance tracking
+- ✅ **Instant Withdrawals** - Fast and secure U2U token transfers
+- ✅ **Real-time Price Conversion** - Live U2U to USD/INR rates
+
 ### 🎨 **Modern UI/UX**
 - **Responsive Design** - Works on all devices
 - **Dark Theme** - Eye-friendly gaming interface
@@ -229,22 +247,7 @@ npx hardhat run scripts/deploy.js --network u2uSolaris
 npx hardhat verify --network u2uSolaris <CONTRACT_ADDRESS>
 ```
 
-## 📋 Contract Information
 
-### Current Deployment
-- **Network**: U2U Solaris Mainnet (Chain ID: 39)
-- **Contract Address**: `0x4141fE3C1bD052dCcAb0fc54A816672447cDf14F`
-- **Deployer**: `0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2`
-- **Transaction Hash**: `0x249a4316ccc0bb09f47d586f76b82c81de1c84f22555a52ba66e937e169509ef`
-- **Block Number**: 40015168
-- **Deployed**: October 5, 2025
-
-### Contract Features
-- ✅ **Provably Fair Gaming** - All games use transparent, verifiable mechanics
-- ✅ **Multi-Game Support** - Mines, Crash, Paaji, Coinflip
-- ✅ **User Statistics** - Complete gaming history and performance tracking
-- ✅ **Instant Withdrawals** - Fast and secure U2U token transfers
-- ✅ **Real-time Price Conversion** - Live U2U to USD/INR rates
 
 ## 🎯 Game Resolution System
 
