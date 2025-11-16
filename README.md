@@ -1,14 +1,14 @@
-# 🎮 Grass.fun - U2U Gaming Platform
+# 🎮 Grass.fun - CELO Gaming Platform
 
-A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet featuring multiple casino-style games with provably fair mechanics. Play exciting games and win real U2U tokens!
+A revolutionary blockchain-based gaming platform built on CELO Mainnet featuring multiple casino-style games with provably fair mechanics. Play exciting games and win real CELO tokens!
 
-![Grass.fun Gaming Platform](https://img.shields.io/badge/Platform-U2U%20Solaris%20Mainnet-blue) ![EVM Compatible](https://img.shields.io/badge/Blockchain-EVM%20Compatible-purple) ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black) ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue) ![Smart Contract](https://img.shields.io/badge/Contract-Solidity-green)
+![Grass.fun Gaming Platform](https://img.shields.io/badge/Platform-CELO%20Mainnet-blue) ![EVM Compatible](https://img.shields.io/badge/Blockchain-EVM%20Compatible-purple) ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black) ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue) ![Smart Contract](https://img.shields.io/badge/Contract-Solidity-green)
 
 <div align="center">
  
   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b951add3-9e32-4c15-ba4d-f5a5b130c020" />
 
-  <p><em>Experience the future of decentralized gaming on U2U Solaris</em></p>
+  <p><em>Experience the future of decentralized gaming on CELO Mainnet</em></p>
 </div>
 
 ## 🌟 Features
@@ -20,18 +20,18 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 - **Paaji On Top** - Unique grid-based game with progressive rewards
 
 ### 🔐 **Blockchain Integration**
-- **U2U Solaris Mainnet** - Fast, secure, and cost-effective EVM-compatible blockchain
+- **CELO Mainnet** - Fast, secure, and cost-effective EVM-compatible blockchain
 - **Smart Contract** - Transparent, provably fair game logic
 - **Automated Resolution** - No manual intervention required
 - **Real-time Balance** - Live wallet balance updates
 - **EVM Compatible** - Works with MetaMask and other EVM wallets
 
 ### 💰 **Financial Features**
-- **U2U Token Support** - Native U2U token integration
-- **Multi-currency Display** - U2U, USD, INR price conversions
-- **Live Exchange Rates** - Real-time U2U price conversion from CoinGecko API
+- **CELO Token Support** - Native CELO token integration
+- **Multi-currency Display** - CELO, USD, INR price conversions
+- **Live Exchange Rates** - Real-time CELO price conversion from CoinGecko API
 - **Balance Caching** - Optimized performance with smart caching
-- **Instant Withdrawals** - Fast and secure U2U token transfers
+- **Instant Withdrawals** - Fast and secure CELO token transfers
 
 ### 📊 **Analytics & Stats**
 - **Personal Statistics** - Detailed gaming performance tracking
@@ -51,12 +51,11 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 
 ### Current Deployment
 
-* **Network**: CELO Sepolia Testnet (Chain ID: 11142220)
-* **Contract Address**: [0xc2a20FCFfC0eE02B1016105b359851b17B8986dA](https://celo-sepolia.blockscout.com/address/0xc2a20FCFfC0eE02B1016105b359851b17B8986dA)
-* **Deployer**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://celo-sepolia.blockscout.com/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
-* **Transaction Hash**: [View on Blockscout](https://celo-sepolia.blockscout.com)
-* **Block Number**: TBD
-* **Deployed**: TBD
+* **Network**: CELO Mainnet (Chain ID: 42220)
+* **Contract Address**: [0x61d11C622Bd98A71aD9361833379A2066Ad29CCa](https://celoscan.io/address/0x61d11C622Bd98A71aD9361833379A2066Ad29CCa)
+* **Deployer**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://celoscan.io/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
+* **Resolver**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://celoscan.io/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
+* **Explorer**: [View on Celoscan](https://celoscan.io)
 
 ---
 
@@ -65,8 +64,8 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 - ✅ **Provably Fair Gaming** - All games use transparent, verifiable mechanics
 - ✅ **Multi-Game Support** - Mines, Crash, Paaji, Coinflip
 - ✅ **User Statistics** - Complete gaming history and performance tracking
-- ✅ **Instant Withdrawals** - Fast and secure U2U token transfers
-- ✅ **Real-time Price Conversion** - Live U2U to USD/INR rates
+- ✅ **Instant Withdrawals** - Fast and secure CELO token transfers
+- ✅ **Real-time Price Conversion** - Live CELO to USD/INR rates
 
 ### 🎨 **Modern UI/UX**
 - **Responsive Design** - Works on all devices
@@ -80,7 +79,7 @@ A revolutionary blockchain-based gaming platform built on U2U Solaris Mainnet fe
 - Node.js 18+ 
 - npm or yarn
 - EVM-compatible wallet (MetaMask, WalletConnect, etc.)
-- U2U tokens for playing games
+- CELO tokens for playing games
 ### Installation
 
 1. **Clone the repository**
@@ -102,20 +101,20 @@ npm run dev
 4. **Open your browser**
 Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🎯 U2U Gaming Features
+## 🎯 CELO Gaming Features
 
-### 🚀 **Native U2U Integration**
+### 🚀 **Native CELO Integration**
 
-Grass.fun is built specifically for U2U Solaris Mainnet, providing:
+Grass.fun is built on CELO Mainnet, providing:
 
 #### **Current Features**
-- **Native U2U Support** - All games use U2U tokens
-- **Real-time Price Conversion** - Live U2U to USD/INR rates from CoinGecko
-- **Instant Withdrawals** - Fast and secure U2U token transfers
+- **Native CELO Support** - All games use CELO tokens
+- **Real-time Price Conversion** - Live CELO to USD/INR rates from CoinGecko
+- **Instant Withdrawals** - Fast and secure CELO token transfers
 - **EVM Compatibility** - Works with MetaMask and other EVM wallets
 
 #### **Benefits**
-- **Low Fees** - U2U Solaris provides fast, cheap transactions
+- **Low Fees** - CELO provides fast, cheap transactions
 - **High Performance** - EVM-compatible with superior speed
 - **Real-time Updates** - Live price feeds and balance updates
 - **Secure Gaming** - All transactions secured by smart contracts
@@ -229,9 +228,9 @@ scripts/
 Create a `.env.local` file in the root directory:
 
 ```env
-# CELO Sepolia Configuration
-NEXT_PUBLIC_CHAIN_ID=11142220
-NEXT_PUBLIC_CONTRACT_ADDRESS=0xc2a20FCFfC0eE02B1016105b359851b17B8986dA
+# CELO Mainnet Configuration
+NEXT_PUBLIC_CHAIN_ID=42220
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x61d11C622Bd98A71aD9361833379A2066Ad29CCa
 
 # WalletConnect Configuration
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id
@@ -252,14 +251,14 @@ npm install
 npx hardhat compile
 ```
 
-3. **Deploy to U2U Solaris Mainnet**
+3. **Deploy to CELO Mainnet**
 ```bash
-npx hardhat run scripts/deploy.js --network u2uSolaris
+npx hardhat run scripts/deploy.mjs --network celo
 ```
 
 4. **Verify the contract**
 ```bash
-npx hardhat verify --network u2uSolaris <CONTRACT_ADDRESS>
+npx hardhat verify --network celo <CONTRACT_ADDRESS>
 ```
 
 
@@ -271,19 +270,19 @@ Grass.fun uses an automated resolver system that processes game outcomes without
 ### How It Works
 1. **User plays game** → Game state stored on-chain via smart contract
 2. **Automated resolution** → Games are resolved based on provably fair outcomes
-3. **Winnings credited** → Users can withdraw U2U tokens from stats page
+3. **Winnings credited** → Users can withdraw CELO tokens from stats page
 4. **Real-time updates** → All statistics and balances update instantly
 
 ### Resolution Features
 - ✅ **Provably Fair** - All game outcomes are transparent and verifiable
 - ✅ **Instant Processing** - Games resolve immediately after completion
-- ✅ **Secure Withdrawals** - U2U tokens transferred directly to user wallets
+- ✅ **Secure Withdrawals** - CELO tokens transferred directly to user wallets
 - ✅ **Complete History** - All games and transactions are recorded on-chain
 
 ## 📊 Smart Contract Methods
 
 ### User Methods
-- `startGame(gameId, gameType)` - Start a new game with U2U bet
+- `startGame(gameId, gameType)` - Start a new game with CELO bet
 - `withdraw()` - Withdraw winnings to wallet
 - `getUserStats(address)` - Get user statistics
 
@@ -315,9 +314,9 @@ vercel --prod
 
 3. **Set Environment Variables**
 In Vercel dashboard, add:
-- `CONTRACT_ID=game-v0.testnet`
-- `RESOLVER_ACCOUNT_ID=resolver-v0.testnet`
-- `RESOLVER_PRIVATE_KEY=ed25519:YOUR_KEY`
+- `NEXT_PUBLIC_CHAIN_ID=42220`
+- `NEXT_PUBLIC_CONTRACT_ADDRESS=0x61d11C622Bd98A71aD9361833379A2066Ad29CCa`
+- `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id`
 
 ### Production Setup
 
@@ -351,7 +350,7 @@ Grassdotfun/
 │   └── ui/                # UI components
 ├── contexts/              # React contexts
 ├── lib/                   # Utility libraries
-├── contracts/             # U2U smart contract
+├── contracts/             # CELO smart contract
 ├── scripts/               # Resolver scripts
 └── public/                # Static assets
 ```
@@ -406,14 +405,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] **More Games** - Additional game types and variations
 
 ### 🔧 **Technical Improvements**
-- [ ] **Layer 2 Integration** - Support for U2U L2s
+- [ ] **Layer 2 Integration** - Support for CELO L2s
 - [ ] **Advanced Analytics** - Enhanced performance tracking
 - [ ] **AI-Powered Features** - Smart game recommendations
 - [ ] **Enterprise APIs** - Developer tools and integrations
 
 ## 🙏 Acknowledgments
 
-- **U2U Solaris** - For the amazing EVM-compatible blockchain infrastructure
+- **CELO** - For the amazing EVM-compatible blockchain infrastructure
 - **Next.js Team** - For the excellent React framework
 - **Open Source Community** - For the incredible tools and libraries
 
@@ -421,4 +420,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by the Grassdotfun Team**
 
-*Experience the future of decentralized gaming on U2U Solaris*
+*Experience the future of decentralized gaming on CELO Mainnet*
