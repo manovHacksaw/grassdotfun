@@ -1,0 +1,10 @@
+{
+  "network": "CELO Mainnet",
+  "chainId": 42220,
+  "contractAddress": "0x61d11C622Bd98A71aD9361833379A2066Ad29CCa",
+  "deployer": "0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2",
+  "resolver": "0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2",
+  "transactionHash": "",
+  "blockNumber": 0,
+  "timestamp": ""
+}
