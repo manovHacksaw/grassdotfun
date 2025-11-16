@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 // ContractService is deprecated - using wagmi hooks directly
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useUserStats, useContractStats, useWagmiContractService } from "@/lib/wagmiContractService"
-import { formatU2U } from "@/lib/currencyUtils"
+import { formatCELO } from "@/lib/currencyUtils"
 import { useLiveConversion } from "@/lib/useCurrencyRates"
 import {
   XAxis,
@@ -302,7 +302,7 @@ export default function UserStats() {
   ])
 
   const formatCurrency = (amount: string) => {
-    return `${formatU2U(amount)} CELO`
+    return `${formatCELO(amount)} CELO`
   }
 
   const formatDate = (dateString: string) => {
@@ -330,14 +330,14 @@ export default function UserStats() {
 
     try {
       console.log("💰 Starting withdrawal process...")
-      console.log(`💸 Withdrawing ${formatU2U(withdrawableAmount.toString())} CELO`)
+      console.log(`💸 Withdrawing ${formatCELO(withdrawableAmount.toString())} CELO`)
 
       // Call the contract withdraw function
       const result = await contractWithdraw()
       console.log("✅ Withdrawal transaction sent:", result)
 
       setSuccessMessage(
-        `🎉 Withdrawal transaction sent! ${formatU2U(withdrawableAmount.toString())} CELO will be sent to your wallet.`,
+        `🎉 Withdrawal transaction sent! ${formatCELO(withdrawableAmount.toString())} CELO will be sent to your wallet.`,
       )
       setTransactionHash(result || "withdrawal-sent")
 
@@ -434,7 +434,7 @@ export default function UserStats() {
             <div className="flex-1">
               <h3 className="text-yellow-400 text-lg font-semibold mb-1">You have winnings to withdraw</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                <span className="font-semibold text-yellow-300">{formatU2U(userStats.withdrawableBalance)} CELO</span>{" "}
+                <span className="font-semibold text-yellow-300">{formatCELO(userStats.withdrawableBalance)} CELO</span>{" "}
                 is ready to withdraw
               </p>
               <Button
@@ -448,7 +448,7 @@ export default function UserStats() {
                     Processing...
                   </>
                 ) : (
-                  <>Withdraw {formatU2U(userStats.withdrawableBalance)} CELO</>
+                  <>Withdraw {formatCELO(userStats.withdrawableBalance)} CELO</>
                 )}
               </Button>
             </div>
@@ -586,7 +586,7 @@ export default function UserStats() {
                       day: "numeric",
                     })
                   }
-                  formatter={(value: number) => [`${formatU2U(value.toString())} CELO`, "Profit/Loss"]}
+                  formatter={(value: number) => [`${formatCELO(value.toString())} CELO`, "Profit/Loss"]}
                 />
                 <Area
                   type="monotone"
@@ -687,7 +687,7 @@ export default function UserStats() {
                         {game.winRate}%
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-green-400 font-medium">{formatU2U(game.totalWon.toString())} CELO</td>
+                    <td className="py-3 px-4 text-green-400 font-medium">{formatCELO(game.totalWon.toString())} CELO</td>
                     <td className="py-3 px-4 text-white">{game.bestMultiplier.toFixed(2)}×</td>
                     <td className="py-3 px-4 text-white">{game.avgMultiplier.toFixed(2)}×</td>
                   </tr>
@@ -736,7 +736,7 @@ export default function UserStats() {
                         Withdrawing...
                       </>
                     ) : (
-                      <>💰 Withdraw {formatU2U(userStats.withdrawableBalance)} CELO</>
+                      <>💰 Withdraw {formatCELO(userStats.withdrawableBalance)} CELO</>
                     )}
                   </Button>
                   <p className="text-xs text-yellow-400/80 mt-2 text-center">

@@ -82,7 +82,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
 
   const connect = () => {
     // Simulate wallet connection
-    const dummyAccountId = "user.u2u";
+    const dummyAccountId = "user.celo";
     setAccountId(dummyAccountId);
     setSelector({}); // Dummy selector
     setModal({}); // Dummy modal

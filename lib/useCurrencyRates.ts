@@ -11,7 +11,7 @@ import {
 } from './currencyUtils';
 
 export interface CurrencyRates {
-  U2U_TO_USD: number;
+  CELO_TO_USD: number;
   USD_TO_INR: number;
   lastUpdated: number;
   isLoading: boolean;
@@ -23,7 +23,7 @@ export interface CurrencyRates {
  */
 export function useCurrencyRates(refreshInterval: number = 60000): CurrencyRates {
   const [rates, setRates] = useState<CurrencyRates>({
-    U2U_TO_USD: 3.05, // Default fallback
+    CELO_TO_USD: 0.75, // Default fallback
     USD_TO_INR: 88.81, // Default fallback
     lastUpdated: 0,
     isLoading: true,
@@ -63,9 +63,9 @@ export function useCurrencyRates(refreshInterval: number = 60000): CurrencyRates
 }
 
 /**
- * Hook to get live conversion text for a U2U amount
+ * Hook to get live conversion text for a CELO amount
  */
-export function useLiveConversion(u2uAmount: string | number): {
+export function useLiveConversion(celoAmount: string | number): {
   conversionText: string;
   isLoading: boolean;
   error: string | null;
@@ -79,7 +79,7 @@ export function useLiveConversion(u2uAmount: string | number): {
       try {
         setIsLoading(true);
         setError(null);
-        const text = await getConversionTextLive(u2uAmount);
+        const text = await getConversionTextLive(celoAmount);
         setConversionText(text);
         setIsLoading(false);
       } catch (err) {
@@ -88,13 +88,13 @@ export function useLiveConversion(u2uAmount: string | number): {
       }
     };
 
-    if (u2uAmount && u2uAmount !== '0') {
+    if (celoAmount && celoAmount !== '0') {
       fetchConversion();
     } else {
       setConversionText('');
       setIsLoading(false);
     }
-  }, [u2uAmount]);
+  }, [celoAmount]);
 
   return { conversionText, isLoading, error };
 }

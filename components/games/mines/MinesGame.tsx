@@ -12,7 +12,7 @@ import { useWagmiContractService } from "@/lib/wagmiContractService"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useContract } from "@/contexts/ContractProvider"
 import { gameOutcomeService } from "@/lib/gameOutcomeService"
-import { formatU2U, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
+import { formatCELO, formatGameCurrency, getConversionText } from "@/lib/currencyUtils"
 import { TransactionModal, TransactionStatus, getExplorerUrl } from "@/components/ui/TransactionModal"
 import { toast } from "sonner"
 

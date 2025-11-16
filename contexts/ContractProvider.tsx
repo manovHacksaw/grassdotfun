@@ -18,21 +18,21 @@ export const ContractProvider = ({ children }: { children: React.ReactNode }) =>
     // Return dummy user data
     return [
       {
-        accountId: "user1.u2u",
+        accountId: "user1.celo",
         totalBet: "50.0",
         totalWon: "75.0",
         gamesPlayed: 10,
         gamesWon: 6
       },
       {
-        accountId: "user2.u2u", 
+        accountId: "user2.celo", 
         totalBet: "25.0",
         totalWon: "30.0",
         gamesPlayed: 5,
         gamesWon: 3
       },
       {
-        accountId: "user3.u2u",
+        accountId: "user3.celo",
         totalBet: "100.0", 
         totalWon: "120.0",
         gamesPlayed: 20,

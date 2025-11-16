@@ -6,7 +6,7 @@
 export class ContractService {
   private account: any;
 
-  constructor(selector: any, account: any, contractId: string = "game-v0.u2u") {
+  constructor(selector: any, account: any, contractId: string = "game-v0.celo") {
     this.account = account;
   }
 

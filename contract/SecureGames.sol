@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-/// @title SecureGames - Solidity rewrite of U2U contract
+/// @title SecureGames - Solidity contract for CELO gaming platform
 /// @notice Players deposit to start games. A trusted resolver resolves outcomes; winnings are credited and withdrawn by players.
 /// @dev Includes event emits, per-user & per-game stats, and reentrancy protection.
 contract SecureGames {

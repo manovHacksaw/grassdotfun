@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useContractStats, useAllUsers, useMultipleUserStats } from "@/lib/wagmiContractService"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
-import { formatU2U } from "@/lib/currencyUtils"
+import { formatCELO } from "@/lib/currencyUtils"
 import { Trophy, Medal, Crown, Users, RefreshCw } from "lucide-react"
 
 interface LeaderboardUser {
@@ -309,19 +309,19 @@ export default function Leaderboard() {
                     <div className="flex items-center space-x-4">
                       <div>
                         <p className="text-sm text-muted-foreground">Total Won</p>
-                        <p className="font-semibold text-green-400">{formatU2U(user.totalWon.toString())} CELO</p>
+                        <p className="font-semibold text-green-400">{formatCELO(user.totalWon.toString())} CELO</p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Net Profit</p>
                         <p className={`font-semibold ${user.netProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
                           {user.netProfit >= 0 ? "+" : ""}
-                          {formatU2U(user.netProfit.toString())} CELO
+                          {formatCELO(user.netProfit.toString())} CELO
                         </p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Withdrawable</p>
                         <p className="font-semibold text-yellow-400">
-                          {formatU2U(user.withdrawableBalance.toString())} CELO
+                          {formatCELO(user.withdrawableBalance.toString())} CELO
                         </p>
                       </div>
                     </div>
@@ -344,7 +344,7 @@ export default function Leaderboard() {
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-green-400">
-                {formatU2U(processedLeaderboard.reduce((sum, user) => sum + user.totalWon, 0).toString())} CELO
+                {formatCELO(processedLeaderboard.reduce((sum, user) => sum + user.totalWon, 0).toString())} CELO
               </p>
               <p className="text-sm text-muted-foreground">Total Won</p>
             </div>

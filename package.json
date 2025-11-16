@@ -9,10 +9,10 @@
     "lint": "eslint",
     "hardhat": "hardhat",
     "compile": "hardhat compile",
-    "deploy:u2u": "hardhat run scripts/deploy.mjs --network u2u",
-    "deploy:u2u-testnet": "hardhat run scripts/deploy.mjs --network u2uTestnet",
-    "verify:u2u": "hardhat verify --network u2u",
-    "interact": "hardhat run scripts/interact.js --network u2u",
+    "deploy:celo": "hardhat run scripts/deploy.mjs --network celo",
+    "deploy:celo-sepolia": "hardhat run scripts/deploy.mjs --network celoSepolia",
+    "verify:celo": "hardhat verify --network celo",
+    "interact": "hardhat run scripts/interact.js --network celo",
     "test": "hardhat test"
   },
   "dependencies": {
