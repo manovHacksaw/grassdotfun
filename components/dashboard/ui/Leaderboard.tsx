@@ -77,7 +77,7 @@ const formatSortLabel = (key: string) => {
 }
 
 export default function Leaderboard() {
-  const { isLoading: contractStatsLoading } = useContractStats()
+  const { totalGames: contractTotalGames, isLoading: contractStatsLoading } = useContractStats()
   const { users: allUsers, isLoading: allUsersLoading, error: allUsersError } = useAllUsers()
   const { address } = useWagmiWallet()
   const [sortBy, setSortBy] = useState<"totalWon" | "netProfit" | "winRate" | "gamesPlayed">("totalWon")
@@ -170,26 +170,26 @@ export default function Leaderboard() {
       <div className="space-y-6 w-full p-2">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3">
             <div className="p-2 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
               <Trophy className="h-6 w-6 text-yellow-400" />
             </div>
-            <div>
+          <div>
               <h2 className="text-2xl font-bold tracking-tight text-white">Arena Leaderboard</h2>
               <p className="text-xs text-muted-foreground">Real-time player performance metrics</p>
-            </div>
           </div>
-          <Button
-            onClick={() => window.location.reload()}
+        </div>
+        <Button
+          onClick={() => window.location.reload()}
             disabled={isLoading}
-            variant="outline"
-            size="sm"
+          variant="outline"
+          size="sm"
             className="bg-background/40 hover:bg-background/60 border-white/10"
-          >
+        >
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
             Refresh Data
-          </Button>
-        </div>
+        </Button>
+      </div>
 
         {/* Global Stats Summary - Moved Top for better UX */}
         {!isLoading && !error && processedLeaderboard.length > 0 && (
@@ -207,7 +207,7 @@ export default function Leaderboard() {
             />
             <StatsCard 
               label="Games Played" 
-              value={processedLeaderboard.reduce((sum, u) => sum + u.gamesPlayed, 0).toString()} 
+              value={contractTotalGames || "0"} 
               icon={<Swords className="h-4 w-4 text-purple-400" />} 
             />
             <StatsCard 
@@ -226,10 +226,10 @@ export default function Leaderboard() {
                <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Player Rankings</h3>
                {!isLoading && allUsers && allUsers.length > 0 && (
                  <p className="text-xs text-muted-foreground">
-                   Showing top {Math.min(processedLeaderboard.length, 10)} out of {allUsers.length} players
+                   Showing top {processedLeaderboard.length} out of {allUsers.length} players
                  </p>
                )}
-             </div>
+        </div>
              
              {/* Segmented Control for Sorting */}
              <div className="bg-white/5 p-1 rounded-lg flex space-x-1">
@@ -249,36 +249,36 @@ export default function Leaderboard() {
              </div>
           </div>
 
-          {/* Error State */}
-          {error && (
+      {/* Error State */}
+      {error && (
             <div className="p-8 text-center bg-red-500/10 m-4 rounded-xl border border-red-500/20">
-              <p className="text-red-400 text-sm">{error}</p>
+          <p className="text-red-400 text-sm">{error}</p>
             </div>
-          )}
+      )}
 
-          {/* Loading State */}
+      {/* Loading State */}
           {isLoading && (
             <div className="h-[400px] flex flex-col items-center justify-center space-y-4">
               <RefreshCw className="h-8 w-8 animate-spin text-primary" />
               <p className="text-muted-foreground text-sm animate-pulse">Syncing blockchain data...</p>
-            </div>
-          )}
+          </div>
+      )}
 
           {/* SCROLLABLE LIST CONTAINER */}
           {/* max-h-[600px] defines the height constraint. overflow-y-auto enables scroll. no-scrollbar hides the bar. */}
           {!isLoading && !error && (
             <div className="max-h-[600px] overflow-y-auto no-scrollbar p-4 space-y-2">
-              {processedLeaderboard.length === 0 ? (
+          {processedLeaderboard.length === 0 ? (
                 <div className="text-center py-20">
                   <Users className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
                   <p className="text-muted-foreground">No players found yet.</p>
-                </div>
-              ) : (
-                processedLeaderboard.map((user) => (
+              </div>
+          ) : (
+            processedLeaderboard.map((user) => (
                   <div
-                    key={user.accountId}
+                key={user.accountId}
                     className={`rounded-xl p-4 relative group ${getRankStyles(user.rank, user.accountId === address)}`}
-                  >
+              >
                     <div className="flex items-center gap-4">
                       {/* Rank Column */}
                       <div className="flex-shrink-0 w-8 flex justify-center">
@@ -290,33 +290,33 @@ export default function Leaderboard() {
                         <div className="flex items-center gap-2">
                           <p className="font-bold text-sm md:text-base text-white truncate">
                             {user.accountId}
-                          </p>
-                          {user.accountId === address && (
+                        </p>
+                        {user.accountId === address && (
                             <span className="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] uppercase font-bold tracking-wider rounded">You</span>
-                          )}
-                        </div>
+                        )}
+                      </div>
                         <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
                           <span className="flex items-center gap-1">
                             <Swords className="h-3 w-3" /> {user.gamesPlayed} plays
                           </span>
                           <span className="hidden sm:inline text-white/20">|</span>
-                          <span>Joined {formatDate(user.joinDate)}</span>
-                        </div>
+                        <span>Joined {formatDate(user.joinDate)}</span>
                       </div>
+                    </div>
 
                       {/* Stats Grid Column */}
                       <div className="flex-shrink-0 text-right grid grid-cols-2 gap-x-6 gap-y-1 w-auto min-w-[140px]">
                         <div className="col-span-2 sm:col-span-1">
                           <p className="text-[10px] uppercase text-muted-foreground">Total Won</p>
                           <p className="font-bold text-green-400 text-sm">{formatCELO(user.totalWon.toString())}</p>
-                        </div>
-                        
+                  </div>
+
                         <div className="col-span-2 sm:col-span-1">
                            <p className="text-[10px] uppercase text-muted-foreground">Win Rate</p>
                            <p className={`font-bold text-sm ${user.winRate > 50 ? 'text-blue-400' : 'text-white/70'}`}>
                              {user.winRate.toFixed(0)}%
-                           </p>
-                        </div>
+                        </p>
+                      </div>
 
                         {/* Visible only on larger screens or expanding card */}
                         <div className="col-span-2 mt-1 pt-1 border-t border-white/5 sm:hidden">
@@ -330,12 +330,12 @@ export default function Leaderboard() {
                       </div>
                     </div>
                   </div>
-                ))
-              )}
-            </div>
+            ))
           )}
+        </div>
+      )}
         </Card>
-      </div>
+    </div>
     </>
   )
 }
