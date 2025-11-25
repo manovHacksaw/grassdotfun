@@ -83,12 +83,12 @@ export default function Leaderboard() {
   const [sortBy, setSortBy] = useState<"totalWon" | "netProfit" | "winRate" | "gamesPlayed">("totalWon")
   const [error, setError] = useState<string>("")
 
-  // Use the multiple user stats hook to fetch stats for all users (limited to first 20 for better scroll demo)
+  // Use the multiple user stats hook to fetch stats for all users (limited to first 10 for top players)
   const {
     userStats: allUserStats,
     isLoading: userStatsLoading,
     error: userStatsError,
-  } = useMultipleUserStats((allUsers || []).slice(0, 20))
+  } = useMultipleUserStats((allUsers || []).slice(0, 10))
 
   // Process and sort the leaderboard data
   const processedLeaderboard = React.useMemo(() => {
@@ -96,7 +96,7 @@ export default function Leaderboard() {
       return []
     }
 
-    const limitedUsers = allUsers.slice(0, 20)
+    const limitedUsers = allUsers.slice(0, 10)
     const leaderboardData: ProcessedLeaderboardUser[] = []
 
     limitedUsers.forEach((userAddress, index) => {
@@ -196,7 +196,7 @@ export default function Leaderboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
             <StatsCard 
               label="Total Players" 
-              value={processedLeaderboard.length.toString()} 
+              value={allUsers?.length?.toString() || "0"} 
               icon={<Users className="h-4 w-4 text-blue-400" />} 
             />
             <StatsCard 
@@ -222,7 +222,14 @@ export default function Leaderboard() {
         <Card className="bg-black/20 border-white/10 overflow-hidden backdrop-blur-sm">
           {/* Controls Header */}
           <div className="p-4 border-b border-white/5 flex flex-col md:flex-row gap-4 justify-between items-center">
-             <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Player Rankings</h3>
+             <div className="flex flex-col gap-1">
+               <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Player Rankings</h3>
+               {!isLoading && allUsers && allUsers.length > 0 && (
+                 <p className="text-xs text-muted-foreground">
+                   Showing top {Math.min(processedLeaderboard.length, 10)} out of {allUsers.length} players
+                 </p>
+               )}
+             </div>
              
              {/* Segmented Control for Sorting */}
              <div className="bg-white/5 p-1 rounded-lg flex space-x-1">
