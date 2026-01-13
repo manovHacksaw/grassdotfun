@@ -16,10 +16,10 @@ async function main() {
   console.log(`\n💰 Test Wallet: ${signer.address}`);
   
   const balance = await hre.ethers.provider.getBalance(signer.address);
-  console.log(`💰 Balance: ${hre.ethers.formatEther(balance)} CELO`);
+  console.log(`💰 Balance: ${hre.ethers.formatEther(balance)} MNT`);
 
   if (parseFloat(hre.ethers.formatEther(balance)) < 0.1) {
-    console.error(`\n❌ Need at least 0.1 CELO for testing!`);
+    console.error(`\n❌ Need at least 0.1 MNT for testing!`);
     return;
   }
 
@@ -47,7 +47,7 @@ async function main() {
   console.log(`\n📋 Test Parameters:`);
   console.log(`   Game ID: ${gameId}`);
   console.log(`   Game Type: ${gameType}`);
-  console.log(`   Bet Amount: ${BET_AMOUNT} CELO (${betAmountWei.toString()} wei)`);
+  console.log(`   Bet Amount: ${BET_AMOUNT} MNT (${betAmountWei.toString()} wei)`);
 
   // Test 1: Estimate gas
   console.log(`\n🔍 Step 1: Estimating gas...`);
@@ -82,7 +82,7 @@ async function main() {
     const testGasLimit = gasLimitsToTest[i];
     const gasLimitEth = hre.ethers.formatUnits(testGasLimit * 25000000000n, "ether"); // Approx gas cost at 25 GWei
     
-    console.log(`   Test ${i + 1}: Gas limit = ${testGasLimit.toString()} (~${gasLimitEth} CELO at 25 GWei)`);
+    console.log(`   Test ${i + 1}: Gas limit = ${testGasLimit.toString()} (~${gasLimitEth} MNT at 25 GWei)`);
     
     // Generate new game ID for each test
     const testGameId = `${gameId}-test${i}`;

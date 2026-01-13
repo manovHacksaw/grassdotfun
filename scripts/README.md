@@ -4,9 +4,9 @@ These scripts are designed to generate transaction volume on the Grass.fun platf
 
 ## ⚠️ IMPORTANT - READ BEFORE RUNNING
 
-1. **These scripts use REAL CELO tokens on MAINNET**
+1. **These scripts use REAL MNT tokens on MAINNET**
 2. **Review all configuration before running**
-3. **Ensure you have sufficient CELO balance**
+3. **Ensure you have sufficient MNT balance**
 4. **The resolver API must be running and accessible**
 5. **These scripts will create actual transactions on-chain**
 
@@ -17,7 +17,7 @@ Generates randomized game transactions across multiple wallets.
 
 **What it does:**
 - Creates 10 random wallets
-- Funds each wallet with 0.18 CELO
+- Funds each wallet with 0.18 MNT
 - Plays 250 games (500 transactions total: 250 starts + 250 resolves)
 - Plays real games: Coinflip, Mines, Crash, Paaji
 - Uses weighted random wallet selection
@@ -28,7 +28,7 @@ Generates randomized game transactions across multiple wallets.
 - `RESOLVER_API_URL`: API endpoint for resolving games (default: localhost:3000)
 - `NUMBER_OF_WALLETS`: Number of wallets to create (default: 3)
 - `TOTAL_GAMES`: Total games to play (default: 60)
-- `FUNDING_PER_WALLET`: CELO amount per wallet (default: 0.25)
+- `FUNDING_PER_WALLET`: MNT amount per wallet (default: 0.25)
 - `BET_AMOUNT`: Bet per game (default: 0.01 - minimum)
 - `DELAY_BETWEEN_TRANSACTIONS`: Delay in ms (default: 1500)
 
@@ -45,7 +45,7 @@ Collects leftover funds from generated test wallets.
 **What it does:**
 - Reads wallet files from all terminals
 - Checks each wallet balance
-- Sends remaining funds back to main wallet (keeps 0.01 CELO for gas)
+- Sends remaining funds back to main wallet (keeps 0.01 MNT for gas)
 
 **Run:**
 ```bash
@@ -101,11 +101,11 @@ The scripts play these real games from your platform:
 
 ## Cost Estimation
 
-For default configuration (optimized for 1.2 CELO budget):
-- 3 wallets × 0.25 CELO = 0.75 CELO
-- Gas fees: ~0.2 CELO
-- **Total: ~0.95 CELO**
-- **Requires minimum: 1.0 CELO in main wallet**
+For default configuration (optimized for 1.2 MNT budget):
+- 3 wallets × 0.25 MNT = 0.75 MNT
+- Gas fees: ~0.2 MNT
+- **Total: ~0.95 MNT**
+- **Requires minimum: 1.0 MNT in main wallet**
 
 ## Safety
 

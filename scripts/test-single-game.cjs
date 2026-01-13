@@ -141,15 +141,15 @@ async function main() {
   console.log("=" .repeat(50));
   console.log(`Contract: ${CONTRACT_ADDRESS}`);
   console.log(`Resolver API: ${RESOLVER_API_URL}`);
-  console.log(`Bet Amount: ${BET_AMOUNT} CELO`);
-  console.log(`Max Win: ${MAX_WIN_AMOUNT} CELO`);
+  console.log(`Bet Amount: ${BET_AMOUNT} MNT`);
+  console.log(`Max Win: ${MAX_WIN_AMOUNT} MNT`);
   console.log(`Max Multiplier: ${MAX_MULTIPLIER}x\n`);
 
   // Get funder wallet
   const [funder] = await hre.ethers.getSigners();
   console.log(`💰 Funder: ${funder.address}`);
   const funderBalance = await hre.ethers.provider.getBalance(funder.address);
-  console.log(`   Balance: ${hre.ethers.formatEther(funderBalance)} CELO\n`);
+  console.log(`   Balance: ${hre.ethers.formatEther(funderBalance)} MNT\n`);
 
   // Create test wallet
   const testWallet = hre.ethers.Wallet.createRandom().connect(hre.ethers.provider);
@@ -157,14 +157,14 @@ async function main() {
   
   // Fund the wallet
   const fundingAmount = hre.ethers.parseEther("0.20");
-  console.log(`💸 Funding wallet with ${hre.ethers.formatEther(fundingAmount)} CELO...`);
+  console.log(`💸 Funding wallet with ${hre.ethers.formatEther(fundingAmount)} MNT...`);
   const fundTx = await funder.sendTransaction({
     to: testWallet.address,
     value: fundingAmount,
   });
   await fundTx.wait();
   const walletBalance = await hre.ethers.provider.getBalance(testWallet.address);
-  console.log(`✅ Wallet funded. Balance: ${hre.ethers.formatEther(walletBalance)} CELO\n`);
+  console.log(`✅ Wallet funded. Balance: ${hre.ethers.formatEther(walletBalance)} MNT\n`);
 
   // Get initial stats
   console.log("📊 Getting initial stats...");
@@ -172,14 +172,14 @@ async function main() {
   const initialStats = await getUserStats(testWallet.address);
   console.log(`     Games Played: ${initialStats.gamesPlayed}`);
   console.log(`     Games Won: ${initialStats.gamesWon}`);
-  console.log(`     Total Bet: ${initialStats.totalBet} CELO`);
-  console.log(`     Total Won: ${initialStats.totalWon} CELO`);
+  console.log(`     Total Bet: ${initialStats.totalBet} MNT`);
+  console.log(`     Total Won: ${initialStats.totalWon} MNT`);
   
   console.log("   Contract Stats:");
   const initialContractStats = await getContractStats();
   console.log(`     Total Users: ${initialContractStats.totalUsers}`);
-  console.log(`     Total Bets: ${initialContractStats.totalBets} CELO`);
-  console.log(`     Total Winnings: ${initialContractStats.totalWinnings} CELO`);
+  console.log(`     Total Bets: ${initialContractStats.totalBets} MNT`);
+  console.log(`     Total Winnings: ${initialContractStats.totalWinnings} MNT`);
   console.log(`     Total Games: ${initialContractStats.totalGames}\n`);
 
   // Generate game ID and outcome
@@ -192,7 +192,7 @@ async function main() {
   console.log(`   Game Type: ${gameType}`);
   console.log(`   Outcome: ${didWin ? "WIN" : "LOSE"}`);
   console.log(`   Multiplier: ${multiplier}x (${multiplierPercent}%)`);
-  console.log(`   Bet Amount: ${BET_AMOUNT} CELO\n`);
+  console.log(`   Bet Amount: ${BET_AMOUNT} MNT\n`);
 
   // Start game
   console.log("🚀 Starting game on-chain...");
@@ -218,7 +218,7 @@ async function main() {
   const gameDetails = await getGameDetails(gameId);
   console.log(`   Game ID: ${gameDetails.id}`);
   console.log(`   Player: ${gameDetails.player}`);
-  console.log(`   Amount: ${gameDetails.amount} CELO`);
+  console.log(`   Amount: ${gameDetails.amount} MNT`);
   console.log(`   Status: ${gameDetails.status} (0=Pending, 1=Won, 2=Lost)`);
   console.log(`   Game Type: ${gameDetails.gameType}\n`);
 
@@ -342,14 +342,14 @@ async function main() {
   const finalStats = await getUserStats(testWallet.address);
   console.log(`     Games Played: ${finalStats.gamesPlayed} (was ${initialStats.gamesPlayed})`);
   console.log(`     Games Won: ${finalStats.gamesWon} (was ${initialStats.gamesWon})`);
-  console.log(`     Total Bet: ${finalStats.totalBet} CELO (was ${initialStats.totalBet})`);
-  console.log(`     Total Won: ${finalStats.totalWon} CELO (was ${initialStats.totalWon})`);
+  console.log(`     Total Bet: ${finalStats.totalBet} MNT (was ${initialStats.totalBet})`);
+  console.log(`     Total Won: ${finalStats.totalWon} MNT (was ${initialStats.totalWon})`);
   
   console.log("   Contract Stats:");
   const finalContractStats = await getContractStats();
   console.log(`     Total Users: ${finalContractStats.totalUsers} (was ${initialContractStats.totalUsers})`);
-  console.log(`     Total Bets: ${finalContractStats.totalBets} CELO (was ${initialContractStats.totalBets})`);
-  console.log(`     Total Winnings: ${finalContractStats.totalWinnings} CELO (was ${initialContractStats.totalWinnings})`);
+  console.log(`     Total Bets: ${finalContractStats.totalBets} MNT (was ${initialContractStats.totalBets})`);
+  console.log(`     Total Winnings: ${finalContractStats.totalWinnings} MNT (was ${initialContractStats.totalWinnings})`);
   console.log(`     Total Games: ${finalContractStats.totalGames} (was ${initialContractStats.totalGames})\n`);
 
   // Verify user stats

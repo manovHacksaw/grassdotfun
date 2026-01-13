@@ -9,7 +9,7 @@ const RESOLVER_API_URL = process.env.RESOLVER_API_URL || "http://localhost:3000/
 // Configuration
 const CONFIG = {
   BET_AMOUNT: "0.01", // Bet amount in MNT
-  GAMES_TO_PLAY: 50, // Number of games to play (0 = infinite)
+  GAMES_TO_PLAY: 3, // Number of games to play (0 = infinite)
   DELAY_BETWEEN_GAMES: 3000, // Delay in ms between games
   DELAY_BEFORE_RESOLVE: 2000, // Delay before resolving game
   WIN_PROBABILITY: 0.55, // 55% win rate

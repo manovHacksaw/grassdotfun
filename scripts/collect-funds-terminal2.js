@@ -39,7 +39,7 @@ async function main() {
       const w = new hre.ethers.Wallet(wallet.privateKey, hre.ethers.provider);
       const balance = await hre.ethers.provider.getBalance(w.address);
 
-      // Keep 0.01 CELO for gas
+      // Keep 0.01 MNT for gas
       if (balance > hre.ethers.parseEther("0.01")) {
         const collectAmount = balance - hre.ethers.parseEther("0.01");
         try {
@@ -54,7 +54,7 @@ async function main() {
           console.log(
             `✅ ${fileName.replace(".json", "")} - Wallet ${
               i + 1
-            }: ${hre.ethers.formatEther(collectAmount)} CELO`
+            }: ${hre.ethers.formatEther(collectAmount)} MNT`
           );
         } catch (error) {
           console.log(
@@ -67,7 +67,7 @@ async function main() {
         console.log(
           `⏭️  ${fileName.replace(".json", "")} - Wallet ${
             i + 1
-          }: Balance too low (${hre.ethers.formatEther(balance)} CELO)`
+          }: Balance too low (${hre.ethers.formatEther(balance)} MNT)`
         );
       }
     }
@@ -80,11 +80,11 @@ async function main() {
   console.log(`   Total wallets processed: ${totalWallets}`);
   console.log(`   Collected from: ${collected} wallets`);
   console.log(
-    `   Total collected: ${hre.ethers.formatEther(totalCollected)} CELO`
+    `   Total collected: ${hre.ethers.formatEther(totalCollected)} MNT`
   );
   const finalBalance = await hre.ethers.provider.getBalance(receiver.address);
   console.log(
-    `   Your balance now: ${hre.ethers.formatEther(finalBalance)} CELO\n`
+    `   Your balance now: ${hre.ethers.formatEther(finalBalance)} MNT\n`
   );
 }
 

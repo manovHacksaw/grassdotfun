@@ -17,7 +17,7 @@ async function collectFromWallet(wallet, ownerAddress) {
       return {
         address: wallet.address,
         success: false,
-        reason: `Balance too low (${balanceEth.toFixed(6)} CELO < ${minBalance} CELO)`,
+        reason: `Balance too low (${balanceEth.toFixed(6)} MNT < ${minBalance} MNT)`,
         balance: balanceEth,
         collected: 0,
       };
@@ -36,7 +36,7 @@ async function collectFromWallet(wallet, ownerAddress) {
       return {
         address: wallet.address,
         success: false,
-        reason: `Insufficient balance to cover gas (${balanceEth.toFixed(6)} CELO)`,
+        reason: `Insufficient balance to cover gas (${balanceEth.toFixed(6)} MNT)`,
         balance: balanceEth,
         collected: 0,
       };
@@ -81,7 +81,7 @@ async function main() {
   console.log(`\n📤 Owner/Relayer Address: ${ownerAddress}`);
 
   const ownerBalanceBefore = await hre.ethers.provider.getBalance(ownerAddress);
-  console.log(`💰 Owner Balance Before: ${hre.ethers.formatEther(ownerBalanceBefore)} CELO\n`);
+  console.log(`💰 Owner Balance Before: ${hre.ethers.formatEther(ownerBalanceBefore)} MNT\n`);
 
   if (!fs.existsSync(WALLETS_FILE)) {
     console.error(`\n❌ File not found: ${WALLETS_FILE}`);
@@ -131,7 +131,7 @@ async function main() {
       ...wallet,
       balance: balanceEth,
     });
-    process.stdout.write(`  ${i + 1}/${wallets.length}: ${wallet.address.slice(0, 10)}... | ${balanceEth.toFixed(6)} CELO\r`);
+    process.stdout.write(`  ${i + 1}/${wallets.length}: ${wallet.address.slice(0, 10)}... | ${balanceEth.toFixed(6)} MNT\r`);
   }
   console.log("\n");
 
@@ -145,7 +145,7 @@ async function main() {
   console.log(`   Wallets to skip (low balance): ${walletsToSkip.length}`);
   
   const totalToCollect = walletsToCollect.reduce((sum, w) => sum + w.balance, 0);
-  console.log(`   Total CELO to collect: ${totalToCollect.toFixed(4)} CELO\n`);
+  console.log(`   Total MNT to collect: ${totalToCollect.toFixed(4)} MNT\n`);
 
   if (walletsToCollect.length === 0) {
     console.log("✅ No wallets have sufficient balance to collect.\n");
@@ -172,7 +172,7 @@ async function main() {
     if (result.success) {
       successCount++;
       totalCollected += result.collected;
-      console.log(`  ✅ Collected ${result.collected.toFixed(6)} CELO (Tx: ${result.txHash.slice(0, 20)}...)`);
+      console.log(`  ✅ Collected ${result.collected.toFixed(6)} MNT (Tx: ${result.txHash.slice(0, 20)}...)`);
     } else {
       failCount++;
       console.log(`  ❌ Failed: ${result.reason}`);
@@ -193,11 +193,11 @@ async function main() {
   console.log(`   Wallets processed: ${walletsToCollect.length}`);
   console.log(`   Successful collections: ${successCount}`);
   console.log(`   Failed collections: ${failCount}`);
-  console.log(`   Total CELO collected: ${totalCollected.toFixed(4)} CELO`);
+  console.log(`   Total MNT collected: ${totalCollected.toFixed(4)} MNT`);
   console.log(`\n💰 Owner Balance:`);
-  console.log(`   Before: ${hre.ethers.formatEther(ownerBalanceBefore)} CELO`);
-  console.log(`   After: ${hre.ethers.formatEther(ownerBalanceAfter)} CELO`);
-  console.log(`   Increase: ${ownerBalanceIncrease.toFixed(4)} CELO`);
+  console.log(`   Before: ${hre.ethers.formatEther(ownerBalanceBefore)} MNT`);
+  console.log(`   After: ${hre.ethers.formatEther(ownerBalanceAfter)} MNT`);
+  console.log(`   Increase: ${ownerBalanceIncrease.toFixed(4)} MNT`);
 
   // Group results by section
   const bySection = {};
@@ -218,7 +218,7 @@ async function main() {
   console.log(`\n📋 By Section:`);
   for (const [section, stats] of Object.entries(bySection)) {
     console.log(`   ${section}:`);
-    console.log(`     Success: ${stats.success} | Failed: ${stats.failed} | Collected: ${stats.collected.toFixed(4)} CELO`);
+    console.log(`     Success: ${stats.success} | Failed: ${stats.failed} | Collected: ${stats.collected.toFixed(4)} MNT`);
   }
 
   // Save detailed report

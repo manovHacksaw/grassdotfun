@@ -1,17 +1,17 @@
 /**
  * Mock Balance Service for Development
  * Provides a fallback balance when all API endpoints fail
- * Updated for CELO dummy data
+ * Updated for MNT dummy data
  */
 
 export class MockBalanceService {
   private static readonly MOCK_BALANCE = "100.00"; // Mock balance for development
-  
+
   /**
    * Get a mock balance for development/testing
    */
   static getMockBalance(accountId: string): string {
-    console.log(`🎭 Using mock balance for ${accountId}: ${this.MOCK_BALANCE} CELO`);
+    console.log(`🎭 Using mock balance for ${accountId}: ${this.MOCK_BALANCE} MNT`);
     return this.MOCK_BALANCE;
   }
   

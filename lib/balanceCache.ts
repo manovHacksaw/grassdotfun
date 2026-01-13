@@ -1,7 +1,7 @@
 /**
  * Balance Cache Service
  * Reduces API calls by caching balance data with smart invalidation
- * Updated for CELO dummy data
+ * Updated for MNT dummy data
  */
 
 interface CachedBalance {

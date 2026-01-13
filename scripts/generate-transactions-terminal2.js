@@ -8,12 +8,12 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// 🎲 TERMINAL 2 - Optimized for 1.2 CELO budget
+// 🎲 TERMINAL 2 - Optimized for 1.2 MNT budget
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS || "0x61d11C622Bd98A71aD9361833379A2066Ad29CCa";
 const RESOLVER_API_URL = process.env.RESOLVER_API_URL || "https://grassdotfun.vercel.app/api/resolve-game-production";
-const NUMBER_OF_WALLETS = 3; // Reduced for 1.2 CELO budget
+const NUMBER_OF_WALLETS = 3; // Reduced for 1.2 MNT budget
 const TOTAL_GAMES = 60; // 60 games = 120 transactions (start + resolve)
-const FUNDING_PER_WALLET = "0.25"; // Each wallet gets 0.25 CELO (enough for ~20 games at 0.01 + gas)
+const FUNDING_PER_WALLET = "0.25"; // Each wallet gets 0.25 MNT (enough for ~20 games at 0.01 + gas)
 const BET_AMOUNT = "0.01"; // Minimum bet amount per game
 const DELAY_BETWEEN_TRANSACTIONS = 1500;
 const DELAY_BEFORE_RESOLVE = 2000; // Wait before resolving
@@ -45,16 +45,16 @@ function generateWallets(count) {
 // Fund wallets
 async function fundWallets(wallets, amountPerWallet) {
   console.log(
-    `\n💰 [TERMINAL 2] Funding ${wallets.length} wallets with ${amountPerWallet} CELO each...\n`
+    `\n💰 [TERMINAL 2] Funding ${wallets.length} wallets with ${amountPerWallet} MNT each...\n`
   );
   const [funder] = await hre.ethers.getSigners();
   const funderBalance = await hre.ethers.provider.getBalance(funder.address);
   console.log(`Funder: ${funder.address}`);
-  console.log(`Balance: ${hre.ethers.formatEther(funderBalance)} CELO\n`);
+  console.log(`Balance: ${hre.ethers.formatEther(funderBalance)} MNT\n`);
   const totalNeeded = parseFloat(amountPerWallet) * wallets.length;
   const gasBuffer = 0.2; // Gas buffer for funding transactions
   if (parseFloat(hre.ethers.formatEther(funderBalance)) < totalNeeded + gasBuffer) {
-    throw new Error(`Need at least ${(totalNeeded + gasBuffer).toFixed(2)} CELO (have ${hre.ethers.formatEther(funderBalance)})`);
+    throw new Error(`Need at least ${(totalNeeded + gasBuffer).toFixed(2)} MNT (have ${hre.ethers.formatEther(funderBalance)})`);
   }
   for (let i = 0; i < wallets.length; i++) {
     const wallet = wallets[i];
@@ -247,14 +247,14 @@ async function main() {
   const startBalance = await hre.ethers.provider.getBalance(mainWallet.address);
   console.log(`\n💰 Main Wallet: ${mainWallet.address}`);
   console.log(
-    `💰 Starting Balance: ${hre.ethers.formatEther(startBalance)} CELO`
+    `💰 Starting Balance: ${hre.ethers.formatEther(startBalance)} MNT`
   );
 
   // Calculate required balance
   const requiredBalance = NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET) + 0.2; // 0.2 for gas buffer
   if (parseFloat(hre.ethers.formatEther(startBalance)) < requiredBalance) {
-    console.log(`\n❌ Need at least ${requiredBalance.toFixed(2)} CELO to run!`);
-    console.log(`   Current balance: ${hre.ethers.formatEther(startBalance)} CELO`);
+    console.log(`\n❌ Need at least ${requiredBalance.toFixed(2)} MNT to run!`);
+    console.log(`   Current balance: ${hre.ethers.formatEther(startBalance)} MNT`);
     return;
   }
 
@@ -267,10 +267,10 @@ async function main() {
   console.log(`   Expected transactions: ${TOTAL_GAMES * 2}`);
   const estimatedCost = NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET) + 0.2;
   console.log(
-    `   Estimated cost: ~${estimatedCost.toFixed(2)} CELO`
+    `   Estimated cost: ~${estimatedCost.toFixed(2)} MNT`
   );
   console.log(
-    `   Breakdown: ${NUMBER_OF_WALLETS} wallets × ${FUNDING_PER_WALLET} CELO = ${(NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET)).toFixed(2)} CELO + ~0.2 CELO gas`
+    `   Breakdown: ${NUMBER_OF_WALLETS} wallets × ${FUNDING_PER_WALLET} MNT = ${(NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET)).toFixed(2)} MNT + ~0.2 MNT gas`
   );
   console.log(
     `   Estimated time: ~${Math.ceil(
@@ -345,9 +345,9 @@ async function main() {
   console.log(
     `   Time taken: ${Math.floor(totalTime / 60)}m ${totalTime % 60}s`
   );
-  console.log(`   Total CELO spent: ${totalSpent}`);
+  console.log(`   Total MNT spent: ${totalSpent}`);
   console.log(
-    `   Main wallet balance: ${hre.ethers.formatEther(endBalance)} CELO`
+    `   Main wallet balance: ${hre.ethers.formatEther(endBalance)} MNT`
   );
   console.log(`\n💡 To collect leftover funds, run:`);
   console.log(

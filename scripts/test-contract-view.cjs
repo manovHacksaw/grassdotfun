@@ -72,8 +72,8 @@ async function main() {
     const stats = await contract.getContractStats();
     console.log(`✅ Contract Stats:`);
     console.log(`   Total Users: ${stats[0].toString()}`);
-    console.log(`   Total Bets: ${hre.ethers.formatEther(stats[1])} CELO`);
-    console.log(`   Total Winnings: ${hre.ethers.formatEther(stats[2])} CELO`);
+    console.log(`   Total Bets: ${hre.ethers.formatEther(stats[1])} MNT`);
+    console.log(`   Total Winnings: ${hre.ethers.formatEther(stats[2])} MNT`);
     console.log(`   Total Games: ${stats[3].toString()}`);
   } catch (error) {
     console.error(`❌ Failed: ${error.message}`);
@@ -116,10 +116,10 @@ async function main() {
     const testAddress = "0x3Fc172864Aff140f212e22F5f56E0586A13e4c74";
     const userStats = await contract.getUserStats(testAddress);
     console.log(`✅ User Stats for ${testAddress}:`);
-    console.log(`   Total Bet: ${hre.ethers.formatEther(userStats[0])} CELO`);
-    console.log(`   Total Won: ${hre.ethers.formatEther(userStats[1])} CELO`);
-    console.log(`   Total Lost: ${hre.ethers.formatEther(userStats[2])} CELO`);
-    console.log(`   Withdrawable: ${hre.ethers.formatEther(userStats[3])} CELO`);
+    console.log(`   Total Bet: ${hre.ethers.formatEther(userStats[0])} MNT`);
+    console.log(`   Total Won: ${hre.ethers.formatEther(userStats[1])} MNT`);
+    console.log(`   Total Lost: ${hre.ethers.formatEther(userStats[2])} MNT`);
+    console.log(`   Withdrawable: ${hre.ethers.formatEther(userStats[3])} MNT`);
     console.log(`   Games Played: ${userStats[4].toString()}`);
     console.log(`   Games Won: ${userStats[5].toString()}`);
   } catch (error) {
@@ -149,7 +149,7 @@ async function main() {
     console.log(`✅ Game Details (non-existent):`);
     console.log(`   ID: ${gameDetails[0]}`);
     console.log(`   Player: ${gameDetails[1]}`);
-    console.log(`   Amount: ${hre.ethers.formatEther(gameDetails[2])} CELO`);
+    console.log(`   Amount: ${hre.ethers.formatEther(gameDetails[2])} MNT`);
     console.log(`   Status: ${gameDetails[3]}`);
     console.log(`   Exists: ${gameDetails[7]}`);
   } catch (error) {

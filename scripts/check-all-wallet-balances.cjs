@@ -80,7 +80,7 @@ async function main() {
     if (result.balance !== "ERROR") {
       const balanceNum = parseFloat(result.balance);
       totalBalance += balanceNum;
-      console.log(`✅ ${result.balance} CELO`);
+      console.log(`✅ ${result.balance} MNT`);
     } else {
       console.log(`❌ ${result.error}`);
     }
@@ -116,7 +116,7 @@ async function main() {
         sectionCount++;
         const status = balance > 0 ? "✅" : "⚠️";
         console.log(
-          `  ${status} ${wallet.address.slice(0, 10)}... | ${wallet.balance} CELO`
+          `  ${status} ${wallet.address.slice(0, 10)}... | ${wallet.balance} MNT`
         );
       } else {
         console.log(`  ❌ ${wallet.address.slice(0, 10)}... | ERROR: ${wallet.error}`);
@@ -124,15 +124,15 @@ async function main() {
     });
 
     console.log(`  ──────────────────────────────────────────────`);
-    console.log(`  Section Total: ${sectionTotal.toFixed(4)} CELO (${sectionCount} wallets)`);
+    console.log(`  Section Total: ${sectionTotal.toFixed(4)} MNT (${sectionCount} wallets)`);
   }
 
   console.log("\n" + "=".repeat(70));
   console.log("💰 OVERALL SUMMARY");
   console.log("=".repeat(70));
   console.log(`   Total Wallets Checked: ${wallets.length}`);
-  console.log(`   Total Balance: ${totalBalance.toFixed(4)} CELO`);
-  console.log(`   Average Balance: ${(totalBalance / wallets.length).toFixed(4)} CELO`);
+  console.log(`   Total Balance: ${totalBalance.toFixed(4)} MNT`);
+  console.log(`   Average Balance: ${(totalBalance / wallets.length).toFixed(4)} MNT`);
 
   // Wallets with balance
   const walletsWithBalance = results.filter((r) => r.balance !== "ERROR" && parseFloat(r.balance) > 0);

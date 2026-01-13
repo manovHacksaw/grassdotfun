@@ -3,12 +3,12 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 
-// 🎲 TERMINAL 3 - Optimized for 1.8 CELO budget (runs simultaneously with Terminal 2)
+// 🎲 TERMINAL 3 - Optimized for 1.8 MNT budget (runs simultaneously with Terminal 2)
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS || "0x61d11C622Bd98A71aD9361833379A2066Ad29CCa";
 const RESOLVER_API_URL = process.env.RESOLVER_API_URL || "http://grassdotfun.vercel.app/api/resolve-game-production";
 const NUMBER_OF_WALLETS = 10; // 10 unique wallets
 const TOTAL_GAMES = 100; // 100 games = 200 transactions (start + resolve)
-const FUNDING_PER_WALLET = "0.20"; // Each wallet gets 0.20 CELO (enough for ~12 games at 0.01 + gas)
+const FUNDING_PER_WALLET = "0.20"; // Each wallet gets 0.20 MNT (enough for ~12 games at 0.01 + gas)
 const MAX_WIN_AMOUNT = "0.1"; // Maximum win per game (10x multiplier with 0.01 bet)
 const BET_AMOUNT = "0.01"; // Minimum bet amount per game
 const DELAY_BETWEEN_TRANSACTIONS = 1500;
@@ -46,7 +46,7 @@ async function fundWallets(wallets, amountPerWallet) {
   const [funder] = await hre.ethers.getSigners();
   const funderBalance = await hre.ethers.provider.getBalance(funder.address);
   console.log(`Funder: ${funder.address}`);
-  console.log(`Balance: ${hre.ethers.formatEther(funderBalance)} CELO\n`);
+  console.log(`Balance: ${hre.ethers.formatEther(funderBalance)} MNT\n`);
   
   // Minimum required balance per wallet (bet amount + gas for multiple games)
   const minRequiredBalance = parseFloat(BET_AMOUNT) * 5 + 0.01; // Enough for 5 games + gas
@@ -66,9 +66,9 @@ async function fundWallets(wallets, amountPerWallet) {
       const needed = targetBalance - balanceEth;
       walletsToFund.push({ wallet, index: i, currentBalance: balanceEth, needed });
       totalNeeded += needed;
-      console.log(`  Wallet ${i + 1}: ${wallet.address.slice(0, 10)}... | Balance: ${balanceEth.toFixed(4)} CELO | ⚠️  Needs funding (${needed.toFixed(4)} CELO)`);
+      console.log(`  Wallet ${i + 1}: ${wallet.address.slice(0, 10)}... | Balance: ${balanceEth.toFixed(4)} MNT | ⚠️  Needs funding (${needed.toFixed(4)} MNT)`);
     } else {
-      console.log(`  Wallet ${i + 1}: ${wallet.address.slice(0, 10)}... | Balance: ${balanceEth.toFixed(4)} CELO | ✅ Sufficient`);
+      console.log(`  Wallet ${i + 1}: ${wallet.address.slice(0, 10)}... | Balance: ${balanceEth.toFixed(4)} MNT | ✅ Sufficient`);
     }
   }
   
@@ -79,11 +79,11 @@ async function fundWallets(wallets, amountPerWallet) {
   
   console.log(`\n📊 Funding Summary:`);
   console.log(`   Wallets needing funding: ${walletsToFund.length}/${wallets.length}`);
-  console.log(`   Total CELO needed: ${totalNeeded.toFixed(4)}`);
+  console.log(`   Total MNT needed: ${totalNeeded.toFixed(4)}`);
   
   const gasBuffer = 0.1; // Gas buffer for funding transactions
   if (parseFloat(hre.ethers.formatEther(funderBalance)) < totalNeeded + gasBuffer) {
-    throw new Error(`Need at least ${(totalNeeded + gasBuffer).toFixed(2)} CELO (have ${hre.ethers.formatEther(funderBalance)})`);
+    throw new Error(`Need at least ${(totalNeeded + gasBuffer).toFixed(2)} MNT (have ${hre.ethers.formatEther(funderBalance)})`);
   }
   
   console.log(`\n💰 Funding ${walletsToFund.length} wallets...\n`);
@@ -93,7 +93,7 @@ async function fundWallets(wallets, amountPerWallet) {
     console.log(
       `Funding ${i + 1}/${walletsToFund.length}: Wallet ${index + 1} (${wallet.address.slice(0, 10)}...)`
     );
-    console.log(`  Current: ${walletsToFund[i].currentBalance.toFixed(4)} CELO | Adding: ${needed.toFixed(4)} CELO`);
+    console.log(`  Current: ${walletsToFund[i].currentBalance.toFixed(4)} MNT | Adding: ${needed.toFixed(4)} MNT`);
     
     const tx = await funder.sendTransaction({
       to: wallet.address,
@@ -102,7 +102,7 @@ async function fundWallets(wallets, amountPerWallet) {
     });
     await tx.wait();
     const newBalance = await hre.ethers.provider.getBalance(wallet.address);
-    console.log(`  ✅ Funded - Tx: ${tx.hash.slice(0, 20)}... | New balance: ${hre.ethers.formatEther(newBalance)} CELO`);
+    console.log(`  ✅ Funded - Tx: ${tx.hash.slice(0, 20)}... | New balance: ${hre.ethers.formatEther(newBalance)} MNT`);
     await sleep(1000);
   }
   console.log("\n✅ Funding complete!\n");
@@ -113,7 +113,7 @@ async function fundWallets(wallets, amountPerWallet) {
     const balance = await hre.ethers.provider.getBalance(wallets[i].address);
     const balanceEth = parseFloat(hre.ethers.formatEther(balance));
     const status = balanceEth >= minRequiredBalance ? "✅" : "⚠️";
-    console.log(`  ${status} Wallet ${i + 1}: ${balanceEth.toFixed(4)} CELO`);
+    console.log(`  ${status} Wallet ${i + 1}: ${balanceEth.toFixed(4)} MNT`);
   }
   console.log();
 }
@@ -124,12 +124,12 @@ function getRandomGameType() {
 }
 
 // Calculate win/loss and multiplier based on game type
-// Max win is capped at 0.1 CELO regardless of bet amount
+// Max win is capped at 0.1 MNT regardless of bet amount
 function calculateGameOutcome(gameType, betAmount) {
   let didWin;
   let multiplier;
   
-  // Calculate max multiplier based on bet amount to ensure max win is 0.1 CELO
+  // Calculate max multiplier based on bet amount to ensure max win is 0.1 MNT
   // maxMultiplier = (0.1 / betAmount) * 100 (convert to percentage)
   const maxWinCELO = parseFloat(MAX_WIN_AMOUNT);
   const betAmountNum = parseFloat(betAmount);
@@ -188,7 +188,7 @@ function calculateGameOutcome(gameType, betAmount) {
       multiplier = didWin ? Math.min(150, effectiveMaxMultiplier) : 100;
   }
   
-  // Final safety check: ensure multiplier never exceeds max and win never exceeds 0.1 CELO
+  // Final safety check: ensure multiplier never exceeds max and win never exceeds 0.1 MNT
   multiplier = Math.min(multiplier, effectiveMaxMultiplier);
   
   // Double-check: calculate actual win amount and cap if needed
@@ -227,7 +227,7 @@ async function playGame(wallet, gameNumber, totalGames, retries = 3) {
       if (!walletBalance || walletBalance < minRequired) {
         const balanceStr = walletBalance ? hre.ethers.formatEther(walletBalance) : "unknown";
         throw new Error(
-          `Insufficient balance: ${balanceStr} CELO (need ${hre.ethers.formatEther(minRequired)})`
+          `Insufficient balance: ${balanceStr} MNT (need ${hre.ethers.formatEther(minRequired)})`
         );
       }
 
@@ -439,7 +439,7 @@ async function playGame(wallet, gameNumber, totalGames, retries = 3) {
           }
         }
         const balanceStr = walletBalance ? hre.ethers.formatEther(walletBalance) : 'unknown';
-        console.error(`   Balance: ${balanceStr} CELO`);
+        console.error(`   Balance: ${balanceStr} MNT`);
         
         // If it's an insufficient funds error, skip this wallet for future games
         if (errorMsg.includes("insufficient funds") || errorMsg.includes("Insufficient balance")) {
@@ -514,12 +514,12 @@ async function main() {
   
   // Only check main wallet balance if we might need to fund
   if (!existingWalletsFunded) {
-    console.log(`💰 Starting Balance: ${hre.ethers.formatEther(startBalance)} CELO`);
+    console.log(`💰 Starting Balance: ${hre.ethers.formatEther(startBalance)} MNT`);
     
     // We'll check actual needs after loading wallets, but show a note
     console.log(`\n💡 Will check wallet balances and only fund what's needed`);
-    console.log(`   Minimum required per wallet: ${(parseFloat(BET_AMOUNT) * 5 + 0.01).toFixed(4)} CELO`);
-    console.log(`   Target balance per wallet: ${FUNDING_PER_WALLET} CELO`);
+    console.log(`   Minimum required per wallet: ${(parseFloat(BET_AMOUNT) * 5 + 0.01).toFixed(4)} MNT`);
+    console.log(`   Target balance per wallet: ${FUNDING_PER_WALLET} MNT`);
   }
 
   console.log(`\n📋 Configuration:`);
@@ -543,13 +543,13 @@ async function main() {
   console.log(`   Wallets: ${NUMBER_OF_WALLETS}`);
   console.log(`   Total games: ${TOTAL_GAMES} (randomly distributed)`);
   console.log(`   Expected transactions: ${TOTAL_GAMES * 2}`);
-  console.log(`   Max win per game: ${MAX_WIN_AMOUNT} CELO (10x multiplier)`);
+  console.log(`   Max win per game: ${MAX_WIN_AMOUNT} MNT (10x multiplier)`);
   const estimatedCost = NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET) + 0.2;
   console.log(
-    `   Estimated cost: ~${estimatedCost.toFixed(2)} CELO`
+    `   Estimated cost: ~${estimatedCost.toFixed(2)} MNT`
   );
   console.log(
-    `   Breakdown: ${NUMBER_OF_WALLETS} wallets × ${FUNDING_PER_WALLET} CELO = ${(NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET)).toFixed(2)} CELO + ~0.2 CELO gas`
+    `   Breakdown: ${NUMBER_OF_WALLETS} wallets × ${FUNDING_PER_WALLET} MNT = ${(NUMBER_OF_WALLETS * parseFloat(FUNDING_PER_WALLET)).toFixed(2)} MNT + ~0.2 MNT gas`
   );
   console.log(
     `   Estimated time: ~${Math.ceil(
@@ -575,7 +575,7 @@ async function main() {
     console.log("\n📋 Existing Wallets:");
     for (let i = 0; i < wallets.length; i++) {
       const balance = await hre.ethers.provider.getBalance(wallets[i].address);
-      console.log(`  ${i + 1}. ${wallets[i].address} | Balance: ${hre.ethers.formatEther(balance)} CELO | Games: ${wallets[i].gamesPlayed || 0}`);
+      console.log(`  ${i + 1}. ${wallets[i].address} | Balance: ${hre.ethers.formatEther(balance)} MNT | Games: ${wallets[i].gamesPlayed || 0}`);
     }
     console.log();
   } else {
@@ -610,8 +610,8 @@ async function main() {
     
     if (parseFloat(hre.ethers.formatEther(currentMainBalance)) < requiredTotal) {
       console.log(`\n⚠️  Main wallet doesn't have enough to fund ${walletsNeedingFunding} wallet(s)!`);
-      console.log(`   Current balance: ${hre.ethers.formatEther(currentMainBalance)} CELO`);
-      console.log(`   Needed for funding: ${totalNeeded.toFixed(4)} CELO`);
+      console.log(`   Current balance: ${hre.ethers.formatEther(currentMainBalance)} MNT`);
+      console.log(`   Needed for funding: ${totalNeeded.toFixed(4)} MNT`);
       console.log(`\n💡 Continuing with existing funded wallets...`);
       console.log(`   Wallets with sufficient balance will be used for games\n`);
       // Continue - use whatever wallets have balance
@@ -677,9 +677,9 @@ async function main() {
   console.log(
     `   Time taken: ${Math.floor(totalTime / 60)}m ${totalTime % 60}s`
   );
-  console.log(`   Total CELO spent: ${totalSpent}`);
+  console.log(`   Total MNT spent: ${totalSpent}`);
   console.log(
-    `   Main wallet balance: ${hre.ethers.formatEther(endBalance)} CELO`
+    `   Main wallet balance: ${hre.ethers.formatEther(endBalance)} MNT`
   );
   console.log(`\n💡 To collect leftover funds, run:`);
   console.log(

@@ -12,7 +12,7 @@ I've created 3 scripts for generating transaction volume on your Grass.fun platf
 
 ### Main Script (`generate-transactions-terminal2.js`)
 - Creates **3 random wallets**
-- Funds each with **0.25 CELO** (total: 0.75 CELO)
+- Funds each with **0.25 MNT** (total: 0.75 MNT)
 - Plays **60 real games** from your platform:
   - **Coinflip** (50% win rate, 1.95x)
   - **Mines** (40-60% win rate, 1.5x-24x)
@@ -21,12 +21,12 @@ I've created 3 scripts for generating transaction volume on your Grass.fun platf
 - Each game = 2 transactions (startGame + resolveGame via API)
 - **Total: 120 transactions**
 - Uses weighted random wallet selection
-- Bet amount: **0.01 CELO per game** (minimum)
+- Bet amount: **0.01 MNT per game** (minimum)
 
 ### Cost
-- **~0.95 CELO total** (0.75 for funding + 0.2 for gas)
-- Uses **REAL CELO on MAINNET**
-- **Optimized for 1.2 CELO budget**
+- **~0.95 MNT total** (0.75 for funding + 0.2 for gas)
+- Uses **REAL MNT on MAINNET**
+- **Optimized for 1.2 MNT budget**
 
 ## ⚙️ Configuration to Review
 
@@ -63,9 +63,9 @@ Before running, verify:
 - [ ] Contract address is correct (currently: `0x61d11C622Bd98A71aD9361833379A2066Ad29CCa`)
 - [ ] Resolver API URL is correct (default: `http://localhost:3000/api/resolve-game-production`)
 - [ ] PRIVATE_KEY in `.env` matches the resolver account on the contract
-- [ ] You have at least **1.0 CELO** in your main wallet (optimized for 1.2 CELO budget)
+- [ ] You have at least **1.0 MNT** in your main wallet (optimized for 1.2 MNT budget)
 - [ ] Next.js app is running (for resolver API)
-- [ ] Network is set to **CELO Mainnet** (not testnet)
+- [ ] Network is set to **MNT Mainnet** (not testnet)
 - [ ] You've reviewed the script configuration
 
 ## 🚀 How to Run
@@ -106,7 +106,7 @@ npm run count:transactions
 
 ## ⚠️ Important Notes
 
-1. **These scripts use REAL CELO on MAINNET**
+1. **These scripts use REAL MNT on MAINNET**
 2. **Generated wallet files contain private keys** - they're in `.gitignore` but be careful
 3. **Scripts will create actual on-chain transactions**
 4. **Resolver API must be accessible** - games won't resolve without it
@@ -138,7 +138,7 @@ Press `Ctrl+C` - the script will stop gracefully. You can collect funds later.
 1. Contract address is correct
 2. Resolver API URL is correct
 3. PRIVATE_KEY matches resolver account
-4. You have sufficient CELO balance
+4. You have sufficient MNT balance
 5. Next.js app is running
 
 **Then confirm you want to proceed!**

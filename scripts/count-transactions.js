@@ -223,7 +223,7 @@ async function main() {
       contractAddress
     );
     console.log(
-      `\n💰 Contract Balance: ${hre.ethers.formatEther(contractBalance)} CELO`
+      `\n💰 Contract Balance: ${hre.ethers.formatEther(contractBalance)} MNT`
     );
 
     // Get contract stats if available
@@ -251,10 +251,10 @@ async function main() {
       console.log("\n📊 Contract Statistics:");
       console.log(`   Total Users: ${stats[0].toString()}`);
       console.log(
-        `   Total Bets: ${hre.ethers.formatEther(stats[1])} CELO`
+        `   Total Bets: ${hre.ethers.formatEther(stats[1])} MNT`
       );
       console.log(
-        `   Total Winnings: ${hre.ethers.formatEther(stats[2])} CELO`
+        `   Total Winnings: ${hre.ethers.formatEther(stats[2])} MNT`
       );
       console.log(`   Total Games: ${stats[3].toString()}`);
     } catch (error) {
