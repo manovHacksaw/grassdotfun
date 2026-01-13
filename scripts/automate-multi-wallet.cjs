@@ -10,8 +10,8 @@ const RESOLVER_API_URL = process.env.RESOLVER_API_URL || "http://localhost:3000/
 
 // Configuration
 const CONFIG = {
-  NUMBER_OF_WALLETS: 10,
-  GAMES_PER_WALLET: 5,
+  NUMBER_OF_WALLETS: 5,
+  GAMES_PER_WALLET: 3,
   FUNDING_PER_WALLET: "0.15", // MNT per wallet
   BET_AMOUNT: "0.01", // MNT per game
   REFUND_THRESHOLD: "0.05", // Re-fund if below this
