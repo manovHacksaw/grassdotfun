@@ -9,10 +9,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 interface DashboardHeaderProps {
   title?: string
-  balanceInCELO: number
+  balanceInMNT: number
 }
 
-export default function DashboardHeader({ title = "Grass", balanceInCELO }: DashboardHeaderProps) {
+export default function DashboardHeader({ title = "Grass", balanceInMNT }: DashboardHeaderProps) {
   const { isConnected, balance } = useWagmiWallet()
 
   return (

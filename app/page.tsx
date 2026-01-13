@@ -18,7 +18,7 @@ import FeaturePills from "@/components/dashboard/ui/FeaturePills"
 import ChatSidebar from "@/components/dashboard/ui/ChatSidebar"
 import PaajiOnTop from "@/components/games/PaajiOnTop/Paaji"
 import UserStats from "@/components/dashboard/ui/UserStats"
-import CeloMarketWork from "@/components/dashboard/ui/celomarketwork"
+import MantleMarketWork from "@/components/dashboard/ui/mantlemarketwork"
 import { useRouter } from "next/navigation"
 import LoadingScreen from "@/components/ui/LoadingScreen"
 import Leaderboard from "@/components/dashboard/ui/Leaderboard"
@@ -203,7 +203,7 @@ export default function DashboardPage() {
       <ChatSidebar />
 
       <div className="relative z-10 w-full mx-auto pt-14">
-        <DashboardHeader title="Grass" balanceInCELO={parseFloat(balance)} />
+        <DashboardHeader title="Grass" balanceInMNT={parseFloat(balance)} />
 
         <div className="flex gap-0 h-[calc(100vh-56px)] overflow-hidden">
           <div className="w-64 shrink-0 m-0 p-0">
@@ -245,7 +245,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-          {mode === "celomarket" ? <CeloMarketWork /> : null}
+          {mode === "mantlemarket" ? <MantleMarketWork /> : null}
         </div>
       </div>
     </div>

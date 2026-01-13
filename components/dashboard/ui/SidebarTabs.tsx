@@ -72,7 +72,7 @@ export default function AppSidebar() {
         </div>
       </div>
 
-      {/* Segmented control (Casino / Celo Market) */}
+      {/* Segmented control (Casino / Mantle Market) */}
       <div className="px-3">
         <div className="grid grid-cols-2 gap-2 rounded-2xl border border-border p-1">
           <button
@@ -89,14 +89,14 @@ export default function AppSidebar() {
           </button>
           <button
             onClick={() => {
-              setMode("celomarket")
+              setMode("mantlemarket")
             }}
             className={cn(
               "h-8 rounded-xl text-xs font-medium",
-              mode === "celomarket" ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:text-foreground hover:bg-muted transition",
+              mode === "mantlemarket" ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:text-foreground hover:bg-muted transition",
             )}
           >
-            Celo Market
+            Mantle Market
           </button>
         </div>
       </div>
