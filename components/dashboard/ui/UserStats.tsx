@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 // ContractService is deprecated - using wagmi hooks directly
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
 import { useUserStats, useContractStats, useWagmiContractService } from "@/lib/wagmiContractService"
-import { formatCELO } from "@/lib/currencyUtils"
+import { formatMNT } from "@/lib/currencyUtils"
 import { useLiveConversion } from "@/lib/useCurrencyRates"
 import {
   XAxis,
@@ -267,16 +267,16 @@ export default function UserStats() {
             console.log("📊 Processed user stats:", processedStats)
             return processedStats;
           }
-          
+
           // Check if stats actually changed
-          const hasChanged = 
+          const hasChanged =
             prevStats.totalBet !== processedStats.totalBet ||
             prevStats.totalWon !== processedStats.totalWon ||
             prevStats.totalLost !== processedStats.totalLost ||
             prevStats.withdrawableBalance !== processedStats.withdrawableBalance ||
             prevStats.gamesPlayed !== processedStats.gamesPlayed ||
             prevStats.gamesWon !== processedStats.gamesWon;
-          
+
           if (hasChanged) {
             console.log("📊 Processed user stats:", processedStats)
             return processedStats;
@@ -302,7 +302,7 @@ export default function UserStats() {
   ])
 
   const formatCurrency = (amount: string) => {
-    return `${formatCELO(amount)} MNT`
+    return `${formatMNT(amount)} MNT`
   }
 
   const formatDate = (dateString: string) => {
@@ -330,14 +330,14 @@ export default function UserStats() {
 
     try {
       console.log("💰 Starting withdrawal process...")
-      console.log(`💸 Withdrawing ${formatCELO(withdrawableAmount.toString())} MNT`)
+      console.log(`💸 Withdrawing ${formatMNT(withdrawableAmount.toString())} MNT`)
 
       // Call the contract withdraw function
       const result = await contractWithdraw()
       console.log("✅ Withdrawal transaction sent:", result)
 
       setSuccessMessage(
-        `🎉 Withdrawal transaction sent! ${formatCELO(withdrawableAmount.toString())} MNT will be sent to your wallet.`,
+        `🎉 Withdrawal transaction sent! ${formatMNT(withdrawableAmount.toString())} MNT will be sent to your wallet.`,
       )
       setTransactionHash(result || "withdrawal-sent")
 
@@ -434,7 +434,7 @@ export default function UserStats() {
             <div className="flex-1">
               <h3 className="text-yellow-400 text-lg font-semibold mb-1">You have winnings to withdraw</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                <span className="font-semibold text-yellow-300">{formatCELO(userStats.withdrawableBalance)} MNT</span>{" "}
+                <span className="font-semibold text-yellow-300">{formatMNT(userStats.withdrawableBalance)} MNT</span>{" "}
                 is ready to withdraw
               </p>
               <Button
@@ -448,7 +448,7 @@ export default function UserStats() {
                     Processing...
                   </>
                 ) : (
-                  <>Withdraw {formatCELO(userStats.withdrawableBalance)} MNT</>
+                  <>Withdraw {formatMNT(userStats.withdrawableBalance)} MNT</>
                 )}
               </Button>
             </div>
@@ -490,7 +490,7 @@ export default function UserStats() {
         <div className="bg-blue-600/20 border border-blue-500/30 rounded-2xl p-4">
           <p className="text-blue-400 text-xs font-medium">🔗 TX: {transactionHash.slice(0, 12)}...</p>
           <a
-            href={`https://celoscan.io/tx/${transactionHash}`}
+            href={`https://sepolia.mantlescan.xyz/tx/${transactionHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-300 hover:text-blue-200 text-xs underline"
@@ -586,7 +586,7 @@ export default function UserStats() {
                       day: "numeric",
                     })
                   }
-                  formatter={(value: number) => [`${formatCELO(value.toString())} MNT`, "Profit/Loss"]}
+                  formatter={(value: number) => [`${formatMNT(value.toString())} MNT`, "Profit/Loss"]}
                 />
                 <Area
                   type="monotone"
@@ -676,18 +676,17 @@ export default function UserStats() {
                     <td className="py-3 px-4 text-white">{game.totalGames}</td>
                     <td className="py-3 px-4">
                       <span
-                        className={`${
-                          game.winRate >= 60
+                        className={`${game.winRate >= 60
                             ? "bg-green-500/20 text-green-400"
                             : game.winRate >= 40
                               ? "bg-yellow-500/20 text-yellow-400"
                               : "bg-red-500/20 text-red-400"
-                        } px-2 py-1 rounded-full text-xs font-medium`}
+                          } px-2 py-1 rounded-full text-xs font-medium`}
                       >
                         {game.winRate}%
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-green-400 font-medium">{formatCELO(game.totalWon.toString())} MNT</td>
+                    <td className="py-3 px-4 text-green-400 font-medium">{formatMNT(game.totalWon.toString())} MNT</td>
                     <td className="py-3 px-4 text-white">{game.bestMultiplier.toFixed(2)}×</td>
                     <td className="py-3 px-4 text-white">{game.avgMultiplier.toFixed(2)}×</td>
                   </tr>
@@ -736,7 +735,7 @@ export default function UserStats() {
                         Withdrawing...
                       </>
                     ) : (
-                      <>💰 Withdraw {formatCELO(userStats.withdrawableBalance)} MNT</>
+                      <>💰 Withdraw {formatMNT(userStats.withdrawableBalance)} MNT</>
                     )}
                   </Button>
                   <p className="text-xs text-yellow-400/80 mt-2 text-center">

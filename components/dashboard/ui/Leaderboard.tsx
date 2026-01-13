@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useContractStats, useAllUsers, useMultipleUserStats } from "@/lib/wagmiContractService"
 import { useWagmiWallet } from "@/contexts/WagmiWalletContext"
-import { formatCELO } from "@/lib/currencyUtils"
+import { formatMNT } from "@/lib/currencyUtils"
 import { Trophy, Medal, Crown, Users, RefreshCw, TrendingUp, DollarSign, Swords } from "lucide-react"
 
 // --- Types ---
@@ -201,7 +201,7 @@ export default function Leaderboard() {
             />
             <StatsCard 
               label="Total Won" 
-              value={`${formatCELO(processedLeaderboard.reduce((sum, u) => sum + u.totalWon, 0).toString())} MNT`} 
+              value={`${formatMNT(processedLeaderboard.reduce((sum, u) => sum + u.totalWon, 0).toString())} MNT`} 
               icon={<DollarSign className="h-4 w-4 text-green-400" />} 
               textColor="text-green-400"
             />
@@ -308,7 +308,7 @@ export default function Leaderboard() {
                       <div className="flex-shrink-0 text-right grid grid-cols-2 gap-x-6 gap-y-1 w-auto min-w-[140px]">
                         <div className="col-span-2 sm:col-span-1">
                           <p className="text-[10px] uppercase text-muted-foreground">Total Won</p>
-                          <p className="font-bold text-green-400 text-sm">{formatCELO(user.totalWon.toString())}</p>
+                          <p className="font-bold text-green-400 text-sm">{formatMNT(user.totalWon.toString())}</p>
                   </div>
 
                         <div className="col-span-2 sm:col-span-1">
@@ -323,7 +323,7 @@ export default function Leaderboard() {
                            <div className="flex justify-between items-center">
                              <span className="text-[10px] text-muted-foreground">Profit</span>
                              <span className={`text-xs font-medium ${user.netProfit >= 0 ? "text-green-400" : "text-red-400"}`}>
-                                {user.netProfit >= 0 ? "+" : ""}{formatCELO(user.netProfit.toString())}
+                                {user.netProfit >= 0 ? "+" : ""}{formatMNT(user.netProfit.toString())}
                              </span>
                            </div>
                         </div>

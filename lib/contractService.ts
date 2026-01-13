@@ -6,7 +6,7 @@
 export class ContractService {
   private account: any;
 
-  constructor(selector: any, account: any, contractId: string = "game-v0.celo") {
+  constructor(selector: any, account: any, contractId: string = "game-v0.mantle") {
     this.account = account;
   }
 
@@ -19,7 +19,7 @@ export class ContractService {
     console.log('🎮 Game ID:', gameId);
     console.log('💰 Bet Amount:', betAmount);
     console.log('🎯 Game Type:', gameType);
-    
+
     throw new Error('ContractService.startGame is deprecated. Use wagmi hooks directly in components.');
   }
 
@@ -31,7 +31,7 @@ export class ContractService {
     console.log('🎮 Game ID:', gameId);
     console.log('🏆 Did Win:', didWin);
     console.log('📊 Multiplier:', multiplier);
-    
+
     // This will be handled by the gameOutcomeService which calls the API
     return `resolve-${Date.now()}`;
   }

@@ -73,9 +73,9 @@ const contractABI = [
 
 // Calculate game outcome
 function calculateGameOutcome(gameType, betAmount) {
-  const maxWinCELO = parseFloat(MAX_WIN_AMOUNT);
+  const maxWinMNT = parseFloat(MAX_WIN_AMOUNT);
   const betAmountNum = parseFloat(betAmount);
-  const MAX_MULTIPLIER_PERCENT = Math.floor((maxWinCELO / betAmountNum) * 100);
+  const MAX_MULTIPLIER_PERCENT = Math.floor((maxWinMNT / betAmountNum) * 100);
   const MAX_ALLOWED_MULTIPLIER_PERCENT = 1000; // 10x = 1000%
   
   const effectiveMaxMultiplier = Math.min(

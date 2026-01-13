@@ -8,7 +8,7 @@ export class ResolverService {
   private account: any;
   private contractId: string;
 
-  constructor(selector: any, account: any, contractId: string = "game-v0.celo") {
+  constructor(selector: any, account: any, contractId: string = "game-v0.mantle") {
     this.selector = selector;
     this.account = account;
     this.contractId = contractId;
@@ -22,10 +22,10 @@ export class ResolverService {
     console.log('🎮 Game ID:', gameId);
     console.log('🏆 Did Win:', didWin);
     console.log('📊 Multiplier:', multiplier);
-    
+
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     return `mock-resolver-tx-hash-${Date.now()}`;
   }
 
@@ -34,7 +34,7 @@ export class ResolverService {
    */
   async getResolverAccount(): Promise<string> {
     console.log('🔍 Mock ResolverService.getResolverAccount called');
-    return 'resolver.celo';
+    return 'resolver.mantle';
   }
 
   /**
@@ -42,6 +42,6 @@ export class ResolverService {
    */
   async isResolverAccount(accountId: string): Promise<boolean> {
     console.log('🔍 Mock ResolverService.isResolverAccount called with:', accountId);
-    return accountId === 'resolver.celo';
+    return accountId === 'resolver.mantle';
   }
 }

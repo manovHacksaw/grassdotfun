@@ -268,7 +268,7 @@ async function main() {
   } catch (error) {
     console.error("\n❌ Error:", error.message);
     console.log("\n💡 RPC query limits hit. Your transactions are on-chain,");
-    console.log("   but we can't query all events. Check CeloScan in 30 mins.\n");
+    console.log("   but we can't query all events. Check Mantle Explorer in 30 mins.\n");
   }
 }
 

@@ -131,9 +131,9 @@ function calculateGameOutcome(gameType, betAmount) {
   
   // Calculate max multiplier based on bet amount to ensure max win is 0.1 MNT
   // maxMultiplier = (0.1 / betAmount) * 100 (convert to percentage)
-  const maxWinCELO = parseFloat(MAX_WIN_AMOUNT);
+  const maxWinMNT = parseFloat(MAX_WIN_AMOUNT);
   const betAmountNum = parseFloat(betAmount);
-  const MAX_MULTIPLIER = Math.floor((maxWinCELO / betAmountNum) * 100); // Convert to percentage
+  const MAX_MULTIPLIER = Math.floor((maxWinMNT / betAmountNum) * 100); // Convert to percentage
   
   // Ensure minimum multiplier is at least 100% (1x - break even)
   const effectiveMaxMultiplier = Math.max(MAX_MULTIPLIER, 100);
@@ -193,9 +193,9 @@ function calculateGameOutcome(gameType, betAmount) {
   
   // Double-check: calculate actual win amount and cap if needed
   const actualWin = (betAmountNum * multiplier) / 100;
-  if (actualWin > maxWinCELO) {
+  if (actualWin > maxWinMNT) {
     // Recalculate multiplier to ensure win is exactly at max
-    multiplier = Math.floor((maxWinCELO / betAmountNum) * 100);
+    multiplier = Math.floor((maxWinMNT / betAmountNum) * 100);
   }
   
   return { didWin, multiplier };
@@ -683,7 +683,7 @@ async function main() {
   );
   console.log(`\n💡 To collect leftover funds, run:`);
   console.log(
-    `   npx hardhat run scripts/collect-funds-terminal4.cjs --network celo\n`
+    `   npx hardhat run scripts/collect-funds-terminal4.cjs --network mantleSepolia\n`
   );
 }
 

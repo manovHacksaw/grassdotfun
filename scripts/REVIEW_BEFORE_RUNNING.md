@@ -84,7 +84,7 @@ npm run dev
 ```bash
 npm run generate:transactions
 # OR
-npx hardhat run scripts/generate-transactions-terminal2.cjs --network celo
+npx hardhat run scripts/generate-transactions-terminal2.cjs --network mantleSepolia
 ```
 
 4. **After completion, collect leftover funds:**

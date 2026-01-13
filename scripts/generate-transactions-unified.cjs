@@ -169,9 +169,9 @@ function calculateGameOutcome(gameType, betAmount) {
   let multiplierPercent;
   
   // Calculate max multiplier based on bet amount to ensure max win is 0.1 MNT
-  const maxWinCELO = parseFloat(MAX_WIN_AMOUNT);
+  const maxWinMNT = parseFloat(MAX_WIN_AMOUNT);
   const betAmountNum = parseFloat(betAmount);
-  const MAX_MULTIPLIER_PERCENT = Math.floor((maxWinCELO / betAmountNum) * 100); // Convert to percentage
+  const MAX_MULTIPLIER_PERCENT = Math.floor((maxWinMNT / betAmountNum) * 100); // Convert to percentage
   
   // Cap at 10x maximum (1000%)
   const MAX_ALLOWED_MULTIPLIER_PERCENT = 1000; // 10x = 1000%
@@ -238,8 +238,8 @@ function calculateGameOutcome(gameType, betAmount) {
   
   // Double-check: calculate actual win amount and cap if needed
   const actualWin = (betAmountNum * multiplier) / 100;
-  if (actualWin > maxWinCELO) {
-    multiplier = Math.floor((maxWinCELO / betAmountNum) * 100);
+  if (actualWin > maxWinMNT) {
+    multiplier = Math.floor((maxWinMNT / betAmountNum) * 100);
   }
   
   return { didWin, multiplier };

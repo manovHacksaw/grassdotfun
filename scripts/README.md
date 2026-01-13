@@ -36,7 +36,7 @@ Generates randomized game transactions across multiple wallets.
 ```bash
 npm run generate:transactions
 # OR
-npx hardhat run scripts/generate-transactions-terminal2.cjs --network celo
+npx hardhat run scripts/generate-transactions-terminal2.cjs --network mantleSepolia
 ```
 
 ### 2. `collect-funds-terminal2.js`
@@ -51,7 +51,7 @@ Collects leftover funds from generated test wallets.
 ```bash
 npm run collect:funds
 # OR
-npx hardhat run scripts/collect-funds-terminal2.cjs --network celo
+npx hardhat run scripts/collect-funds-terminal2.cjs --network mantleSepolia
 ```
 
 ### 3. `count-transactions.js`
@@ -67,7 +67,7 @@ Counts on-chain transactions by querying blockchain events.
 ```bash
 npm run count:transactions
 # OR
-npx hardhat run scripts/count-transactions.cjs --network celo
+npx hardhat run scripts/count-transactions.cjs --network mantleSepolia
 ```
 
 ## Setup

@@ -1,6 +1,6 @@
 # 🎮 Grass.fun - MNT Gaming Platform
 
-A revolutionary blockchain-based gaming platform built on MNT Mainnet featuring multiple casino-style games with provably fair mechanics. Play exciting games and win real MNT tokens!
+A revolutionary blockchain-based gaming platform built on Mantle Sepolia featuring multiple casino-style games with provably fair mechanics. Play exciting games and win real MNT tokens!
 
 ![Grass.fun Gaming Platform](https://img.shields.io/badge/Platform-MNT%20Mainnet-blue) ![EVM Compatible](https://img.shields.io/badge/Blockchain-EVM%20Compatible-purple) ![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black) ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue) ![Smart Contract](https://img.shields.io/badge/Contract-Solidity-green)
 
@@ -8,7 +8,7 @@ A revolutionary blockchain-based gaming platform built on MNT Mainnet featuring 
  
   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b951add3-9e32-4c15-ba4d-f5a5b130c020" />
 
-  <p><em>Experience the future of decentralized gaming on MNT Mainnet</em></p>
+  <p><em>Experience the future of decentralized gaming on Mantle Sepolia</em></p>
 </div>
 
 ## 🌟 Features
@@ -20,7 +20,7 @@ A revolutionary blockchain-based gaming platform built on MNT Mainnet featuring 
 - **Paaji On Top** - Unique grid-based game with progressive rewards
 
 ### 🔐 **Blockchain Integration**
-- **MNT Mainnet** - Fast, secure, and cost-effective EVM-compatible blockchain
+- **Mantle Sepolia** - Fast, secure, and cost-effective EVM-compatible blockchain
 - **Smart Contract** - Transparent, provably fair game logic
 - **Automated Resolution** - No manual intervention required
 - **Real-time Balance** - Live wallet balance updates
@@ -51,11 +51,11 @@ A revolutionary blockchain-based gaming platform built on MNT Mainnet featuring 
 
 ### Current Deployment
 
-* **Network**: MNT Mainnet (Chain ID: 42220)
-* **Contract Address**: [0x61d11C622Bd98A71aD9361833379A2066Ad29CCa](https://celoscan.io/address/0x61d11C622Bd98A71aD9361833379A2066Ad29CCa)
-* **Deployer**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://celoscan.io/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
-* **Resolver**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://celoscan.io/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
-* **Explorer**: [View on Celoscan](https://celoscan.io)
+* **Network**: Mantle Sepolia (Chain ID: 5003)
+* **Contract Address**: [0x61d11C622Bd98A71aD9361833379A2066Ad29CCa](https://sepolia.mantlescan.xyz/address/0x61d11C622Bd98A71aD9361833379A2066Ad29CCa)
+* **Deployer**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://sepolia.mantlescan.xyz/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
+* **Resolver**: [0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2](https://sepolia.mantlescan.xyz/address/0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2)
+* **Explorer**: [View on Mantlescan](https://sepolia.mantlescan.xyz)
 
 ---
 
@@ -105,7 +105,7 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 ### 🚀 **Native MNT Integration**
 
-Grass.fun is built on MNT Mainnet, providing:
+Grass.fun is built on Mantle Sepolia, providing:
 
 #### **Current Features**
 - **Native MNT Support** - All games use MNT tokens
@@ -228,8 +228,8 @@ scripts/
 Create a `.env.local` file in the root directory:
 
 ```env
-# MNT Mainnet Configuration
-NEXT_PUBLIC_CHAIN_ID=42220
+# Mantle Sepolia Configuration
+NEXT_PUBLIC_CHAIN_ID=5003
 NEXT_PUBLIC_CONTRACT_ADDRESS=0x61d11C622Bd98A71aD9361833379A2066Ad29CCa
 
 # WalletConnect Configuration
@@ -251,14 +251,14 @@ npm install
 npx hardhat compile
 ```
 
-3. **Deploy to MNT Mainnet**
+3. **Deploy to Mantle Sepolia**
 ```bash
-npx hardhat run scripts/deploy.mjs --network celo
+npx hardhat run scripts/deploy.mjs --network mantleSepolia
 ```
 
 4. **Verify the contract**
 ```bash
-npx hardhat verify --network celo <CONTRACT_ADDRESS>
+npx hardhat verify --network mantleSepolia <CONTRACT_ADDRESS>
 ```
 
 
@@ -314,7 +314,7 @@ vercel --prod
 
 3. **Set Environment Variables**
 In Vercel dashboard, add:
-- `NEXT_PUBLIC_CHAIN_ID=42220`
+- `NEXT_PUBLIC_CHAIN_ID=5003`
 - `NEXT_PUBLIC_CONTRACT_ADDRESS=0x61d11C622Bd98A71aD9361833379A2066Ad29CCa`
 - `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your-project-id`
 
@@ -420,4 +420,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by the Grassdotfun Team**
 
-*Experience the future of decentralized gaming on MNT Mainnet*
+*Experience the future of decentralized gaming on Mantle Sepolia*

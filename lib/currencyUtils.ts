@@ -212,17 +212,3 @@ export function getCurrentExchangeRates(): { MNT_TO_USD: number; USD_TO_INR: num
     lastUpdated: exchangeRatesCache.lastUpdated,
   };
 }
-
-// Legacy function names for backward compatibility (deprecated)
-export const formatCELO = formatMNT;
-export const celoToUSD = mntToUSD;
-export const celoToINR = mntToINR;
-export const celoToUSDLive = mntToUSDLive;
-export const celoToINRLive = mntToINRLive;
-export const formatCELOWithConversion = formatMNTWithConversion;
-export const formatU2U = formatMNT;
-export const u2uToUSD = mntToUSD;
-export const u2uToINR = mntToINR;
-export const u2uToUSDLive = mntToUSDLive;
-export const u2uToINRLive = mntToINRLive;
-export const formatU2UWithConversion = formatMNTWithConversion;

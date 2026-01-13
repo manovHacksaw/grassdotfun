@@ -351,7 +351,7 @@ async function main() {
   );
   console.log(`\n💡 To collect leftover funds, run:`);
   console.log(
-    `   npx hardhat run scripts/collect-funds-terminal2.js --network celo\n`
+    `   npx hardhat run scripts/collect-funds-terminal2.js --network mantleSepolia\n`
   );
 }
 
