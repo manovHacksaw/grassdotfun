@@ -122,7 +122,7 @@ export default function AdminDashboard() {
     }
 
     if (parseFloat(withdrawAmount) > parseFloat(houseProfit)) {
-      setErrorMessage(`Cannot withdraw more than available profit: ${houseProfit} CELO`)
+      setErrorMessage(`Cannot withdraw more than available profit: ${houseProfit} MNT`)
       return
     }
 
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
 
     try {
       await withdrawHouseProfit(withdrawAmount)
-      setSuccessMessage(`Withdrawal initiated! Amount: ${withdrawAmount} CELO`)
+      setSuccessMessage(`Withdrawal initiated! Amount: ${withdrawAmount} MNT`)
       setWithdrawAmount("")
       // Refetch house profit after a delay
       setTimeout(() => {
@@ -285,7 +285,7 @@ export default function AdminDashboard() {
                   {houseProfitLoading ? (
                     <RefreshCw className="w-5 h-5 animate-spin inline" />
                   ) : (
-                    `${parseFloat(houseProfit).toFixed(4)} CELO`
+                    `${parseFloat(houseProfit).toFixed(4)} MNT`
                   )}
                 </span>
               </div>
@@ -354,11 +354,11 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-white/70">Total Bets:</span>
-                  <span className="text-white font-medium">{parseFloat(contractStats.totalBets).toFixed(4)} CELO</span>
+                  <span className="text-white font-medium">{parseFloat(contractStats.totalBets).toFixed(4)} MNT</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-white/70">Total Winnings:</span>
-                  <span className="text-white font-medium">{parseFloat(contractStats.totalWinnings).toFixed(4)} CELO</span>
+                  <span className="text-white font-medium">{parseFloat(contractStats.totalWinnings).toFixed(4)} MNT</span>
                 </div>
               </div>
             ) : contractStatsLoading ? (

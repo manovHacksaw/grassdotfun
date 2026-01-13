@@ -277,7 +277,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
     }
     
     if (bet < 0.01) {
-      setErrorMessage("Minimum bet amount is 0.01 CELO")
+      setErrorMessage("Minimum bet amount is 0.01 MNT")
       return
     }
     
@@ -290,7 +290,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
           isOpen: true,
           status: "pending",
           title: "Placing Your Bet",
-          message: "Placing your bet on CELO Mainnet... hang tight!",
+          message: "Placing your bet on Mantle Sepolia... hang tight!",
           transactionHash: undefined
         })
         
@@ -325,7 +325,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
       if (error.message?.includes("User closed the window")) {
         errorMsg = "Transaction cancelled. Please try again when ready."
       } else if (error.message?.includes("insufficient balance")) {
-        errorMsg = "Insufficient balance. Please add more CELO to your wallet."
+        errorMsg = "Insufficient balance. Please add more MNT to your wallet."
       } else if (error.message?.includes("already have a pending bet")) {
         errorMsg = "You already have a pending bet. Please wait for it to be resolved."
       } else if (error.message) {
@@ -509,7 +509,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
                   />
                 </div>
                 <div className="text-xs text-muted-foreground px-2">
-                  CELO
+                  MNT
                 </div>
                 <button
                   onClick={() => adjustBetAmount(0.5)}
@@ -526,7 +526,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
                   2×
                 </button>
               </div>
-              <div className="mt-1 text-[11px] text-foreground/50">Min: 0.01 CELO</div>
+              <div className="mt-1 text-[11px] text-foreground/50">Min: 0.01 MNT</div>
             </div>
 
             <div>
@@ -586,7 +586,7 @@ export function PaajiOnTop({ rows = 8, cols = 4 }: PaajiOnTopProps) {
                 <span className="text-foreground/60">
                   {status === "in-progress" || status === "cashed-out" || status === "won" 
                     ? formatGameCurrency((parseFloat(betAmount) * (parseFloat(multiplier) - 1)).toString())
-                    : "0.00 CELO"
+                    : "0.00 MNT"
                   }
                 </span>
               </div>

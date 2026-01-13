@@ -201,7 +201,7 @@ export default function Leaderboard() {
             />
             <StatsCard 
               label="Total Won" 
-              value={`${formatCELO(processedLeaderboard.reduce((sum, u) => sum + u.totalWon, 0).toString())} CELO`} 
+              value={`${formatCELO(processedLeaderboard.reduce((sum, u) => sum + u.totalWon, 0).toString())} MNT`} 
               icon={<DollarSign className="h-4 w-4 text-green-400" />} 
               textColor="text-green-400"
             />

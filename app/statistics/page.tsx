@@ -279,7 +279,7 @@ export default function StatisticsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-white/70 text-sm">Total Bet</p>
-                    <p className="text-2xl font-bold text-white">{userStats.totalBet.toFixed(4)} CELO</p>
+                    <p className="text-2xl font-bold text-white">{userStats.totalBet.toFixed(4)} MNT</p>
                   </div>
                   <DollarSign className="h-8 w-8 text-yellow-500" />
                 </div>
@@ -290,7 +290,7 @@ export default function StatisticsPage() {
                   <div>
                     <p className="text-white/70 text-sm">Net Profit</p>
                     <p className={`text-2xl font-bold ${userStats.netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {userStats.netProfit >= 0 ? '+' : ''}{userStats.netProfit.toFixed(4)} CELO
+                      {userStats.netProfit >= 0 ? '+' : ''}{userStats.netProfit.toFixed(4)} MNT
                     </p>
                   </div>
                   {userStats.netProfit >= 0 ? (
@@ -313,24 +313,24 @@ export default function StatisticsPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">Total Bet:</span>
-                    <span className="text-white font-medium">{userStats.totalBet.toFixed(4)} CELO</span>
+                    <span className="text-white font-medium">{userStats.totalBet.toFixed(4)} MNT</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">Total Won:</span>
-                    <span className="text-green-400 font-medium">{userStats.totalWon.toFixed(4)} CELO</span>
+                    <span className="text-green-400 font-medium">{userStats.totalWon.toFixed(4)} MNT</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">Total Lost:</span>
-                    <span className="text-red-400 font-medium">{userStats.totalLost.toFixed(4)} CELO</span>
+                    <span className="text-red-400 font-medium">{userStats.totalLost.toFixed(4)} MNT</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">Withdrawable:</span>
-                    <span className="text-blue-400 font-medium">{userStats.withdrawableBalance.toFixed(4)} CELO</span>
+                    <span className="text-blue-400 font-medium">{userStats.withdrawableBalance.toFixed(4)} MNT</span>
                   </div>
                   <div className="flex justify-between items-center border-t border-white/10 pt-4">
                     <span className="text-white/70">Net Profit:</span>
                     <span className={`font-bold ${userStats.netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                      {userStats.netProfit >= 0 ? '+' : ''}{userStats.netProfit.toFixed(4)} CELO
+                      {userStats.netProfit >= 0 ? '+' : ''}{userStats.netProfit.toFixed(4)} MNT
                     </span>
                   </div>
                 </div>

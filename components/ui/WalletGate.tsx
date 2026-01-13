@@ -49,7 +49,7 @@ export default function WalletGate({
                 Wallet Required
               </h3>
               <p className="text-white/70 text-sm">
-                Connect your wallet to access the games and start playing on CELO Mainnet.
+                Connect your wallet to access the games and start playing on Mantle Sepolia.
               </p>
             </div>
 

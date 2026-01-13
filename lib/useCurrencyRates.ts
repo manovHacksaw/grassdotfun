@@ -3,15 +3,15 @@
  */
 
 import { useState, useEffect } from 'react';
-import { 
-  getCurrentExchangeRates, 
+import {
+  getCurrentExchangeRates,
   initializeExchangeRates,
   getConversionTextLive,
-  type CurrencyDisplay 
+  type CurrencyDisplay
 } from './currencyUtils';
 
 export interface CurrencyRates {
-  CELO_TO_USD: number;
+  MNT_TO_USD: number;
   USD_TO_INR: number;
   lastUpdated: number;
   isLoading: boolean;
@@ -23,7 +23,7 @@ export interface CurrencyRates {
  */
 export function useCurrencyRates(refreshInterval: number = 60000): CurrencyRates {
   const [rates, setRates] = useState<CurrencyRates>({
-    CELO_TO_USD: 0.75, // Default fallback
+    MNT_TO_USD: 0.75, // Default fallback
     USD_TO_INR: 88.81, // Default fallback
     lastUpdated: 0,
     isLoading: true,
@@ -63,9 +63,9 @@ export function useCurrencyRates(refreshInterval: number = 60000): CurrencyRates
 }
 
 /**
- * Hook to get live conversion text for a CELO amount
+ * Hook to get live conversion text for a MNT amount
  */
-export function useLiveConversion(celoAmount: string | number): {
+export function useLiveConversion(mntAmount: string | number): {
   conversionText: string;
   isLoading: boolean;
   error: string | null;
@@ -79,7 +79,7 @@ export function useLiveConversion(celoAmount: string | number): {
       try {
         setIsLoading(true);
         setError(null);
-        const text = await getConversionTextLive(celoAmount);
+        const text = await getConversionTextLive(mntAmount);
         setConversionText(text);
         setIsLoading(false);
       } catch (err) {
@@ -88,13 +88,13 @@ export function useLiveConversion(celoAmount: string | number): {
       }
     };
 
-    if (celoAmount && celoAmount !== '0') {
+    if (mntAmount && mntAmount !== '0') {
       fetchConversion();
     } else {
       setConversionText('');
       setIsLoading(false);
     }
-  }, [celoAmount]);
+  }, [mntAmount]);
 
   return { conversionText, isLoading, error };
 }

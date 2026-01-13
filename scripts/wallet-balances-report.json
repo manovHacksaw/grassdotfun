@@ -1,0 +1,257 @@
+{
+  "timestamp": "2025-11-25T10:04:43.453Z",
+  "totalWallets": 35,
+  "totalBalance": "2.4471",
+  "results": [
+    {
+      "address": "0x3Fc172864Aff140f212e22F5f56E0586A13e4c74",
+      "privateKey": "0x859d4a5765553dc4ecb3458e70cd70e786eb8182294b9ae8177788d206a23b78",
+      "balance": "0.127794826642898286",
+      "balanceWei": "127794826642898286",
+      "section": "# TERMINAL 2 WALLETS (3 wallets)"
+    },
+    {
+      "address": "0x7BeD0E06c2aA61d8d1D72aff9Cd13cAA955ee91c",
+      "privateKey": "0x508b83adb1d854403832c8c8f9e39d11d52ada013543ec0eb6dd9bbb53ede254",
+      "balance": "0.145845078596007296",
+      "balanceWei": "145845078596007296",
+      "section": "# TERMINAL 2 WALLETS (3 wallets)"
+    },
+    {
+      "address": "0xDc904afbb16B1112deDD8FD4E90D10439eb06f43",
+      "privateKey": "0xc8a1bd5d202a45c7d71dd86a194830763c356b09c8b42106e3712e4a28373c18",
+      "balance": "0.109743549129136297",
+      "balanceWei": "109743549129136297",
+      "section": "# TERMINAL 2 WALLETS (3 wallets)"
+    },
+    {
+      "address": "0x483b9a507Be17054Cc568301fe0D568603797117",
+      "privateKey": "0x5a89414eeb3e340485c32e6a486c5a19a99a48b28851ab7c3d1b75ac8e4565ea",
+      "balance": "0.037537748828800303",
+      "balanceWei": "37537748828800303",
+      "section": "# TERMINAL 3 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0xdA5eb4346aA81668fC127aE1c414d80590a815b2",
+      "privateKey": "0x212365e31358c381c649fd61bc899776922bb1be13627336bac5d76e799b9498",
+      "balance": "0.019486062971129721",
+      "balanceWei": "19486062971129721",
+      "section": "# TERMINAL 3 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0x57E4e3cd994EeB597EAeA1Ad076EA13Aa8408270",
+      "privateKey": "0x78d5cf5f2dbbcbfe658a7bdb391f7b1d06232219e47d261ed33ab6cd4a1ae961",
+      "balance": "0.019473423570377771",
+      "balanceWei": "19473423570377771",
+      "section": "# TERMINAL 3 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0xCD87cc4eFfCd9ff7D9D71d7fB6906EA730AE37e5",
+      "privateKey": "0x3a4860dfacf24a619e012e561991c8c6f1544e68a2500171a854ca5c1ef0870d",
+      "balance": "0.037538632411233726",
+      "balanceWei": "37538632411233726",
+      "section": "# TERMINAL 3 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0x4F8661c838Fbbf789324A4d02FB565C769549133",
+      "privateKey": "0xc10d7b22b693bdbb4f50fd9a92384859cc4a73022a1ce4592520383b9bb5ec1b",
+      "balance": "0.019487492976130076",
+      "balanceWei": "19487492976130076",
+      "section": "# TERMINAL 3 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0x22ED754fB1E906778AC0949131fe3c19073F81D4",
+      "privateKey": "0x2b5bd7cf61759bcd0dcd3da16ecb1de982122db6de04d3a720a6ba1a902f02f3",
+      "balance": "0.019484882175367961",
+      "balanceWei": "19484882175367961",
+      "section": "# TERMINAL 4 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0xFAB8Ef873d74eB7Dc92F6B3Ff3477df2bE7e7879",
+      "privateKey": "0xe26b51eba6fb531630ca26ae5f3e28d9e55bdcc597cb691e186c4800859ad326",
+      "balance": "0.019483173290215221",
+      "balanceWei": "19483173290215221",
+      "section": "# TERMINAL 4 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0x1c5a110960b103E4E53601c4d13c9adf408aDD9A",
+      "privateKey": "0x5d0407e5832b4f71893a0addd72ab417d69574817881be7c375051126487022d",
+      "balance": "0.0194877114115526",
+      "balanceWei": "19487711411552600",
+      "section": "# TERMINAL 4 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0xe794Aed8ED20979cb3707B0A1c127c03bebD6059",
+      "privateKey": "0x591f6dd9a0a5c43bc2221bf0dd6cb9998f1883c6360bfde6df63acc473713f54",
+      "balance": "0.019488007899",
+      "balanceWei": "19488007899000000",
+      "section": "# TERMINAL 4 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0x26aC5dCf61BAf689EA0c228EF0BAf01d406084FC",
+      "privateKey": "0x9b0bf86db7f0d2993b1de231c7013975f1779bc073552aa2b04d7bdcee8a7d9f",
+      "balance": "0.01948167379030025",
+      "balanceWei": "19481673790300250",
+      "section": "# TERMINAL 4 WALLETS (5 wallets)"
+    },
+    {
+      "address": "0x396Efc4884B0567cf6F0F398246512C980384b6f",
+      "privateKey": "0x843ac16ae664c498cb883a23acd8a3979e395f06c31afdb1d478b318527d44cb",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x21D6eE70ed755F018f802E557D972a8AB0a29a40",
+      "privateKey": "0x826397edd81452ac24ac34795752034583f1a5eec2764cff5bf19bcbdeccb224",
+      "balance": "0.142644230813",
+      "balanceWei": "142644230813000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xF2ABcc341A7Db47195681361fD698C9D276eA221",
+      "privateKey": "0x6d868ff4ce0f84122c53b783e6bc8d80aba0eaec126a0aa41cf07ff8cbb604e0",
+      "balance": "0.16069622788",
+      "balanceWei": "160696227880000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x80c5e6310F538421F003A4F66130A2B289775333",
+      "privateKey": "0x45d75cbbfeb436ddc0be70e09a917c405b2272b10aecc9878effbddb2d6bbf51",
+      "balance": "0.106542036751",
+      "balanceWei": "106542036751000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x830fE625810eC87714f6d952530De2A3e425cB28",
+      "privateKey": "0x57431e0b49d9cb6896ce63996b8542b846a560792a7a854439ace4fcc3f49515",
+      "balance": "0.106542036751",
+      "balanceWei": "106542036751000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x24B7eF192610B1b181d5a173F4594BE01f82Cb10",
+      "privateKey": "0x3af1fe23e7b3749a29b1c19f69d1fa265e7a1785d6c19cddb9a7b69a60a52d5b",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x8E1249a51C35C9489ca3a0931eDF7398A792A127",
+      "privateKey": "0xe4a88bfa4ffdb2ffbe6542f0ca2a41760c378cf7696ed03347bebf9565885743",
+      "balance": "0.124593133782",
+      "balanceWei": "124593133782000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x709748aa23BA326b0c91Fc0FfeCCfA10bcA428d0",
+      "privateKey": "0xa15c651d082c985719c489bbdf3e01cf5c933e4a552ef80fa338bc70bca0f06b",
+      "balance": "0.124593133782",
+      "balanceWei": "124593133782000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x48b463273A9D451FEcaE3C35fD36b189e02D69ce",
+      "privateKey": "0x38935624a25ee7cd857308c37ec1d64d188ef4587422a7fd22b7baf5fe3b80a9",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xAd559E92AcBe6EaD8af9E56d76B87c2b5aD49bb1",
+      "privateKey": "0xea32c0c8408824b57b746f22df7e43b8a01b7b2faec884d011db4c796e73a2ff",
+      "balance": "0.08849093972",
+      "balanceWei": "88490939720000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xA56F85c7426119227B3365026851a2d7B24D207D",
+      "privateKey": "0x268da4145e03f3b4cbd2f908646b3a9bcbf584a932e729de97047c103e440321",
+      "balance": "0.124594033818",
+      "balanceWei": "124594033818000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xbCEA29450DE5C44B4b199E908090c8337A51DB24",
+      "privateKey": "0xa1ee5a26043ad5c4d3daadd8ba90e74f0b540bd8f84f562c99d6855f0e2fcd78",
+      "balance": "0.106542936787",
+      "balanceWei": "106542936787000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x1a2619e3F6167657e8cc76F5AECdf1E5F288CCe5",
+      "privateKey": "0x3bdb29776e867d531bb6663486e88c4b53a8b4c2a718b8ec49cfee0c1cf29541",
+      "balance": "0.124594033818",
+      "balanceWei": "124594033818000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x416f9cb7579c9b4ae248F70E5627239ff8362800",
+      "privateKey": "0x22e02b19863b012762ae5268b9a055395ff0d15a80e823e24b8922c5c8964b7d",
+      "balance": "0.124593133782",
+      "balanceWei": "124593133782000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x51d4773C85984D5EeE50eAABfCFbF434dd14451d",
+      "privateKey": "0x37cbac1002a83a1e086ef1ee49b344b8e7e447135bf97620d6436779bf8c52bc",
+      "balance": "0.142645130849",
+      "balanceWei": "142645130849000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x59adcFc23007543655129df53623b6D959da9aF4",
+      "privateKey": "0x39c8a5c8ad253ec46e717c8daff1ddb68471ae5da6bcabbb5a45acf649ce9d57",
+      "balance": "0.124593133782",
+      "balanceWei": "124593133782000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x33D1a3A8ec2D1a7ef7908fB4284f66672003B555",
+      "privateKey": "0xccf2e35204ed79d2f16f68381e1a3b3f36ebb71633f58365f158efef6761cf74",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0x96710628A643Bc249332872ce33601b29F18052f",
+      "privateKey": "0xa7835bf944fff12d0a2c7284b1d3d5341758750f8f9f1bbb77610ef5b57ed58c",
+      "balance": "0.106534625368159375",
+      "balanceWei": "106534625368159375",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xdf65f669FdCd07Ab570aFe5550b8D90C7919bd3e",
+      "privateKey": "0x8f1a16d2c5c04ef9e0a0ea1b383e593555576297385082b44801c19fc55edb98",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xB58a40327634E602c6Fb89631F2Cb4f58baea5C4",
+      "privateKey": "0x5a1ee933f1033d1662aff35f227bc0a58b370086780fc5ff23466a4f95e54d04",
+      "balance": "0.124593133782",
+      "balanceWei": "124593133782000000",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xfC35C63d671cA07B62fDAE99C4af10096267dba2",
+      "privateKey": "0x01d973d9ab238780dc178eca1f7a245ab9688bdfd8dca5c37ada917aa08886cd",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    },
+    {
+      "address": "0xb08bF58DDbCf0019d23f19C9a389454A3E67fc0a",
+      "privateKey": "0x8e3bf1ad6cd35656050bc278a28367119028da43c13586e6a9ad21c7391ebbb7",
+      "balance": "0.0",
+      "balanceWei": "0",
+      "section": "# UNIFIED SCRIPT WALLETS (22 wallets)"
+    }
+  ],
+  "summary": {
+    "withBalance": 28,
+    "withoutBalance": 7,
+    "withError": 0
+  }
+}

@@ -1,13 +1,13 @@
 /**
  * Currency Utilities
- * 
- * Handles CELO currency formatting and conversions to USD/INR
+ *
+ * Handles MNT currency formatting and conversions to USD/INR
  * Uses real-time exchange rates from CoinGecko and ExchangeRate-API
  */
 
 // Cache for exchange rates to avoid excessive API calls
 let exchangeRatesCache = {
-  CELO_TO_USD: 0.75, // Default fallback rate
+  MNT_TO_USD: 0.75, // Default fallback rate
   USD_TO_INR: 88.81, // Default fallback rate
   lastUpdated: 0,
   cacheDuration: 60000, // 1 minute cache
@@ -16,22 +16,22 @@ let exchangeRatesCache = {
 /**
  * Fetch real-time exchange rates from APIs
  */
-async function fetchExchangeRates(): Promise<{ CELO_TO_USD: number; USD_TO_INR: number }> {
+async function fetchExchangeRates(): Promise<{ MNT_TO_USD: number; USD_TO_INR: number }> {
   const now = Date.now();
-  
+
   // Return cached rates if still valid
   if (now - exchangeRatesCache.lastUpdated < exchangeRatesCache.cacheDuration) {
     return {
-      CELO_TO_USD: exchangeRatesCache.CELO_TO_USD,
+      MNT_TO_USD: exchangeRatesCache.MNT_TO_USD,
       USD_TO_INR: exchangeRatesCache.USD_TO_INR,
     };
   }
 
   try {
-    // Fetch CELO to USD rate from CoinGecko
-    const celoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=celo&vs_currencies=usd');
-    const celoData = await celoResponse.json();
-    const celoToUsd = celoData['celo']?.usd || exchangeRatesCache.CELO_TO_USD;
+    // Fetch MNT to USD rate from CoinGecko
+    const mntResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=mantle&vs_currencies=usd');
+    const mntData = await mntResponse.json();
+    const mntToUsd = mntData['mantle']?.usd || exchangeRatesCache.MNT_TO_USD;
 
     // Fetch USD to INR rate from ExchangeRate-API
     const usdResponse = await fetch('https://open.er-api.com/v6/latest/USD');
@@ -40,75 +40,75 @@ async function fetchExchangeRates(): Promise<{ CELO_TO_USD: number; USD_TO_INR: 
 
     // Update cache
     exchangeRatesCache = {
-      CELO_TO_USD: celoToUsd,
+      MNT_TO_USD: mntToUsd,
       USD_TO_INR: usdToInr,
       lastUpdated: now,
       cacheDuration: 60000, // 1 minute cache
     };
 
-    console.log(`🔄 Updated exchange rates: 1 CELO = $${celoToUsd}, 1 USD = ₹${usdToInr}`);
-    
-    return { CELO_TO_USD: celoToUsd, USD_TO_INR: usdToInr };
+    console.log(`🔄 Updated exchange rates: 1 MNT = $${mntToUsd}, 1 USD = ₹${usdToInr}`);
+
+    return { MNT_TO_USD: mntToUsd, USD_TO_INR: usdToInr };
   } catch (error) {
     console.warn('⚠️ Failed to fetch exchange rates, using cached values:', error);
     return {
-      CELO_TO_USD: exchangeRatesCache.CELO_TO_USD,
+      MNT_TO_USD: exchangeRatesCache.MNT_TO_USD,
       USD_TO_INR: exchangeRatesCache.USD_TO_INR,
     };
   }
 }
 
 export interface CurrencyDisplay {
-  celo: string;
+  mnt: string;
   usd: string;
   inr: string;
 }
 
 /**
- * Format CELO amount with proper decimal places
+ * Format MNT amount with proper decimal places
  */
-export function formatCELO(amount: string | number): string {
+export function formatMNT(amount: string | number): string {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
   if (isNaN(num)) return '0.00';
   return num.toFixed(2);
 }
 
 /**
- * Convert CELO to USD (synchronous - uses cached rates)
+ * Convert MNT to USD (synchronous - uses cached rates)
  */
-export function celoToUSD(celoAmount: string | number): number {
-  const celo = typeof celoAmount === 'string' ? parseFloat(celoAmount) : celoAmount;
-  if (isNaN(celo)) return 0;
-  return celo * exchangeRatesCache.CELO_TO_USD;
+export function mntToUSD(mntAmount: string | number): number {
+  const mnt = typeof mntAmount === 'string' ? parseFloat(mntAmount) : mntAmount;
+  if (isNaN(mnt)) return 0;
+  return mnt * exchangeRatesCache.MNT_TO_USD;
 }
 
 /**
- * Convert CELO to INR (synchronous - uses cached rates)
+ * Convert MNT to INR (synchronous - uses cached rates)
  */
-export function celoToINR(celoAmount: string | number): number {
-  const celo = typeof celoAmount === 'string' ? parseFloat(celoAmount) : celoAmount;
-  if (isNaN(celo)) return 0;
-  return celo * exchangeRatesCache.CELO_TO_USD * exchangeRatesCache.USD_TO_INR;
+export function mntToINR(mntAmount: string | number): number {
+  const mnt = typeof mntAmount === 'string' ? parseFloat(mntAmount) : mntAmount;
+  if (isNaN(mnt)) return 0;
+  return mnt * exchangeRatesCache.MNT_TO_USD * exchangeRatesCache.USD_TO_INR;
 }
 
 /**
- * Convert CELO to USD (async - fetches latest rates)
+ * Convert MNT to USD (async - fetches latest rates)
  */
-export async function celoToUSDLive(celoAmount: string | number): Promise<number> {
-  const celo = typeof celoAmount === 'string' ? parseFloat(celoAmount) : celoAmount;
-  if (isNaN(celo)) return 0;
+export async function mntToUSDLive(mntAmount: string | number): Promise<number> {
+  const mnt = typeof mntAmount === 'string' ? parseFloat(mntAmount) : mntAmount;
+  if (isNaN(mnt)) return 0;
   const rates = await fetchExchangeRates();
-  return celo * rates.CELO_TO_USD;
+  return mnt * rates.MNT_TO_USD;
 }
 
 /**
- * Convert CELO to INR (async - fetches latest rates)
+ * Convert MNT to INR (async - fetches latest rates)
  */
-export async function celoToINRLive(celoAmount: string | number): Promise<number> {
-  const celo = typeof celoAmount === 'string' ? parseFloat(celoAmount) : celoAmount;
-  if (isNaN(celo)) return 0;
+export async function mntToINRLive(mntAmount: string | number): Promise<number> {
+  const mnt = typeof mntAmount === 'string' ? parseFloat(mntAmount) : mntAmount;
+  if (isNaN(mnt)) return 0;
   const rates = await fetchExchangeRates();
-  return celo * rates.CELO_TO_USD * rates.USD_TO_INR;
+  return mnt * rates.MNT_TO_USD * rates.USD_TO_INR;
 }
 
 /**
@@ -126,67 +126,67 @@ export function formatINR(amount: number): string {
 }
 
 /**
- * Get all currency displays for a CELO amount
+ * Get all currency displays for a MNT amount
  */
-export function getCurrencyDisplay(celoAmount: string | number): CurrencyDisplay {
-  const celo = formatCELO(celoAmount);
-  const usd = formatUSD(celoToUSD(celoAmount));
-  const inr = formatINR(celoToINR(celoAmount));
-  
-  return { celo, usd, inr };
+export function getCurrencyDisplay(mntAmount: string | number): CurrencyDisplay {
+  const mnt = formatMNT(mntAmount);
+  const usd = formatUSD(mntToUSD(mntAmount));
+  const inr = formatINR(mntToINR(mntAmount));
+
+  return { mnt, usd, inr };
 }
 
 /**
- * Format CELO with conversion display
+ * Format MNT with conversion display
  */
-export function formatCELOWithConversion(celoAmount: string | number, showConversion: boolean = true): string {
-  const celo = formatCELO(celoAmount);
-  if (!showConversion) return `${celo} CELO`;
-  
-  const usd = celoToUSD(celoAmount);
-  const inr = celoToINR(celoAmount);
-  
-  return `${celo} CELO (${formatUSD(usd)} / ${formatINR(inr)})`;
+export function formatMNTWithConversion(mntAmount: string | number, showConversion: boolean = true): string {
+  const mnt = formatMNT(mntAmount);
+  if (!showConversion) return `${mnt} MNT`;
+
+  const usd = mntToUSD(mntAmount);
+  const inr = mntToINR(mntAmount);
+
+  return `${mnt} MNT (${formatUSD(usd)} / ${formatINR(inr)})`;
 }
 
 /**
  * Format currency for display in game UI
  */
-export function formatGameCurrency(celoAmount: string | number): string {
-  const celo = formatCELO(celoAmount);
-  const usd = celoToUSD(celoAmount);
-  
-  return `${celo} CELO (${formatUSD(usd)})`;
+export function formatGameCurrency(mntAmount: string | number): string {
+  const mnt = formatMNT(mntAmount);
+  const usd = mntToUSD(mntAmount);
+
+  return `${mnt} MNT (${formatUSD(usd)})`;
 }
 
 /**
  * Format currency for display in stats
  */
-export function formatStatsCurrency(celoAmount: string | number): string {
-  const celo = formatCELO(celoAmount);
-  const usd = celoToUSD(celoAmount);
-  const inr = celoToINR(celoAmount);
-  
-  return `${celo} CELO`;
+export function formatStatsCurrency(mntAmount: string | number): string {
+  const mnt = formatMNT(mntAmount);
+  const usd = mntToUSD(mntAmount);
+  const inr = mntToINR(mntAmount);
+
+  return `${mnt} MNT`;
 }
 
 /**
  * Get conversion text for tooltips
  */
-export function getConversionText(celoAmount: string | number): string {
-  const usd = celoToUSD(celoAmount);
-  const inr = celoToINR(celoAmount);
-  
+export function getConversionText(mntAmount: string | number): string {
+  const usd = mntToUSD(mntAmount);
+  const inr = mntToINR(mntAmount);
+
   return `${formatUSD(usd)} / ${formatINR(inr)}`;
 }
 
 /**
  * Get conversion text for tooltips (async - fetches latest rates)
  */
-export async function getConversionTextLive(celoAmount: string | number): Promise<string> {
-  const usd = await celoToUSDLive(celoAmount);
-  const inr = await celoToINRLive(celoAmount);
-  
+export async function getConversionTextLive(mntAmount: string | number): Promise<string> {
+  const usd = await mntToUSDLive(mntAmount);
+  const inr = await mntToINRLive(mntAmount);
+
   return `${formatUSD(usd)} / ${formatINR(inr)}`;
 }
 
@@ -205,18 +205,24 @@ export async function initializeExchangeRates(): Promise<void> {
 /**
  * Get current exchange rates (for debugging/monitoring)
  */
-export function getCurrentExchangeRates(): { CELO_TO_USD: number; USD_TO_INR: number; lastUpdated: number } {
+export function getCurrentExchangeRates(): { MNT_TO_USD: number; USD_TO_INR: number; lastUpdated: number } {
   return {
-    CELO_TO_USD: exchangeRatesCache.CELO_TO_USD,
+    MNT_TO_USD: exchangeRatesCache.MNT_TO_USD,
     USD_TO_INR: exchangeRatesCache.USD_TO_INR,
     lastUpdated: exchangeRatesCache.lastUpdated,
   };
 }
 
-// Legacy function names for backward compatibility (deprecated - use formatCELO instead)
-export const formatU2U = formatCELO;
-export const u2uToUSD = celoToUSD;
-export const u2uToINR = celoToINR;
-export const u2uToUSDLive = celoToUSDLive;
-export const u2uToINRLive = celoToINRLive;
-export const formatU2UWithConversion = formatCELOWithConversion;
+// Legacy function names for backward compatibility (deprecated)
+export const formatCELO = formatMNT;
+export const celoToUSD = mntToUSD;
+export const celoToINR = mntToINR;
+export const celoToUSDLive = mntToUSDLive;
+export const celoToINRLive = mntToINRLive;
+export const formatCELOWithConversion = formatMNTWithConversion;
+export const formatU2U = formatMNT;
+export const u2uToUSD = mntToUSD;
+export const u2uToINR = mntToINR;
+export const u2uToUSDLive = mntToUSDLive;
+export const u2uToINRLive = mntToINRLive;
+export const formatU2UWithConversion = formatMNTWithConversion;

@@ -110,7 +110,7 @@ export default function ConnectWalletButton({ className }: ConnectWalletButtonPr
                       {isBalanceLoading ? (
                         <RefreshCw className="w-3 h-3 animate-spin" />
                       ) : (
-                        `${parseFloat(balance).toFixed(3)} CELO`
+                        `${parseFloat(balance).toFixed(3)} MNT`
                       )}
                     </Badge>
                   </div>
@@ -158,7 +158,7 @@ export default function ConnectWalletButton({ className }: ConnectWalletButtonPr
                           </div>
                         ) : (
                           <span className="text-white font-medium">
-                            {parseFloat(balance).toFixed(4)} CELO
+                            {parseFloat(balance).toFixed(4)} MNT
                           </span>
                         )}
                         <Button
@@ -176,7 +176,7 @@ export default function ConnectWalletButton({ className }: ConnectWalletButtonPr
                     <div className="flex items-center justify-between">
                       <span className="text-white/70 text-sm">Network:</span>
                       <Badge variant="outline" className="border-white/20 text-white">
-                        CELO Mainnet
+                        Mantle Sepolia
                       </Badge>
                     </div>
                   </div>

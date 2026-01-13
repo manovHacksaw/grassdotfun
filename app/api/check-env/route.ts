@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Expected resolver address from deployment info
     const EXPECTED_RESOLVER = '0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2';
     const CONTRACT_ADDRESS = '0x61d11C622Bd98A71aD9361833379A2066Ad29CCa';
-    const RPC_URL = 'https://forno.celo.org';
+    const RPC_URL = 'https://rpc.sepolia.mantle.xyz';
 
     let derivedAddress = null;
     let matchesResolver = false;

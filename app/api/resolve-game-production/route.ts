@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     let signerAddress: string | null = null;
     try {
       const { ethers } = await import('ethers');
-      const RPC_URL = 'https://forno.celo.org';
+      const RPC_URL = 'https://rpc.sepolia.mantle.xyz';
       const CONTRACT_ADDRESS = '0x61d11C622Bd98A71aD9361833379A2066Ad29CCa';
       const provider = new ethers.JsonRpcProvider(RPC_URL);
       

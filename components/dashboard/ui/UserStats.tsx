@@ -49,7 +49,7 @@ interface UserStats {
   gameTypeStats: GameStats[]
 }
 
-// Contract data format (from CELO contract)
+// Contract data format (from MNT contract)
 interface ContractUserStats {
   totalBet: string | bigint
   totalWon: string | bigint
@@ -302,7 +302,7 @@ export default function UserStats() {
   ])
 
   const formatCurrency = (amount: string) => {
-    return `${formatCELO(amount)} CELO`
+    return `${formatCELO(amount)} MNT`
   }
 
   const formatDate = (dateString: string) => {
@@ -330,14 +330,14 @@ export default function UserStats() {
 
     try {
       console.log("💰 Starting withdrawal process...")
-      console.log(`💸 Withdrawing ${formatCELO(withdrawableAmount.toString())} CELO`)
+      console.log(`💸 Withdrawing ${formatCELO(withdrawableAmount.toString())} MNT`)
 
       // Call the contract withdraw function
       const result = await contractWithdraw()
       console.log("✅ Withdrawal transaction sent:", result)
 
       setSuccessMessage(
-        `🎉 Withdrawal transaction sent! ${formatCELO(withdrawableAmount.toString())} CELO will be sent to your wallet.`,
+        `🎉 Withdrawal transaction sent! ${formatCELO(withdrawableAmount.toString())} MNT will be sent to your wallet.`,
       )
       setTransactionHash(result || "withdrawal-sent")
 
@@ -417,7 +417,7 @@ export default function UserStats() {
                 <p className="text-xs text-muted-foreground">Loading balance...</p>
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">Balance: {walletBalance} CELO</p>
+              <p className="text-xs text-muted-foreground">Balance: {walletBalance} MNT</p>
             )}
           </div>
           <div className="text-right">
@@ -434,7 +434,7 @@ export default function UserStats() {
             <div className="flex-1">
               <h3 className="text-yellow-400 text-lg font-semibold mb-1">You have winnings to withdraw</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                <span className="font-semibold text-yellow-300">{formatCELO(userStats.withdrawableBalance)} CELO</span>{" "}
+                <span className="font-semibold text-yellow-300">{formatCELO(userStats.withdrawableBalance)} MNT</span>{" "}
                 is ready to withdraw
               </p>
               <Button
@@ -448,7 +448,7 @@ export default function UserStats() {
                     Processing...
                   </>
                 ) : (
-                  <>Withdraw {formatCELO(userStats.withdrawableBalance)} CELO</>
+                  <>Withdraw {formatCELO(userStats.withdrawableBalance)} MNT</>
                 )}
               </Button>
             </div>
@@ -586,7 +586,7 @@ export default function UserStats() {
                       day: "numeric",
                     })
                   }
-                  formatter={(value: number) => [`${formatCELO(value.toString())} CELO`, "Profit/Loss"]}
+                  formatter={(value: number) => [`${formatCELO(value.toString())} MNT`, "Profit/Loss"]}
                 />
                 <Area
                   type="monotone"
@@ -687,7 +687,7 @@ export default function UserStats() {
                         {game.winRate}%
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-green-400 font-medium">{formatCELO(game.totalWon.toString())} CELO</td>
+                    <td className="py-3 px-4 text-green-400 font-medium">{formatCELO(game.totalWon.toString())} MNT</td>
                     <td className="py-3 px-4 text-white">{game.bestMultiplier.toFixed(2)}×</td>
                     <td className="py-3 px-4 text-white">{game.avgMultiplier.toFixed(2)}×</td>
                   </tr>
@@ -736,7 +736,7 @@ export default function UserStats() {
                         Withdrawing...
                       </>
                     ) : (
-                      <>💰 Withdraw {formatCELO(userStats.withdrawableBalance)} CELO</>
+                      <>💰 Withdraw {formatCELO(userStats.withdrawableBalance)} MNT</>
                     )}
                   </Button>
                   <p className="text-xs text-yellow-400/80 mt-2 text-center">

@@ -9,7 +9,7 @@ export default function TestWalletPage() {
   return (
     <div className="min-h-screen bg-black text-white p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">CELO Wallet Test</h1>
+        <h1 className="text-4xl font-bold mb-8">MNT Wallet Test</h1>
         
         <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 mb-8">
           <h2 className="text-2xl font-bold mb-4">Wallet Status</h2>
@@ -38,14 +38,14 @@ export default function TestWalletPage() {
         <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-8">
           <h2 className="text-2xl font-bold mb-4">Connect Wallet</h2>
           <p className="text-white/70 mb-6">
-            Click the button below to see the CELO Wallet Selector with multiple wallet options:
+            Click the button below to see the MNT Wallet Selector with multiple wallet options:
           </p>
           <div className="space-y-4">
             <ConnectWalletButton />
             <div className="text-sm text-white/50">
               <p>Supported wallets:</p>
               <ul className="list-disc list-inside mt-2 space-y-1">
-                <li>CELO Wallet (Browser)</li>
+                <li>MNT Wallet (Browser)</li>
                 <li>MyNearWallet</li>
                 <li>Sender Wallet</li>
                 <li>HERE Wallet</li>

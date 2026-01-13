@@ -110,3 +110,9 @@ storybook-static
 tmp/
 temp/
 
+# Generated wallet files (contain private keys - DO NOT COMMIT)
+scripts/generated-wallets*.json
+generated-wallets*.json
+scripts/all-wallet-private-keys.txt
+scripts/generated-wallets-unified.json
+

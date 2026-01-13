@@ -159,7 +159,7 @@ export function TransactionModal({
 }
 
 // Helper function to get explorer URL for different networks
-export function getExplorerUrl(transactionHash: string, network: string = "mainnet"): string {
-  // For CELO Mainnet - using Celoscan explorer
-  return `https://celoscan.io/tx/${transactionHash}`
+export function getExplorerUrl(transactionHash: string, network: string = "mantleSepolia"): string {
+  // For Mantle Sepolia Testnet - using Mantlescan explorer
+  return `https://sepolia.mantlescan.xyz/tx/${transactionHash}`
 }

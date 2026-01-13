@@ -14,17 +14,10 @@ module.exports = {
     },
   },
   networks: {
-    // CELO Mainnet
-    celo: {
-      url: "https://forno.celo.org",
-      chainId: 42220,
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      gasPrice: "auto",
-    },
-    // CELO Sepolia Testnet (kept for reference)
-    celoSepolia: {
-      url: "https://forno.celo-sepolia.celo-testnet.org",
-      chainId: 11142220,
+    // Mantle Sepolia Testnet
+    mantleSepolia: {
+      url: "https://rpc.sepolia.mantle.xyz",
+      chainId: 5003,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       gasPrice: "auto",
     },
@@ -39,24 +32,15 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      celo: process.env.CELO_API_KEY || "dummy", // Update with actual CELO explorer API key if available
-      celoSepolia: process.env.CELO_API_KEY || "dummy",
+      mantleSepolia: process.env.MANTLE_API_KEY || "dummy",
     },
     customChains: [
       {
-        network: "celo",
-        chainId: 42220,
+        network: "mantleSepolia",
+        chainId: 5003,
         urls: {
-          apiURL: "https://api.celoscan.io/api",
-          browserURL: "https://celoscan.io",
-        },
-      },
-      {
-        network: "celoSepolia",
-        chainId: 11142220,
-        urls: {
-          apiURL: "https://celo-sepolia.blockscout.com/api",
-          browserURL: "https://celo-sepolia.blockscout.com",
+          apiURL: "https://api-sepolia.mantlescan.xyz/api",
+          browserURL: "https://sepolia.mantlescan.xyz",
         },
       },
     ],

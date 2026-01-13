@@ -28,15 +28,15 @@ export default function DashboardHeader({ title = "Grass", balanceInCELO }: Dash
         <div className="relative mx-auto flex h-14 items-center justify-end px-2 md:px-3">
           {/* Right: Network indicator, Wallet connect */}
           <div className="flex items-center gap-2 md:gap-3">
-            {/* CELO Mainnet Network Badge */}
+            {/* Mantle Sepolia Network Badge */}
             <Badge 
               variant="outline" 
               className="rounded-full border-white/20 bg-white/10 text-white hover:bg-white/20 transition-colors"
             >
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="hidden sm:inline">CELO Mainnet</span>
-                <span className="sm:hidden">CELO</span>
+                <span className="hidden sm:inline">Mantle Sepolia</span>
+                <span className="sm:hidden">MNT</span>
               </div>
             </Badge>
 

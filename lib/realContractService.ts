@@ -1,6 +1,6 @@
 /**
  * Real Contract Service for Production
- * Integrates with the deployed SecureGames contract on CELO Mainnet
+ * Integrates with the deployed SecureGames contract on Mantle Sepolia Testnet
  */
 
 import { ethers } from 'ethers';
@@ -8,8 +8,8 @@ import { parseEther, formatEther } from 'viem';
 
 // Contract configuration
 const CONTRACT_ADDRESS = '0x61d11C622Bd98A71aD9361833379A2066Ad29CCa';
-const RPC_URL = 'https://forno.celo.org';
-const CHAIN_ID = 42220;
+const RPC_URL = 'https://rpc.sepolia.mantle.xyz';
+const CHAIN_ID = 5003;
 
 // Contract ABI - only the functions we need
 const CONTRACT_ABI = [

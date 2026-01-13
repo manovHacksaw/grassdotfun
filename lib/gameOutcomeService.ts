@@ -24,10 +24,10 @@ class GameOutcomeService {
     try {
       console.log(`🚀 Resolving game: ${outcome.gameId} - ${outcome.didWin ? 'WIN' : 'LOSE'} at ${outcome.multiplier}x`);
       
-        // Use production API route for real contract resolution
-        const apiEndpoint = '/api/resolve-game-production';
+      // Use production API route for real contract resolution
+      const apiEndpoint = '/api/resolve-game-production';
       
-      console.log(`🔧 Using unified near-api-js resolver: ${apiEndpoint}`);
+      console.log(`🔧 Using production API resolver: ${apiEndpoint}`);
       
       // Use the appropriate API route
       const response = await fetch(apiEndpoint, {

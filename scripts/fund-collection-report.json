@@ -1,0 +1,281 @@
+{
+  "timestamp": "2025-11-25T11:17:09.511Z",
+  "ownerAddress": "0x2D4575003f6017950C2f7a10aFb17bf2fBb648d2",
+  "ownerBalanceBefore": "8.491059375214855469",
+  "ownerBalanceAfter": "8.491059375214855469",
+  "totalCollected": "0.0000",
+  "summary": {
+    "totalWallets": 35,
+    "successCount": 0,
+    "failCount": 35
+  },
+  "results": [
+    {
+      "address": "0x3Fc172864Aff140f212e22F5f56E0586A13e4c74",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 127794826642898286, tx cost 128319826642898286, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x7BeD0E06c2aA61d8d1D72aff9Cd13cAA955ee91c",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 145845078596007296, tx cost 146370078596007296, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xDc904afbb16B1112deDD8FD4E90D10439eb06f43",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 109743549129136297, tx cost 110268549129136297, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x483b9a507Be17054Cc568301fe0D568603797117",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 37537748828800303, tx cost 38062748828800303, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xdA5eb4346aA81668fC127aE1c414d80590a815b2",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19486062971129721, tx cost 20011062971129721, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x57E4e3cd994EeB597EAeA1Ad076EA13Aa8408270",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19473423570377771, tx cost 19998423570377771, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xCD87cc4eFfCd9ff7D9D71d7fB6906EA730AE37e5",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 37538632411233726, tx cost 38063632411233726, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x4F8661c838Fbbf789324A4d02FB565C769549133",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19487492976130076, tx cost 20012492976130076, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x22ED754fB1E906778AC0949131fe3c19073F81D4",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19484882175367961, tx cost 20010708670162961, overshot 525826494795000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xFAB8Ef873d74eB7Dc92F6B3Ff3477df2bE7e7879",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19483173290215221, tx cost 20008173290215221, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x1c5a110960b103E4E53601c4d13c9adf408aDD9A",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19487711411552600, tx cost 20012711411552600, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xe794Aed8ED20979cb3707B0A1c127c03bebD6059",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19488007899000000, tx cost 20013007899000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x26aC5dCf61BAf689EA0c228EF0BAf01d406084FC",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 19481673790300250, tx cost 20006673790300250, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x396Efc4884B0567cf6F0F398246512C980384b6f",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 200000000000000000, tx cost 200525000000000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x21D6eE70ed755F018f802E557D972a8AB0a29a40",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 142644230813000000, tx cost 143169230813000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xF2ABcc341A7Db47195681361fD698C9D276eA221",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 142645130849000000, tx cost 143170130849000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x80c5e6310F538421F003A4F66130A2B289775333",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 106542036751000000, tx cost 107067036751000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x830fE625810eC87714f6d952530De2A3e425cB28",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 106542036751000000, tx cost 107067036751000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x24B7eF192610B1b181d5a173F4594BE01f82Cb10",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 178746424875000000, tx cost 179271424875000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x8E1249a51C35C9489ca3a0931eDF7398A792A127",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 88490939720000000, tx cost 89015939720000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x709748aa23BA326b0c91Fc0FfeCCfA10bcA428d0",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 124593133782000000, tx cost 125118133782000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x48b463273A9D451FEcaE3C35fD36b189e02D69ce",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 200000000000000000, tx cost 200525000000000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xAd559E92AcBe6EaD8af9E56d76B87c2b5aD49bb1",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 88490939720000000, tx cost 89015939720000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xA56F85c7426119227B3365026851a2d7B24D207D",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 124594033818000000, tx cost 125119033818000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xbCEA29450DE5C44B4b199E908090c8337A51DB24",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 106542936787000000, tx cost 107068033151590000, overshot 525096364590000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x1a2619e3F6167657e8cc76F5AECdf1E5F288CCe5",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 124594033818000000, tx cost 125119033818000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x416f9cb7579c9b4ae248F70E5627239ff8362800",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 106541136715000000, tx cost 107066136715000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x51d4773C85984D5EeE50eAABfCFbF434dd14451d",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 142645130849000000, tx cost 143170130849000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x59adcFc23007543655129df53623b6D959da9aF4",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 124593133782000000, tx cost 125118133782000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x33D1a3A8ec2D1a7ef7908fB4284f66672003B555",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 178746424875000000, tx cost 179271424875000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0x96710628A643Bc249332872ce33601b29F18052f",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 88483528337159375, tx cost 89008528337159375, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xdf65f669FdCd07Ab570aFe5550b8D90C7919bd3e",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 178747324911000000, tx cost 179272324911000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xB58a40327634E602c6Fb89631F2Cb4f58baea5C4",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 124593133782000000, tx cost 125118133782000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xfC35C63d671cA07B62fDAE99C4af10096267dba2",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 178747324911000000, tx cost 179272324911000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    },
+    {
+      "address": "0xb08bF58DDbCf0019d23f19C9a389454A3E67fc0a",
+      "success": false,
+      "reason": "error_forwarding_sequencer: insufficient funds for gas * price + value: balance 178747324911000000, tx cost 179272324911000000, overshot 525000000000000",
+      "balance": 0,
+      "collected": 0
+    }
+  ],
+  "bySection": {
+    "# TERMINAL 2 WALLETS (3 wallets)": {
+      "success": 0,
+      "failed": 3,
+      "collected": 0
+    },
+    "# TERMINAL 3 WALLETS (5 wallets)": {
+      "success": 0,
+      "failed": 5,
+      "collected": 0
+    },
+    "# TERMINAL 4 WALLETS (5 wallets)": {
+      "success": 0,
+      "failed": 5,
+      "collected": 0
+    },
+    "# UNIFIED SCRIPT WALLETS (22 wallets)": {
+      "success": 0,
+      "failed": 22,
+      "collected": 0
+    }
+  }
+}

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     
     console.log(`🔍 API Balance Route: Returning mock balance for ${accountId}`);
     
-    // Return mock balance for CELO
+    // Return mock balance for MNT
     const mockBalance = MockBalanceService.getMockBalance(accountId);
     
     // Cache the result
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       endpoint: 'mock',
       cached: false,
       source: 'mock',
-      note: 'Using mock balance for CELO development'
+      note: 'Using mock balance for MNT development'
     });
     
   } catch (error: unknown) {

@@ -127,7 +127,7 @@ export default function GameTransactionWrapper({
               {betStatus === 'error' && "Bet Failed"}
             </DialogTitle>
             <DialogDescription className="text-white/70">
-              {betStatus === 'pending' && "Placing your bet on CELO Mainnet... hang tight!"}
+              {betStatus === 'pending' && "Placing your bet on Mantle Sepolia... hang tight!"}
               {betStatus === 'success' && "Your bet has been confirmed on-chain. Game starting..."}
               {betStatus === 'error' && "There was an issue placing your bet. Please try again."}
             </DialogDescription>

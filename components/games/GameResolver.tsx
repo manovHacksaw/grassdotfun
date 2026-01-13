@@ -185,7 +185,7 @@ export default function GameResolver({ gameId: initialGameId, onResolved, compac
           <h4 className="text-blue-400 font-medium mb-2">Game Details</h4>
           <div className="space-y-1 text-sm text-blue-300">
             <p>Player: {gameDetails.player}</p>
-            <p>Amount: {(parseFloat(gameDetails.amount) / 1e24).toFixed(4)} CELO</p>
+            <p>Amount: {(parseFloat(gameDetails.amount) / 1e24).toFixed(4)} MNT</p>
             <p>Status: {gameDetails.status === 0 ? "Pending" : gameDetails.status === 1 ? "Won" : "Lost"}</p>
             <p>Game Type: {gameDetails.gameType || "Unknown"}</p>
             {gameDetails.multiplier > 0 && (

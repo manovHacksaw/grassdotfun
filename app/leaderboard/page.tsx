@@ -394,11 +394,11 @@ export default function LeaderboardPage() {
                         </div>
                       </td>
                       <td className="py-4 px-4 text-right">
-                        <span className="text-green-400 font-medium">{user.totalWon.toFixed(4)} CELO</span>
+                        <span className="text-green-400 font-medium">{user.totalWon.toFixed(4)} MNT</span>
                       </td>
                       <td className="py-4 px-4 text-right">
                         <span className={`font-medium ${user.netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                          {user.netProfit >= 0 ? '+' : ''}{user.netProfit.toFixed(4)} CELO
+                          {user.netProfit >= 0 ? '+' : ''}{user.netProfit.toFixed(4)} MNT
                         </span>
                       </td>
                       <td className="py-4 px-4 text-right">

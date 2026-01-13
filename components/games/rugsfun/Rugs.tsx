@@ -548,7 +548,7 @@ export default function CrashGame({ compact = false }: CrashGameProps) {
       }
       
       if (bet < 0.01) {
-        setErrorMessage("Minimum bet amount is 0.01 CELO")
+        setErrorMessage("Minimum bet amount is 0.01 MNT")
         return
       }
       
@@ -566,7 +566,7 @@ export default function CrashGame({ compact = false }: CrashGameProps) {
           isOpen: true,
           status: "pending",
           title: "Placing Your Bet",
-          message: "Placing your bet on CELO Mainnet... hang tight!",
+          message: "Placing your bet on Mantle Sepolia... hang tight!",
           transactionHash: undefined
         })
         
@@ -601,7 +601,7 @@ export default function CrashGame({ compact = false }: CrashGameProps) {
         if (error.message?.includes("User closed the window")) {
           errorMsg = "Transaction cancelled. Please try again when ready."
         } else if (error.message?.includes("insufficient balance")) {
-          errorMsg = "Insufficient balance. Please add more CELO to your wallet."
+          errorMsg = "Insufficient balance. Please add more MNT to your wallet."
         } else if (error.message?.includes("already have a pending bet")) {
           errorMsg = "You already have a pending bet. Please wait for it to be resolved."
         } else if (error.message) {
@@ -697,7 +697,7 @@ export default function CrashGame({ compact = false }: CrashGameProps) {
                 </div>
               </div>
             </div>
-            <div className="text-xs text-foreground/50">0.00 CELO</div>
+            <div className="text-xs text-foreground/50">0.00 MNT</div>
           </div>
 
           <div className="space-y-3">
@@ -741,10 +741,10 @@ export default function CrashGame({ compact = false }: CrashGameProps) {
                 className="bg-background/70 border border-border text-foreground flex-1 h-9 rounded-2xl"
               />
               <div className="w-8 h-8 rounded-full flex items-center justify-center border border-border bg-background/60">
-                <span className="text-foreground text-[10px] font-bold">CELO</span>
+                <span className="text-foreground text-[10px] font-bold">MNT</span>
               </div>
             </div>
-            <div className="text-xs text-foreground/50">0.00 CELO</div>
+            <div className="text-xs text-foreground/50">0.00 MNT</div>
           </div>
         </div>
       </div>
