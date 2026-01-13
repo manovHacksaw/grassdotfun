@@ -23,7 +23,10 @@
     "collect:all": "hardhat run scripts/collect-all-funds.cjs --network mantleSepolia",
     "test:contract": "hardhat run scripts/test-contract-view.cjs --network mantleSepolia",
     "test:write": "hardhat run scripts/test-contract-write.cjs --network mantleSepolia",
-    "test:single-game": "hardhat run scripts/test-single-game.cjs --network mantleSepolia"
+    "test:single-game": "hardhat run scripts/test-single-game.cjs --network mantleSepolia",
+    "automate:single": "hardhat run scripts/automate-games.cjs --network mantleSepolia",
+    "automate:multi": "hardhat run scripts/automate-multi-wallet.cjs --network mantleSepolia",
+    "automate:unified": "hardhat run scripts/generate-transactions-unified.cjs --network mantleSepolia"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
